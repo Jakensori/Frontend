@@ -1,6 +1,8 @@
 //import 'dart:html';
 
 import 'package:flutter/material.dart';
+import 'package:temp_project/donate.dart';
+import 'package:temp_project/record.dart';
 import 'start.dart';
 
 void main() {
