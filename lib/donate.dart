@@ -22,40 +22,51 @@ class Donate extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: Column(
-        children: <Widget>[
+      body: Container(
+          child: Stack(
+        children: [
           Container(
-            width: 500,
+            width: 600,
             height: 200,
+            margin: EdgeInsets.symmetric(horizontal: 50, vertical: 50),
             decoration: BoxDecoration(
               color: Colors.amber,
               borderRadius: BorderRadius.circular(10),
             ),
-            margin: EdgeInsets.symmetric(horizontal: 40, vertical: 50),
-            child: Container(
-              margin: EdgeInsets.fromLTRB(5, 140, 180, 5),
-              child: TextButton(
-                child: Text(
-                  '저금 내역 보기',
-                  style: TextStyle(
-                    fontSize: 14, // 폰트 크기
-                    fontWeight: FontWeight.w600, // 폰트 두께
-                    color: Colors.black, // 폰트 색상
-                  ),
-                ),
-                onPressed: () {
-                  // 페이지 이동
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Savings()),
-                  );
-                },
+          ),
+          Container(
+            margin: EdgeInsets.fromLTRB(70, 80, 180, 5),
+            child: Text(
+              '나의 기부 저금통',
+              style: TextStyle(
+                fontSize: 18, // 폰트 크기
+                fontWeight: FontWeight.w600, // 폰트 두께
+                color: Colors.black, // 폰트 색상
               ),
             ),
           ),
+          Container(
+            margin: EdgeInsets.fromLTRB(70, 200, 180, 5),
+            child: TextButton(
+              child: Text(
+                '저금 내역 보기',
+                style: TextStyle(
+                  fontSize: 12, // 폰트 크기
+                  fontWeight: FontWeight.w600, // 폰트 두께
+                  color: Colors.black, // 폰트 색상
+                ),
+              ),
+              onPressed: () {
+                // 페이지 이동
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Savings()),
+                );
+              },
+            ),
+          )
         ],
-      ),
+      )),
     ));
   }
 }
-//Stack을 사용해서 다시 구현 예정..
