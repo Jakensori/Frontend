@@ -1,16 +1,24 @@
 //import 'dart:html';
 
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:weekly_date_picker/weekly_date_picker.dart';
 
 class Record extends StatefulWidget {
   const Record({Key? key}) : super(key: key);
+
+  //final String title;
 
   @override
   State<Record> createState() => _Record();
 }
 
 class _Record extends State<Record> {
+  DateTime _selectedDay = DateTime.now();
+
+  String formatDate = DateFormat('yy/ mm/ dd').format(DateTime.now());
+
   List<String> breakfast = ['삼각김밥'];
   List<String> launch = [];
   List<String> dinner = [];
@@ -24,7 +32,7 @@ class _Record extends State<Record> {
         appBar: AppBar(
           backgroundColor: Color(0xffFFC646),
           title: Text(
-            '2023년 2월 1일 (수)',
+            formatDate,
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w700,
@@ -40,6 +48,27 @@ class _Record extends State<Record> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              //주간 캘린더
+
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: WeeklyDatePicker(
+                  selectedDay: _selectedDay,
+                  changeDay: (value) => setState(() {
+                    _selectedDay = value;
+                    formatDate = DateFormat('yyyy년 M월 dd일').format(value);
+                  }),
+                  enableWeeknumberText: false,
+                  weeknumberTextColor: Colors.white,
+                  backgroundColor: const Color(0xffFFFFFF),
+                  weekdayTextColor: const Color(0xff444444),
+                  digitsColor: Color(0xff444444),
+                  selectedBackgroundColor: const Color(0xffFFC646),
+                  weekdays: const ["월", "화", "수", "목", "금", "토", "일"],
+                  daysInWeek: 7,
+                ),
+              ),
+
               // 날짜&기부금액
               Container(
                   width: double.infinity,
