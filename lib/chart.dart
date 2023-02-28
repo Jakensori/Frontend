@@ -20,15 +20,16 @@ class Chart extends StatelessWidget {
       child:Scaffold(
         appBar:AppBar(
           //title: Text('chart탭 상단바'),
-          //backgroundColor: Color(0xFFFFFF),
+          backgroundColor: Color(0xffFFFFFF),
           bottom: TabBar(
-          /*
-            labelColor: Color(0x444444),
-            unselectedLabelColor: Color(0x999999),
-            indicatorWeight: 5,
-            indicatorColor: Color(0x444444),*/
+
+            labelColor: Color(0xff444444),
+            unselectedLabelColor: Color(0xff999999),
+            indicatorWeight: 3,
+            indicatorColor: Color(0xff444444),
+
             tabs: [
-              Tab(text: '가계부'),
+              Tab(text: '가계부',),
               Tab(text: '식비 분석'),
               Tab(text: '식사 분석'),
             ],
