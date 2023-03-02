@@ -4,7 +4,7 @@ import 'package:temp_project/chart_pages/calendar.dart';
 import 'package:temp_project/chart_pages/expense_chart.dart';
 import 'package:temp_project/chart_pages/meal_chart.dart';
 
-class Chart extends StatelessWidget {
+class Chart extends StatefulWidget {
   const Chart({Key? key}) : super(key: key);
 
   static const List<Widget> _views = [
@@ -13,6 +13,11 @@ class Chart extends StatelessWidget {
     Center(child: MealChartPage()),
   ];
 
+  @override
+  State<Chart> createState() => _ChartState();
+}
+
+class _ChartState extends State<Chart> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -37,7 +42,7 @@ class Chart extends StatelessWidget {
         ),
 
         body:TabBarView(
-          children: _views
+          children: Chart._views
         ),
       ),
     );
