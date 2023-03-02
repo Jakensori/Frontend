@@ -1,8 +1,7 @@
-//import 'dart:html';
-
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:temp_project/const/colors.dart';
 import 'package:weekly_date_picker/weekly_date_picker.dart';
 
 class Record extends StatefulWidget {
@@ -30,14 +29,14 @@ class _Record extends State<Record> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Color(0xffFFC646),
+          backgroundColor: PRIMARY_COLOR,
           title: Text(
             formatDate,
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w700,
               letterSpacing: 1.2,
-              color: Color(0xff444444),
+              color: BLACK_COLOR,
             ),
           ),
           centerTitle: true,
@@ -63,7 +62,7 @@ class _Record extends State<Record> {
                   backgroundColor: const Color(0xffFFFFFF),
                   weekdayTextColor: const Color(0xff444444),
                   digitsColor: Color(0xff444444),
-                  selectedBackgroundColor: const Color(0xffFFC646),
+                  selectedBackgroundColor: PRIMARY_COLOR,
                   weekdays: const ["월", "화", "수", "목", "금", "토", "일"],
                   daysInWeek: 7,
                 ),
@@ -73,7 +72,7 @@ class _Record extends State<Record> {
               Container(
                   width: double.infinity,
                   height: 315,
-                  color: Color(0xffFFC646),
+                  color: PRIMARY_COLOR,
                   child: Center(child: Text("캘린더 및 하루 식비"))),
               SizedBox(height: 40.0),
 
@@ -241,35 +240,6 @@ class _Record extends State<Record> {
                     ),
               SizedBox(height: 30.0),
             ],
-          ),
-        ),
-        bottomNavigationBar: BottomAppBar(
-          child: SizedBox(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                IconButton(
-                  icon: Icon(CupertinoIcons.pencil, color: Colors.black),
-                  onPressed: () {},
-                ),
-                IconButton(
-                  icon: Icon(CupertinoIcons.chart_bar, color: Colors.black),
-                  onPressed: () {},
-                ),
-                IconButton(
-                  icon: Icon(CupertinoIcons.gift, color: Colors.black),
-                  onPressed: () {},
-                ),
-                IconButton(
-                  icon: Icon(CupertinoIcons.heart, color: Colors.black),
-                  onPressed: () {},
-                ),
-                IconButton(
-                  icon: Icon(CupertinoIcons.person_solid, color: Colors.black),
-                  onPressed: () {},
-                ),
-              ],
-            ),
           ),
         ),
       ),
