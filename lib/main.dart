@@ -1,7 +1,8 @@
 //import 'dart:html';
 
 import 'package:flutter/material.dart';
-//import 'start.dart';
+
+import 'start.dart';
 import 'record.dart';
 
 void main() {
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Record(),
+
     );
   }
 }
