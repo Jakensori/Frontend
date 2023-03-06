@@ -1,13 +1,21 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:temp_project/const/colors.dart';
 import 'package:weekly_date_picker/weekly_date_picker.dart';
 
+class MealRecord {
+  String name = ""; // 내용
+  String meal = ""; // 식사
+  String type = ""; // 방식
+  int price = 0; // 금액
+
+  MealRecord(this.name, this.type, this.price);
+}
+
 class Record extends StatefulWidget {
   const Record({Key? key}) : super(key: key);
-
-  //final String title;
 
   @override
   State<Record> createState() => _Record();
@@ -16,9 +24,9 @@ class Record extends StatefulWidget {
 class _Record extends State<Record> {
   DateTime _selectedDay = DateTime.now();
 
-  String formatDate = DateFormat('yy/ mm/ dd').format(DateTime.now());
+  String formatDate = DateFormat('yyyy년 M월 d일').format(DateTime.now());
 
-  List<String> breakfast = ['삼각김밥'];
+  List<String> breakfast = ['삼각김밥', '사과'];
   List<String> launch = [];
   List<String> dinner = [];
   List<String> snack = [];
@@ -48,14 +56,13 @@ class _Record extends State<Record> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               //주간 캘린더
-
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: WeeklyDatePicker(
                   selectedDay: _selectedDay,
                   changeDay: (value) => setState(() {
                     _selectedDay = value;
-                    formatDate = DateFormat('yyyy년 M월 dd일').format(value);
+                    formatDate = DateFormat('yyyy년 M월 d일').format(value);
                   }),
                   enableWeeknumberText: false,
                   weeknumberTextColor: Colors.white,
@@ -68,28 +75,50 @@ class _Record extends State<Record> {
                 ),
               ),
 
-              // 날짜&기부금액
-              Container(
-                  width: double.infinity,
-                  height: 315,
-                  color: PRIMARY_COLOR,
-                  child: Center(child: Text("캘린더 및 하루 식비"))),
+              // 기부금액&소비내역
+              Stack(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    height: 180,
+                    color: PRIMARY_COLOR,
+                  ),
+                  Container(
+                    width: 460,
+                    height: 150,
+                    margin:
+                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                  )
+                ],
+              ),
               SizedBox(height: 40.0),
 
               // 아침 기록
-              Text(
-                '아침',
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Color(0xff999999),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                child: Text(
+                  '아침',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: GREY_COLOR,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
               SizedBox(
                 height: 5.0,
               ),
               breakfast.isEmpty
-                  ? Text("아침식사를 기록하세요")
+                  ? Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 12.0),
+                      child: Text("아침식사를 기록하세요"),
+                    )
                   : ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
@@ -97,11 +126,33 @@ class _Record extends State<Record> {
                       itemBuilder: (context, index) {
                         String bucket =
                             breakfast[index]; // index에 해당하는 bucket 가져오기
-                        return ListTile(
-                          title: Text(
-                            bucket,
-                            style: TextStyle(
-                              fontSize: 22,
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: Card(
+                            color: Color(0xffF9F9F9),
+                            elevation: 2,
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 12.0, vertical: 4.0),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12)),
+                            child: ListTile(
+                              leading: Text(
+                                '외식',
+                                style: TextStyle(color: GREY_COLOR),
+                              ),
+                              title: Text(
+                                bucket,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
+                              ),
+                              trailing: Text(
+                                '1200',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: GREY_COLOR,
+                                ),
+                              ),
                             ),
                           ),
                         );
@@ -110,19 +161,42 @@ class _Record extends State<Record> {
               SizedBox(height: 30.0),
 
               // 점심 기록
-              Text(
-                '점심',
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Color(0xff999999),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 12.0),
+                child: Text(
+                  '점심',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: GREY_COLOR,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
               SizedBox(
                 height: 5.0,
               ),
               launch.isEmpty
-                  ? Text("점심식사를 기록하세요")
+                  ? Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 12.0),
+                      child: Card(
+                        color: Color(0xffF9F9F9),
+                        elevation: 2,
+                        margin: EdgeInsets.symmetric(
+                            horizontal: 12.0, vertical: 4.0),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12)),
+                        child: ListTile(
+                          title: Text(
+                            '점심식사를 입력하세요',
+                            style: TextStyle(
+                              fontSize: 17.5,
+                              color: BLACK_COLOR,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
                   : ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
@@ -143,19 +217,26 @@ class _Record extends State<Record> {
               SizedBox(height: 30.0),
 
               //저녁 기록
-              Text(
-                '저녁',
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Color(0xff999999),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 12.0),
+                child: Text(
+                  '저녁',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: GREY_COLOR,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
               SizedBox(
                 height: 5.0,
               ),
               dinner.isEmpty
-                  ? Text("저녁식사를 기록하세요")
+                  ? Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 12.0),
+                      child: Text("저녁식사를 기록하세요"),
+                    )
                   : ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
@@ -176,19 +257,26 @@ class _Record extends State<Record> {
               SizedBox(height: 30.0),
 
               //간식 기록
-              Text(
-                '간식',
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Color(0xff999999),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 12.0),
+                child: Text(
+                  '간식',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: GREY_COLOR,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
               SizedBox(
                 height: 5.0,
               ),
               snack.isEmpty
-                  ? Text("간식을 기록하세요")
+                  ? Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 12.0),
+                      child: Text("간식을 기록하세요"),
+                    )
                   : ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
@@ -208,19 +296,26 @@ class _Record extends State<Record> {
               SizedBox(height: 30.0),
 
               //기타
-              Text(
-                '기타',
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Color(0xff999999),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 12.0),
+                child: Text(
+                  '기타',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: GREY_COLOR,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
               SizedBox(
                 height: 5.0,
               ),
               others.isEmpty
-                  ? Text("기타 식사를 입력하세요")
+                  ? Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 12.0),
+                      child: Text("기타 식사를 입력하세요"),
+                    )
                   : ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
@@ -239,10 +334,102 @@ class _Record extends State<Record> {
                       },
                     ),
               SizedBox(height: 30.0),
+              //
+              // 기록추가 버튼
+              Container(
+                alignment: Alignment.bottomRight,
+                child: MaterialButton(
+                  onPressed: () {
+                    showModalBottomSheet<void>(
+                        context: context,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(100.0),
+                        ),
+                        builder: (BuildContext context) {
+                          return Container(
+                            height: 600,
+                            decoration: const BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(25),
+                                  topRight: Radius.circular(25),
+                                )),
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+
+                                // ignore: prefer_const_literals_to_create_immutables
+                                children: [
+                                  SizedBox(height: 10.0),
+                                  Text(
+                                    '기록하기',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 25,
+                                      color: BLACK_COLOR,
+                                    ),
+                                  ),
+                                  SizedBox(height: 20.0),
+                                  Text(
+                                    '식사',
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                      fontSize: 19,
+                                      color: Color(0xff999999),
+                                    ),
+                                  ),
+                                  SizedBox(height: 10.0),
+                                  Text(
+                                    '방식',
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                      fontSize: 19,
+                                      color: Color(0xff999999),
+                                    ),
+                                  ),
+                                  SizedBox(height: 10.0),
+                                  Text(
+                                    '내용',
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                      fontSize: 19,
+                                      color: Color(0xff999999),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        });
+                  },
+                  color: PRIMARY_COLOR,
+                  textColor: Colors.white,
+                  child: Icon(
+                    Icons.add,
+                    size: 24,
+                  ),
+                  padding: EdgeInsets.all(16),
+                  shape: CircleBorder(),
+                ),
+              ),
+
+              SizedBox(height: 20.0),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildList(MealRecord mealrecord) {
+    return ListTile(
+      onTap: () {},
+      //trailing: ,
+      title: Text(
+        mealrecord.name,
+      ),
+      trailing: Text('mealrecord.price원'),
     );
   }
 }

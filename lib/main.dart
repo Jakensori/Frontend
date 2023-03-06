@@ -13,7 +13,6 @@ import 'package:intl/date_symbol_data_local.dart';
 //import 'package:temp_project/chart_pages/expense_chart.dart';
 //import 'package:temp_project/chart_pages/meal_chart.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting();
@@ -50,7 +49,7 @@ class _HomePageState extends State<HomePage> {
     MyPage(),
   ];
 
-  void _onItemTapped(int index){
+  void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
@@ -65,15 +64,24 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         items: [
-          BottomNavigationBarItem(icon:Icon(CupertinoIcons.pencil,color:Colors.black), label:'record'),
-          BottomNavigationBarItem(icon: Icon(CupertinoIcons.chart_bar,color:Colors.black),label: 'chart'),
-          BottomNavigationBarItem(icon:Icon(CupertinoIcons.gift,color:Colors.black),label: 'donate'),
-          BottomNavigationBarItem(icon:Icon(CupertinoIcons.heart,color:Colors.black), label: 'collection'),
-          BottomNavigationBarItem(icon:Icon(CupertinoIcons.person_solid,color:Colors.black), label: 'my page'),
+          BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.pencil, color: Colors.black),
+              label: 'record'),
+          BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.chart_bar, color: Colors.black),
+              label: 'chart'),
+          BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.gift, color: Colors.black),
+              label: 'donate'),
+          BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.heart, color: Colors.black),
+              label: 'collection'),
+          BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.person_solid, color: Colors.black),
+              label: 'my page'),
         ],
         onTap: _onItemTapped,
       ),
-
     );
   }
 }
