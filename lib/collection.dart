@@ -21,17 +21,6 @@ class CollectionPage extends State<Collection> {
           padding: EdgeInsets.all(8.0),
           child: Column(
             children: <Widget>[
-              /*
-              Container(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  'ListView',
-                  style: TextStyle(
-                    color: Colors.black45,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),*/
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 3.0),
                 height: 160,
@@ -60,33 +49,7 @@ class CollectionPage extends State<Collection> {
                     ),
                   ],
                 ),
-                /*
-                child: ListView.builder(
-                  itemCount: 2,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      margin: EdgeInsets.only(right: 8.0),
-                      decoration: BoxDecoration(color: Colors.pinkAccent),
-                      width: 120,
-                      child: Center(
-                        child: Text('리스트뷰 ${index + 1}'),
-                      ),
-                    );
-                  },
-                ),*/
               ),
-              /*
-              Container(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  'GridView',
-                  style: TextStyle(
-                    color: Colors.black45,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),*/
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 2.0),
                 height: 400,
@@ -101,41 +64,43 @@ class CollectionPage extends State<Collection> {
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
                       decoration: BoxDecoration(color: Colors.amber[200]),
-                      child: Center(
-                        child: Text('그리드뷰 ${index + 1}'),
-                      ),
+                      child: FlutterDialog(),
                     );
                   },
                 ),
               ),
-              /*
-              Container(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  'Container',
-                  style: TextStyle(
-                    color: Colors.black45,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              Container(
-                height: 300,
-                margin: const EdgeInsets.symmetric(
-                  horizontal: 8.0,
-                ),
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Colors.greenAccent,
-                ),
-                child: Center(
-                  child: Text('컨테이너'),
-                ),
-              ),*/
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class FlutterDialog extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () => showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+          title: const Text('             캐릭터 이름           '),
+          content: const Text('대충 캐릭터 설명글 \n\n\n\n\n\n\n\n\n\n\n'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'Cancel'),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'OK'),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      ),
+      child: const Icon(Icons.bookmark_border_outlined),
     );
   }
 }
