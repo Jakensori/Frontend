@@ -1,14 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:temp_project/chart_pages/calendar.dart';
+import 'package:temp_project/chart_pages/monthly_calendar.dart';
 import 'package:temp_project/chart_pages/expense_chart.dart';
 import 'package:temp_project/chart_pages/meal_chart.dart';
+import 'package:temp_project/const/colors.dart';
 
 class Chart extends StatefulWidget {
   const Chart({Key? key}) : super(key: key);
 
-  static const List<Widget> _views = [
-    Center(child: CalendarPage()),
+  static List<Widget> _views = [
+    Center(child: Calendar()),
     Center(child: ExpenseChartPage()),
     Center(child: MealChartPage()),
   ];
@@ -25,8 +26,9 @@ class _ChartState extends State<Chart> {
       child: Scaffold(
         appBar: AppBar(
           //title: Text('chart탭 상단바'),
-          backgroundColor: Color(0xffFFFFFF),
+          backgroundColor: WHITE_COLOR,
           bottom: TabBar(
+
             labelColor: Color(0xff444444),
             unselectedLabelColor: Color(0xff999999),
             indicatorWeight: 3,
@@ -45,68 +47,3 @@ class _ChartState extends State<Chart> {
     );
   }
 }
-
-/*
-//차트페이지
-class ChartPage extends StatefulWidget {
-  const ChartPage({Key? key}) : super(key: key);
-
-  @override
-  State<ChartPage> createState() => _ChartPageState();
-}
-
-class _ChartPageState extends State<ChartPage> {
-
-  int _selectedIndex = 0;
-  final List<Widget> _widgetOotions = <Widget>[
-    CalendarPage(),
-   // ExpenseChartPage(),
-   // MealChartPage(),
-  ];
-
-  void _onItemTapped(int index){
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body:SafeArea(
-        child: _widgetOotions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.pencil, color: Colors.black),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.chart_bar, color: Colors.black),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.gift, color: Colors.black),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.heart, color: Colors.black),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.person, color: Colors.black),
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.orangeAccent,
-        onTap: _onItemTapped,
-      ),
-    );
-  }
-
-  void initState(){
-    super.initState();
-  }
-
-  void dispose(){
-    super.dispose();
-  }
-}
-*/
