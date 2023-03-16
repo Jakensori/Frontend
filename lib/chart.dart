@@ -22,29 +22,27 @@ class _ChartState extends State<Chart> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length:3,
-      child:Scaffold(
-        appBar:AppBar(
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
           //title: Text('chart탭 상단바'),
           backgroundColor: WHITE_COLOR,
           bottom: TabBar(
 
-            labelColor: BLACK_COLOR,
-            unselectedLabelColor: GREY_COLOR,
+            labelColor: Color(0xff444444),
+            unselectedLabelColor: Color(0xff999999),
             indicatorWeight: 3,
-            indicatorColor: BLACK_COLOR,
-
+            indicatorColor: Color(0xff444444),
             tabs: const [
-              Tab(text: '가계부',),
+              Tab(
+                text: '가계부',
+              ),
               Tab(text: '식비 분석'),
               Tab(text: '식사 분석'),
             ],
           ),
         ),
-
-        body:TabBarView(
-          children: Chart._views
-        ),
+        body: TabBarView(children: Chart._views),
       ),
     );
   }
