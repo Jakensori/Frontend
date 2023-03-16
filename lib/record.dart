@@ -5,15 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:temp_project/const/colors.dart';
 import 'package:weekly_date_picker/weekly_date_picker.dart';
-
-class MealRecord {
-  String name = ""; // 내용
-  String meal = ""; // 식사
-  String type = ""; // 방식
-  int price = 0; // 금액
-
-  MealRecord(this.name, this.type, this.price);
-}
+import 'food.dart';
 
 class Record extends StatefulWidget {
   const Record({Key? key}) : super(key: key);
@@ -24,16 +16,21 @@ class Record extends StatefulWidget {
 
 class _Record extends State<Record> {
   DateTime _selectedDay = DateTime.now();
-
   String formatDate = DateFormat('yyyy년 M월 d일').format(DateTime.now());
-
-  List<MealRecord> breakFast = [];
 
   List<String> breakfast = ['삼각김밥', '사과'];
   List<String> launch = [];
   List<String> dinner = [];
   List<String> snack = [];
   List<String> others = [];
+
+  Future<MealRecord>? mealRecord;
+
+  @override
+  void initState() {
+    super.initState();
+    mealRecord = fetchInfo();
+  }
 
   @override
   Widget build(BuildContext context) {
