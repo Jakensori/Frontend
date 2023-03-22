@@ -64,7 +64,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.5"
-
   custom_radio_grouped_button:
     dependency: "direct main"
     description:
@@ -72,7 +71,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.2"
-
   dropdown_button2:
     dependency: "direct main"
     description:
@@ -80,7 +78,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.4.0"
-
   equatable:
     dependency: transitive
     description:

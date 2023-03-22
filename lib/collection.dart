@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:temp_project/level.dart';
 
 class Collection extends StatefulWidget {
   const Collection({Key? key}) : super(key: key);
@@ -8,6 +9,8 @@ class Collection extends StatefulWidget {
 }
 
 class CollectionPage extends State<Collection> {
+  Level _level = Level(1, 10);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,12 +63,65 @@ class CollectionPage extends State<Collection> {
                     crossAxisSpacing: 8.0,
                     mainAxisSpacing: 8.0,
                   ),
-                  itemCount: 12,
+                  itemCount: 8,
                   itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      decoration: BoxDecoration(color: Colors.amber[200]),
-                      child: FlutterDialog(),
-                    );
+                    if (index == 0) {
+                      return Container(
+                        color: Colors.red,
+                        child: FlutterDialog1(
+                          level: _level,
+                        ),
+                      );
+                    } else if (index == 1) {
+                      return Container(
+                        color: Colors.red,
+                        child: FlutterDialog2(
+                          level: _level,
+                        ),
+                      );
+                    } else if (index == 2) {
+                      return Container(
+                        color: Colors.red,
+                        child: FlutterDialog3(
+                          level: _level,
+                        ),
+                      );
+                    } else if (index == 3) {
+                      return Container(
+                        color: Colors.red,
+                        child: FlutterDialog4(
+                          level: _level,
+                        ),
+                      );
+                    } else if (index == 4) {
+                      return Container(
+                        color: Colors.red,
+                        child: FlutterDialog5(
+                          level: _level,
+                        ),
+                      );
+                    } else if (index == 5) {
+                      return Container(
+                        color: Colors.red,
+                        child: FlutterDialog6(
+                          level: _level,
+                        ),
+                      );
+                    } else if (index == 6) {
+                      return Container(
+                        color: Colors.red,
+                        child: FlutterDialog7(
+                          level: _level,
+                        ),
+                      );
+                    } else {
+                      return Container(
+                        color: Colors.red,
+                        child: FlutterDialog8(
+                          level: _level,
+                        ),
+                      );
+                    }
                   },
                 ),
               ),
@@ -77,30 +133,306 @@ class CollectionPage extends State<Collection> {
   }
 }
 
-class FlutterDialog extends StatelessWidget {
+class FlutterDialog1 extends StatelessWidget {
+  final Level level; // level 매개변수 선언
+
+  const FlutterDialog1({Key? key, required this.level}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () => showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-          title: const Text('             캐릭터 이름           '),
-          content: const Text('대충 캐릭터 설명글 \n\n\n\n\n\n\n\n\n\n\n'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => Navigator.pop(context, 'Cancel'),
-              child: const Text('Cancel'),
+      onPressed: () {
+        if (level.currentLevel == 1) {
+          showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0)),
+              title: const Text('             캐릭터 이름           '),
+              content: const Text('대충 캐릭터 설명글 \n\n\n\n\n\n\n\n\n\n\n'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'Cancel'),
+                  child: const Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'OK'),
+                  child: const Text('OK'),
+                ),
+              ],
             ),
-            TextButton(
-              onPressed: () => Navigator.pop(context, 'OK'),
-              child: const Text('OK'),
-            ),
-          ],
-        ),
+          );
+        }
+      },
+      child: const Icon(
+        Icons.quiz_outlined,
+        size: 30,
       ),
-      child: const Icon(Icons.bookmark_border_outlined),
+    );
+  }
+}
+
+class FlutterDialog2 extends StatelessWidget {
+  final Level level; // level 매개변수 선언
+
+  const FlutterDialog2({Key? key, required this.level}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () {
+        if (level.currentLevel == 2) {
+          showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0)),
+              title: const Text('             캐릭터 이름           '),
+              content: const Text('대충 캐릭터 설명글 \n\n\n\n\n\n\n\n\n\n\n'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'Cancel'),
+                  child: const Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'OK'),
+                  child: const Text('OK'),
+                ),
+              ],
+            ),
+          );
+        }
+      },
+      child: const Icon(
+        Icons.quiz_outlined,
+        size: 30,
+      ),
+    );
+  }
+}
+
+class FlutterDialog3 extends StatelessWidget {
+  final Level level; // level 매개변수 선언
+
+  const FlutterDialog3({Key? key, required this.level}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () {
+        if (level.currentLevel == 3) {
+          showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0)),
+              title: const Text('             캐릭터 이름           '),
+              content: const Text('대충 캐릭터 설명글 \n\n\n\n\n\n\n\n\n\n\n'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'Cancel'),
+                  child: const Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'OK'),
+                  child: const Text('OK'),
+                ),
+              ],
+            ),
+          );
+        }
+      },
+      child: const Icon(
+        Icons.quiz_outlined,
+        size: 30,
+      ),
+    );
+  }
+}
+
+class FlutterDialog4 extends StatelessWidget {
+  final Level level; // level 매개변수 선언
+
+  const FlutterDialog4({Key? key, required this.level}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () {
+        if (level.currentLevel == 4) {
+          showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0)),
+              title: const Text('             캐릭터 이름           '),
+              content: const Text('대충 캐릭터 설명글 \n\n\n\n\n\n\n\n\n\n\n'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'Cancel'),
+                  child: const Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'OK'),
+                  child: const Text('OK'),
+                ),
+              ],
+            ),
+          );
+        }
+      },
+      child: const Icon(
+        Icons.quiz_outlined,
+        size: 30,
+      ),
+    );
+  }
+}
+
+class FlutterDialog5 extends StatelessWidget {
+  final Level level; // level 매개변수 선언
+
+  const FlutterDialog5({Key? key, required this.level}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () {
+        if (level.currentLevel == 5) {
+          showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0)),
+              title: const Text('             캐릭터 이름           '),
+              content: const Text('대충 캐릭터 설명글 \n\n\n\n\n\n\n\n\n\n\n'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'Cancel'),
+                  child: const Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'OK'),
+                  child: const Text('OK'),
+                ),
+              ],
+            ),
+          );
+        }
+      },
+      child: const Icon(
+        Icons.quiz_outlined,
+        size: 30,
+      ),
+    );
+  }
+}
+
+class FlutterDialog6 extends StatelessWidget {
+  final Level level; // level 매개변수 선언
+
+  const FlutterDialog6({Key? key, required this.level}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () {
+        if (level.currentLevel == 6) {
+          showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0)),
+              title: const Text('             캐릭터 이름           '),
+              content: const Text('대충 캐릭터 설명글 \n\n\n\n\n\n\n\n\n\n\n'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'Cancel'),
+                  child: const Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'OK'),
+                  child: const Text('OK'),
+                ),
+              ],
+            ),
+          );
+        }
+      },
+      child: const Icon(
+        Icons.quiz_outlined,
+        size: 30,
+      ),
+    );
+  }
+}
+
+class FlutterDialog7 extends StatelessWidget {
+  final Level level; // level 매개변수 선언
+
+  const FlutterDialog7({Key? key, required this.level}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () {
+        if (level.currentLevel == 7) {
+          showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0)),
+              title: const Text('             캐릭터 이름           '),
+              content: const Text('대충 캐릭터 설명글 \n\n\n\n\n\n\n\n\n\n\n'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'Cancel'),
+                  child: const Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'OK'),
+                  child: const Text('OK'),
+                ),
+              ],
+            ),
+          );
+        }
+      },
+      child: const Icon(
+        Icons.quiz_outlined,
+        size: 30,
+      ),
+    );
+  }
+}
+
+class FlutterDialog8 extends StatelessWidget {
+  final Level level; // level 매개변수 선언
+
+  const FlutterDialog8({Key? key, required this.level}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () {
+        if (level.currentLevel == 8) {
+          showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0)),
+              title: const Text('             캐릭터 이름           '),
+              content: const Text('대충 캐릭터 설명글 \n\n\n\n\n\n\n\n\n\n\n'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'Cancel'),
+                  child: const Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'OK'),
+                  child: const Text('OK'),
+                ),
+              ],
+            ),
+          );
+        }
+      },
+      child: const Icon(
+        Icons.quiz_outlined,
+        size: 30,
+      ),
     );
   }
 }
