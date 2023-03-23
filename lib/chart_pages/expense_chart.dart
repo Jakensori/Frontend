@@ -5,6 +5,7 @@ import 'package:temp_project/const/colors.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:fl_chart/fl_chart.dart';
 
+//pie chart 데이터1
 List<PieChartSectionData> _chartSections1 = [
   PieChartSectionData(
     value: 46,
@@ -41,6 +42,7 @@ List<PieChartSectionData> _chartSections1 = [
   ),
 ];
 
+//pie chart 데이터2
 List<PieChartSectionData> _chartSections2 = [
   PieChartSectionData(
     value: 528400,
@@ -76,6 +78,22 @@ List<PieChartSectionData> _chartSections2 = [
     ),
   ),
 ];
+
+//bar chart 데이터 클래스
+class TimesDataItem {
+  int x;
+  double y1;
+  double y2;
+
+  TimesDataItem({required this.x, required this.y1, required this.y2});
+}
+class ExpenseDataItem {
+  int x;
+  double y1;
+  double y2;
+
+  ExpenseDataItem({required this.x, required this.y1, required this.y2});
+}
 
 class ExpenseChartPage extends StatefulWidget {
   const ExpenseChartPage({Key? key}) : super(key: key);
@@ -113,6 +131,23 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
     '11',
     '12',
   ];
+
+  //bar chart 데이터
+  final List<TimesDataItem> _myData1 = List.generate(
+      5,
+      (index) => TimesDataItem(
+            x: index,
+            y1: 113,
+            y2: 49,
+          ));
+
+  final List<ExpenseDataItem> _myData2 = List.generate(
+      5,
+          (index) => ExpenseDataItem(
+        x: index,
+        y1: 1521100,
+        y2: 528400,
+      ));
 
   @override
   Widget build(BuildContext context) {
@@ -293,31 +328,26 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
                           Flexible(
                               child: Text(
                                 '식사 종류 (횟수)',
-                                style:TextStyle(
-                                  fontSize: 15
-                                ),
+                                style: TextStyle(fontSize: 15),
                               ),
-                              flex:1),
+                              flex: 1),
                           Flexible(
-                            child: PieChart(
-                              PieChartData(
-                                sections: _chartSections1,
-                                borderData: FlBorderData(
-                                  show: false,
+                              child: PieChart(
+                                PieChartData(
+                                  sections: _chartSections1,
+                                  borderData: FlBorderData(
+                                    show: false,
+                                  ),
+                                  centerSpaceRadius: 40,
+                                  sectionsSpace: 0,
                                 ),
-                                centerSpaceRadius: 40,
-                                sectionsSpace: 0,
                               ),
-                            ),
-                            flex:9
-                          ),
+                              flex: 9),
                         ],
                       ),
                     ),
                   ),
                 ),
-
-
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
@@ -334,11 +364,9 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
                           Flexible(
                               child: Text(
                                 '식사 종류 (비용)',
-                                style:TextStyle(
-                                    fontSize: 15
-                                ),
+                                style: TextStyle(fontSize: 15),
                               ),
-                              flex:1),
+                              flex: 1),
                           Flexible(
                               child: PieChart(
                                 PieChartData(
@@ -350,57 +378,113 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
                                   sectionsSpace: 0,
                                 ),
                               ),
-                              flex:9
-                          ),
+                              flex: 9),
                         ],
                       ),
                     ),
                   ),
                 ),
 
-
-                Container(
-                  height: 270.0,
-                  width: double.infinity,
-                  child: PieChart(
-                    PieChartData(
-                      sections: _chartSections2,
-                      borderData: FlBorderData(
-                        show: false,
-                      ),
-                      centerSpaceRadius: 40,
-                      sectionsSpace: 0,
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 270.0,
-                  width: double.infinity,
-                  child: PieChart(
-                    PieChartData(
-                      sections: _chartSections2,
-                      borderData: FlBorderData(
-                        show: false,
-                      ),
-                      centerSpaceRadius: 40,
-                      sectionsSpace: 0,
-                    ),
-                  ),
-                ),
-                /*
-                Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.0),
-                    side: BorderSide(width: 1.0),
-                  ),
-                  elevation: 0.0,
-                  color: PRIMARY_COLOR.withOpacity(0.1),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
                   child: Container(
-                    height: 400.0,
-                    width: double.infinity,
+                    height: 270.0,
+                    width: 350.0,
+                    decoration: BoxDecoration(
+                      color: PRIMARY_COLOR.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          Flexible(
+                              child: Text(
+                                '식사 방식 (횟수)',
+                                style: TextStyle(fontSize: 15),
+                              ),
+                              flex: 1),
+                          Flexible(
+                              child: BarChart(BarChartData(
+                                  borderData: FlBorderData(
+                                      border: const Border(
+                                    top: BorderSide.none,
+                                    right: BorderSide.none,
+                                    left: BorderSide(width: 1),
+                                    bottom: BorderSide(width: 1),
+                                  )),
+                                  groupsSpace: 10,
+                                  barGroups: _myData1
+                                      .map((dataItem) => BarChartGroupData(
+                                              x: dataItem.x,
+                                              barRods: [
+                                                BarChartRodData(
+                                                    toY: dataItem.y1,
+                                                    width: 5,
+                                                    color: PRIMARY_COLOR),
+                                                BarChartRodData(
+                                                    toY: dataItem.y2,
+                                                    width: 5,
+                                                    color: Colors.orange),
+                                              ]))
+                                      .toList())),
+                              flex: 9),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-                */
+
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    height: 270.0,
+                    width: 350.0,
+                    decoration: BoxDecoration(
+                      color: PRIMARY_COLOR.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          Flexible(
+                              child: Text(
+                                '식사 방식 (비용)',
+                                style: TextStyle(fontSize: 15),
+                              ),
+                              flex: 1),
+                          Flexible(
+                              child: BarChart(BarChartData(
+                                  borderData: FlBorderData(
+                                      border: const Border(
+                                        top: BorderSide.none,
+                                        right: BorderSide.none,
+                                        left: BorderSide(width: 1),
+                                        bottom: BorderSide(width: 1),
+                                      )),
+                                  groupsSpace: 10,
+                                  barGroups: _myData2
+                                      .map((dataItem) => BarChartGroupData(
+                                      x: dataItem.x,
+                                      barRods: [
+                                        BarChartRodData(
+                                            toY: dataItem.y1,
+                                            width: 5,
+                                            color: PRIMARY_COLOR),
+                                        BarChartRodData(
+                                            toY: dataItem.y2,
+                                            width: 5,
+                                            color: Colors.orange),
+                                      ]))
+                                      .toList())),
+                              flex: 9),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+
               ],
             ),
           ],
