@@ -10,12 +10,6 @@ class Calendar extends StatefulWidget {
   State<Calendar> createState() => _CalendarState();
 }
 
-class _AppointmentDataSource extends CalendarDataSource {
-  _AppointmentDataSource(List<Appointment> source) {
-    appointments = source;
-  }
-}
-
 class _CalendarState extends State<Calendar> {
   @override
   Widget build(BuildContext context) {
@@ -35,17 +29,22 @@ class _CalendarState extends State<Calendar> {
           children: [
             Expanded(
               flex:5,
-              child: SfCalendar(
-                view: CalendarView.month,
-                dataSource: _getCalendarDataSource(),
-                monthViewSettings: MonthViewSettings(
-                    //showTrailingAndLeadingDates:true,
-                    appointmentDisplayMode:
-                    MonthAppointmentDisplayMode.appointment,
-                    navigationDirection: MonthNavigationDirection.horizontal
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SfCalendar(
+                  view: CalendarView.month,
+                  showNavigationArrow: true,
+                  dataSource:  MeetingDataSource(_getDataSource()),
+                  monthViewSettings: MonthViewSettings(
+                      //showTrailingAndLeadingDates:true,
+                      appointmentDisplayMode:
+                      MonthAppointmentDisplayMode.appointment,
+                      navigationDirection: MonthNavigationDirection.horizontal
+                  ),
                 ),
               ),
             ),
+
             Expanded(
               flex:1,
               child: Padding(
@@ -65,18 +64,85 @@ class _CalendarState extends State<Calendar> {
     );
   }
 
-  _AppointmentDataSource _getCalendarDataSource() {
-    List<Appointment> appointments = <Appointment>[];
 
-    appointments.add(Appointment(
-      startTime: DateTime.now(),
-      endTime: DateTime.now().add(Duration(minutes: 10)),
-      subject: '+1,500',
-      color: PRIMARY_COLOR,
-      startTimeZone: '',
-      endTimeZone: '',
-    ));
-
-    return _AppointmentDataSource(appointments);
+}
+/*
+class _SavedMoneyDataSource extends CalendarDataSource {
+  _SavedMoneyDataSource(List<Appointment> source) {
+    appointments = source;
   }
+}
+
+_SavedMoneyDataSource _getCalendarDataSource() {
+  List<Appointment> appointments = <Appointment>[];
+
+  appointments.add(Appointment(
+    startTime: DateTime.now(),
+    endTime: DateTime.now().add(Duration(minutes: 10)),
+    subject: '+1,500',
+    color: PRIMARY_COLOR,
+    startTimeZone: '',
+    endTimeZone: '',
+  ));
+
+  return _SavedMoneyDataSource(appointments);
+}
+ */
+
+List<Meeting> _getDataSource() {
+  final List<Meeting> meetings1 = <Meeting>[
+    Meeting('saved money',DateTime(2023,3,1),DateTime(2023,3,1),Colors.blue,false),
+  ];
+
+  final List<Meeting> meetings2 = <Meeting>[
+    Meeting('donated money',DateTime(2023,3,1),DateTime(2023,3,1),PRIMARY_COLOR,false),
+  ];
+
+  final DateTime today = DateTime.now();
+  //final DateTime startTime =
+  //DateTime(today.year, today.month, today.day, 9, 0, 0);
+  //final DateTime endTime = startTime.add(const Duration(hours: 2));
+  return meetings1+meetings2;
+}
+
+class MeetingDataSource extends CalendarDataSource {
+  MeetingDataSource(List<Meeting> source) {
+    appointments = source;
+  }
+
+  @override
+  DateTime getStartTime(int index) {
+    return appointments![index].from;
+  }
+
+  @override
+  DateTime getEndTime(int index) {
+    return appointments![index].to;
+  }
+
+  @override
+  String getSubject(int index) {
+    return appointments![index].eventName;
+  }
+
+  @override
+  Color getColor(int index) {
+    return appointments![index].background;
+  }
+
+  @override
+  bool isAllDay(int index) {
+    return appointments![index].isAllDay;
+  }
+}
+
+class Meeting {
+  Meeting(this.eventName, this.from, this.to, this.background, this.isAllDay);
+
+  String eventName;
+  DateTime from;
+  DateTime to;
+  Color background;
+  bool isAllDay;
+
 }
