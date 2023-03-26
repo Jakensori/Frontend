@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:temp_project/const/colors.dart';
 import 'package:weekly_date_picker/weekly_date_picker.dart';
-import 'food.dart';
+import 'package:temp_project/MealChart.dart';
 import 'dart:async';
 
 class Record extends StatefulWidget {
@@ -25,12 +25,12 @@ class _Record extends State<Record> {
   List<String> snack = [];
   List<String> others = [];
 
-  late Future<MealRecord>? mealRecord;
+  late Future<MealChart>? mealRecord;
 
   @override
   void initState() {
     super.initState();
-    mealRecord = MealProvider().fetchMealRecord();
+    mealRecord = MealProvider().fetchMealChart();
   }
 
   // test용
@@ -42,7 +42,7 @@ class _Record extends State<Record> {
           centerTitle: true,
         ),
         body: Center(
-            child: FutureBuilder<MealRecord>(
+            child: FutureBuilder<MealChart>(
                 //통신데이터 가져오기
                 future: mealRecord,
                 builder: (context, snapshot) {
