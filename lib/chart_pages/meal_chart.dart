@@ -19,6 +19,9 @@ class MealChartPage extends StatefulWidget {
 
 class _MealChartPageState extends State<MealChartPage> {
   Future<MealChart>? mealChart;
+  double BreakfastCounts=0;
+  double LunchCounts =0;
+  double DinnerCounts =0;
 
   @override
   void initState() {
@@ -35,8 +38,53 @@ class _MealChartPageState extends State<MealChartPage> {
   List<String> items_year = ['2020 년', '2021 년', '2022 년', '2023 년'];
   List<String> items_month = ['전체', '1 월', '2 월', '3 월', '4 월','5 월', '6 월','7 월', '8 월', '9 월', '10 월', '11 월', '12 월'];
 
+  void getBreakfastCounts(snapshot){
+    for (int i=0;i<snapshot.record_byTime.lenght();i++){
+      if(snapshot.record_byTime[i]=='아침'){
+        BreakfastCounts++;
+      }
+    }
+  }
+  void getLunchCounts(snapshot){
+    for (int i=0;i<snapshot.record_byTime.lenght();i++){
+      if(snapshot.record_byTime[i]=='점심'){
+        LunchCounts++;
+      }
+    }
+  }
+  void getDinnerCounts(snapshot){
+    for (int i=0;i<snapshot.record_byTime.lenght();i++){
+      if(snapshot.record_byTime[i]=='저녁'){
+        DinnerCounts++;
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+        body: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: [
+                FutureBuilder<MealChart>(
+                  //통신데이터 가져오기
+                  future: mealChart,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return buildList(snapshot.data);
+                    } else if (snapshot.hasError) {
+                      return Text("${snapshot.error}에러!!");
+                    }
+                    return CircularProgressIndicator();
+                  },
+                ),
+              ],
+            ),
+          ),
+        ));
+  }
+  Widget buildList(snapshot) {
     return AspectRatio(
       aspectRatio: 1,
       child: Stack(
@@ -58,7 +106,7 @@ class _MealChartPageState extends State<MealChartPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const [
                               Text(
-                                '2023 년',
+                                '2023',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -128,7 +176,7 @@ class _MealChartPageState extends State<MealChartPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const [
                               Text(
-                                '3 월',
+                                '3',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -275,11 +323,11 @@ class _MealChartPageState extends State<MealChartPage> {
   List<BarChartGroupData> showingGroups() => List.generate(3, (i) {
       switch (i) {
         case 0:
-          return makeGroupData(0, 12, isTouched: i == touchedIndex);
+          return makeGroupData(0, BreakfastCounts, isTouched: i == touchedIndex);
         case 1:
-          return makeGroupData(1, 29, isTouched: i == touchedIndex);
+          return makeGroupData(1, LunchCounts, isTouched: i == touchedIndex);
         case 2:
-          return makeGroupData(2, 34, isTouched: i == touchedIndex);
+          return makeGroupData(2, DinnerCounts, isTouched: i == touchedIndex);
         default:
           return throw Error();
       }

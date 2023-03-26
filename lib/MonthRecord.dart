@@ -62,14 +62,12 @@ class MealChart {
         total_count: json['total_count']);
   }
 
-/*
+
   dynamic toJson() => {
-        'name': name,
-        'meal': meal,
-        'type': type,
-        'price': price,
+        'record_byTime': record_byTime,
+        'total_count': total_count,
       };
-*/
+
 }
 
 // 화면에 데이터 보여주는 코드
