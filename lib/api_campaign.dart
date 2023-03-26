@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -53,5 +55,53 @@ Future<List<CampaignRecord>> fetchCampaign() async {
         .toList();
   } else {
     throw Exception('Failed to load campaign data');
+  }
+}
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      home: MultiProvider(
+        providers: [
+          FutureProvider<List<CampaignRecord>>(
+            create: (_) => fetchCampaign(),
+            initialData: [],
+          ),
+        ],
+        child: HomePage(),
+      ),
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final campaigns = context.watch<List<CampaignRecord>>();
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Campaign List'),
+      ),
+      body: ListView.builder(
+        itemCount: campaigns.length,
+        itemBuilder: (context, index) {
+          final campaign = campaigns[index];
+          return ListTile(
+            title: Text(campaign.title ?? ''),
+            subtitle: Text(campaign.summary ?? ''),
+            leading: Image.network(campaign.image ?? ''),
+            trailing: Text(
+                '${campaign.currentAmount ?? 0}원 / ${campaign.goalAmount ?? 0}원'),
+          );
+        },
+      ),
+    );
   }
 }

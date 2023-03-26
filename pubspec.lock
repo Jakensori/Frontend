@@ -178,8 +178,7 @@ packages:
       name: intl
       url: "https://pub.dartlang.org"
     source: hosted
-
-    version: "0.17.0"
+    version: "0.18.0"
   js:
     dependency: transitive
     description:
@@ -187,7 +186,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.3"
-
   lints:
     dependency: transitive
     description:
@@ -223,7 +221,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0"
-
   petitparser:
     dependency: transitive
     description:
@@ -238,7 +235,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.7.2"
-
   provider:
     dependency: "direct main"
     description:
