@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:temp_project/const/colors.dart';
 import 'package:syncfusion_localizations/syncfusion_localizations.dart';
+import 'package:temp_project/MonthRecord.dart';
 
 class Calendar extends StatefulWidget {
   const Calendar({Key? key}) : super(key: key);
@@ -11,6 +12,14 @@ class Calendar extends StatefulWidget {
 }
 
 class _CalendarState extends State<Calendar> {
+  Future<MealChart>? monthRecord;
+
+  @override
+  void initState() {
+    super.initState();
+    monthRecord = MonthRecordProvider().fetchMonthRecord();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

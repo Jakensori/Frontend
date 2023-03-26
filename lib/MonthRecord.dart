@@ -4,12 +4,13 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:provider/provider.dart';
 
-class MealProvider with ChangeNotifier {
-  MealChart? _mealRecord;
-  MealChart? get mealRecord => _mealRecord;
+class MonthRecordProvider with ChangeNotifier {
+  MealChart? _monthRecord;
+  MealChart? get monthRecord => _monthRecord;
 
-  Future<MealChart> fetchMealRecord() async {
+  Future<MealChart> fetchMonthRecord() async {
     print("함수 들어옴");
+
     final Parameters = {'year': 2023, 'month': 3}.map((key, value) =>
         MapEntry(key, value.toString())); // int 허용 안되서 string으로 바꿔줌.
 
@@ -25,7 +26,7 @@ class MealProvider with ChangeNotifier {
       //만약 서버가 ok응답을 반환하면, json을 파싱합니다
       print('응답했다');
       print(json.decode(utf8.decode(response.bodyBytes))); // 한글 깨짐 해결 !
-      _mealRecord = MealChart.fromJson(json.decode(response.body));
+      _monthRecord = MealChart.fromJson(json.decode(response.body));
       notifyListeners();
       return MealChart.fromJson(json.decode(response.body));
     } else {
@@ -77,7 +78,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => MealProvider(),
+      create: (_) => MonthRecordProvider(),
       child: MaterialApp(
         title: 'Flutter Demo',
         home: Scaffold(
@@ -85,9 +86,9 @@ class MyApp extends StatelessWidget {
             title: Text('상태 관리 예제'),
           ),
           body: Center(
-            child: Consumer<MealProvider>(
+            child: Consumer<MonthRecordProvider>(
               builder: (context, provider, child) {
-                if (provider.mealRecord == null) {
+                if (provider.monthRecord == null) {
                   return CircularProgressIndicator();
                 }
                 return Column(
@@ -110,5 +111,5 @@ class MyApp extends StatelessWidget {
 
 void main() {
   print("main 함수 실행");
-  MealProvider().fetchMealRecord();
+  MonthRecordProvider().fetchMonthRecord();
 }
