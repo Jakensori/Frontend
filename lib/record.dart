@@ -25,17 +25,14 @@ class _Record extends State<Record> {
   List<String> snack = [];
   List<String> others = [];
 
-
   late Future<MealRecord>? mealRecord;
-
 
   @override
   void initState() {
     super.initState();
-
     mealRecord = MealProvider().fetchMealRecord();
-
   }
+
   // test용
   @override
   Widget build(BuildContext context) {
@@ -45,35 +42,32 @@ class _Record extends State<Record> {
           centerTitle: true,
         ),
         body: Center(
-          child: FutureBuilder<MealRecord>(
-            //통신데이터 가져오기
-            future: mealRecord,
-            builder: (context, snapshot) {
-              if ((snapshot.hasData) && (snapshot.data != null)){
-                print("성공");
-                return Column(
-                  // mainAxisAlignment: MainAxisAlignment.center,
-                  // crossAxisAlignment: CrossAxisAlignment.center,
-                  // children: [
-                  //   Text('고객번호:' + snapshot.data!.when.toString(),
-                  //       style: TextStyle(fontSize: 20)),
-                  //   Text('고객명:' + snapshot.data!.category.toString(),
-                  //       style: TextStyle(fontSize: 20)),
-                  //   Text('계좌 아이디:' + snapshot.data!.price.toString(),
-                  //       style: TextStyle(fontSize: 20)),
-                  //   Text('잔액:' + snapshot.data!.memo.toString() + '원',
-                  //       style: TextStyle(fontSize: 20)),
-                  // ],
-                );
-              } else if (snapshot.hasError) {
-                print(mealRecord);
-                return Text("${snapshot.error}에러!!");
-              }
-              return CircularProgressIndicator();
-          }
-        )
-
-        ));
+            child: FutureBuilder<MealRecord>(
+                //통신데이터 가져오기
+                future: mealRecord,
+                builder: (context, snapshot) {
+                  if ((snapshot.hasData) && (snapshot.data != null)) {
+                    print("성공");
+                    return Column(
+                        // mainAxisAlignment: MainAxisAlignment.center,
+                        // crossAxisAlignment: CrossAxisAlignment.center,
+                        // children: [
+                        //   Text('고객번호:' + snapshot.data!.when.toString(),
+                        //       style: TextStyle(fontSize: 20)),
+                        //   Text('고객명:' + snapshot.data!.category.toString(),
+                        //       style: TextStyle(fontSize: 20)),
+                        //   Text('계좌 아이디:' + snapshot.data!.price.toString(),
+                        //       style: TextStyle(fontSize: 20)),
+                        //   Text('잔액:' + snapshot.data!.memo.toString() + '원',
+                        //       style: TextStyle(fontSize: 20)),
+                        // ],
+                        );
+                  } else if (snapshot.hasError) {
+                    print(mealRecord);
+                    return Text("${snapshot.error}에러!!");
+                  }
+                  return CircularProgressIndicator();
+                })));
   }
   /*@override
   Widget build(BuildContext context) {
