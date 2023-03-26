@@ -23,8 +23,8 @@ class _MealChartPageState extends State<MealChartPage> {
 
   String? _value1;
   String? _value2;
-  List<String> items_year = ['2020', '2021', '2022', '2023'];
-  List<String> items_month = ['전체', '1', '2', '3', '4','5', '6','7', '8', '9', '10', '11', '12'];
+  List<String> items_year = ['2020 년', '2021 년', '2022 년', '2023 년'];
+  List<String> items_month = ['전체', '1 월', '2 월', '3 월', '4 월','5 월', '6 월','7 월', '8 월', '9 월', '10 월', '11 월', '12 월'];
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class _MealChartPageState extends State<MealChartPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const [
                               Text(
-                                'Year',
+                                '2023 년',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -119,7 +119,7 @@ class _MealChartPageState extends State<MealChartPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const [
                               Text(
-                                'Month',
+                                '3 월',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,

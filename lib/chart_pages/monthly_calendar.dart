@@ -36,10 +36,11 @@ class _CalendarState extends State<Calendar> {
                   showNavigationArrow: true,
                   dataSource:  MeetingDataSource(_getDataSource()),
                   monthViewSettings: MonthViewSettings(
-                      //showTrailingAndLeadingDates:true,
+                      appointmentDisplayCount: 3,
                       appointmentDisplayMode:
                       MonthAppointmentDisplayMode.appointment,
-                      navigationDirection: MonthNavigationDirection.horizontal
+                      navigationDirection: MonthNavigationDirection.horizontal,
+
                   ),
                 ),
               ),
