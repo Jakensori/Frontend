@@ -22,6 +22,7 @@ class MealProvider with ChangeNotifier {
     final newURI = url.replace(queryParameters: Parameters);   // 쿼리 파라미터 보내줌
     final response = await http.get(newURI, headers:headers);
     print('응답했다');
+
     if (response.statusCode == 200) {
       //만약 서버가 ok응답을 반환하면, json을 파싱합니다
       print('응답했다');
@@ -33,6 +34,7 @@ class MealProvider with ChangeNotifier {
       //만약 응답이 ok가 아니면 에러를 던집니다.
       throw Exception('계좌정보를 불러오는데 실패했습니다');
     }
+
   }
 }
 

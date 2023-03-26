@@ -3,6 +3,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:temp_project/const/colors.dart';
 import 'dart:async';
 import 'dart:math';
+import 'package:dropdown_button2/dropdown_button2.dart';
 
 class MealChartPage extends StatefulWidget {
   MealChartPage({Key? key}) : super(key: key);
@@ -20,6 +21,11 @@ class _MealChartPageState extends State<MealChartPage> {
   int touchedIndex = -1;
   bool isPlaying = false;
 
+  String? _value1;
+  String? _value2;
+  List<String> items_year = ['2020 년', '2021 년', '2022 년', '2023 년'];
+  List<String> items_month = ['전체', '1 월', '2 월', '3 월', '4 월','5 월', '6 월','7 월', '8 월', '9 월', '10 월', '11 월', '12 월'];
+
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
@@ -27,32 +33,161 @@ class _MealChartPageState extends State<MealChartPage> {
       child: Stack(
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.fromLTRB(30, 5, 30, 5),
+            padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                const Text(
-                  '식사분석',
-                  style: TextStyle(
-                    //color: AppColors.contentColorGreen,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                Padding(
+                  padding: const EdgeInsets.all(25.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      DropdownButtonHideUnderline(
+                        child: DropdownButton2(
+                          isExpanded: true,
+                          hint: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Text(
+                                '2023 년',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: BLACK_COLOR,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                          items: items_year
+                              .map((item) => DropdownMenuItem<String>(
+                            value: item,
+                            child: Text(
+                              item,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: BLACK_COLOR,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ))
+                              .toList(),
+                          value: _value1,
+                          onChanged: (value) {
+                            setState(() {
+                              _value1 = value as String;
+                            });
+                          },
+                          icon: const Icon(
+                            Icons.expand_more,
+                          ),
+                          iconSize: 16,
+                          iconEnabledColor: BLACK_COLOR,
+                          iconDisabledColor: BLACK_COLOR,
+                          buttonHeight: 70,
+                          buttonWidth: 150,
+                          buttonPadding: const EdgeInsets.only(left: 20, right: 20),
+                          buttonDecoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(14),
+                            border: Border.all(
+                              color: WHITE_COLOR,
+                            ),
+                            //color: Colors.redAccent,
+                          ),
+                          buttonElevation: 0,
+                          itemHeight: 20,
+                          itemPadding: const EdgeInsets.only(left: 20, right: 20),
+                          dropdownMaxHeight: 200,
+                          dropdownWidth: 200,
+                          dropdownPadding: null,
+                          dropdownDecoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(14),
+                            color: WHITE_COLOR,
+                          ),
+                          dropdownElevation: 0,
+                          scrollbarRadius: const Radius.circular(40),
+                          scrollbarThickness: 6,
+                          scrollbarAlwaysShow: true,
+                          offset: const Offset(-20, 0),
+                        ),
+                      ),
+                      DropdownButtonHideUnderline(
+                        child: DropdownButton2(
+                          isExpanded: true,
+                          hint: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Text(
+                                '3 월',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: BLACK_COLOR,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                          items: items_month
+                              .map((item2) => DropdownMenuItem<String>(
+                            value: item2,
+                            child: Text(
+                              item2,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: BLACK_COLOR,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ))
+                              .toList(),
+                          value: _value2,
+                          onChanged: (value) {
+                            setState(() {
+                              _value2 = value as String;
+                            });
+                          },
+                          icon: const Icon(
+                            Icons.expand_more,
+                          ),
+                          iconSize: 16,
+                          iconEnabledColor: BLACK_COLOR,
+                          iconDisabledColor: BLACK_COLOR,
+                          buttonHeight: 70,
+                          buttonWidth: 150,
+                          buttonPadding: const EdgeInsets.only(left: 20, right: 20),
+                          buttonDecoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(14),
+                            border: Border.all(
+                              color: WHITE_COLOR,
+                            ),
+                            //color: Colors.redAccent,
+                          ),
+                          buttonElevation: 0,
+                          itemHeight: 20,
+                          itemPadding: const EdgeInsets.only(left: 20, right: 20),
+                          dropdownMaxHeight: 200,
+                          dropdownWidth: 200,
+                          dropdownPadding: null,
+                          dropdownDecoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(14),
+                            color: WHITE_COLOR,
+                          ),
+                          dropdownElevation: 8,
+                          scrollbarRadius: const Radius.circular(40),
+                          scrollbarThickness: 6,
+                          scrollbarAlwaysShow: true,
+                          offset: const Offset(-20, 0),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(
-                  height: 4,
-                ),
-                Text(
-                  '2023년 전체',
-                  style: TextStyle(
-                    //color: AppColors.contentColorGreen.darken(),
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(
-                  height: 38,
-                ),
+
+
+
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
