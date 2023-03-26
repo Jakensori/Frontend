@@ -13,7 +13,7 @@ class MealProvider with ChangeNotifier {
     final Parameters = {'year': 2023, 'month': 3}.map((key, value) =>
         MapEntry(key, value.toString())); // int 허용 안되서 string으로 바꿔줌.
 
-    var url = Uri.parse('http://192.168.17.46:8000/record/time/2/');
+    var url = Uri.parse('http://172.30.1.47:8000/record/time/2/');
     Map<String, String>? headers = {
       'Content-Type': 'application/json; charset=UTF-8',
     };
