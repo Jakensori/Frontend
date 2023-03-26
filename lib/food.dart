@@ -106,4 +106,5 @@ class MyApp extends StatelessWidget {
 void main() {
   print("main 함수 실행");
   MealProvider().fetchMealRecord();
+
 }
