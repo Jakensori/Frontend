@@ -35,40 +35,47 @@ class MealProvider with ChangeNotifier {
   }
 }
 
-class MealRecord {
-  final Map<String, int>? record_byTime;
-  final int? total_count;
-  /*final String? when;
+class MealInfo {
+  final String? when;
   final String? category;
   final int? price;
-  final String? memo;*/
+  final String? memo;
 
-  MealRecord(
-      // {required this.when,
-      // required this.category,
-      // required this.price,
-      // required this.memo}
-      {required this.record_byTime,
-      required this.total_count});
+  MealInfo(
+      {required this.when,
+      required this.category,
+      required this.price,
+      required this.memo});
+}
+
+class MealRecord {
+  final Map<String, List<MealInfo>> meal;
+  final int? day_buget;
+  final int? consumption;
+/*
+  final String? when;
+  final String? category;
+  final int? price;
+  final String? memo;
+*/
+  MealRecord({
+    required this.meal,
+    required this.day_buget,
+    required this.consumption,
+  });
 
   factory MealRecord.fromJson(Map<String, dynamic> json) {
     return MealRecord(
-        // when: json["when"],
-        // category: json["category"],
-        // price: json["price"],
-        // memo: json["memo"]);
-        record_byTime: json['record_byTime'],
-        total_count: json['total_count']);
+        meal: json["meal"],
+        day_buget: json["day_buget"],
+        consumption: json["consumption"]);
   }
 
-/*
   dynamic toJson() => {
-        'name': name,
-        'meal': meal,
-        'type': type,
-        'price': price,
+        "meal": meal,
+        "day_buget": day_buget,
+        "consumption": consumption,
       };
-*/
 }
 
 // 화면에 데이터 보여주는 코드
