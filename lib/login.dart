@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:temp_project/const/colors.dart';
 
 class Login extends StatelessWidget {
   const Login({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class Login extends StatelessWidget {
               fontSize: 24,
               fontWeight: FontWeight.w500,
               letterSpacing: 1.5,
-              color: Color(0xff000000),
+              color: BLACK_COLOR,
             ),
           ),
           centerTitle: true,
@@ -61,7 +62,7 @@ class Login extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
-                      primary: Color(0xff60695B),
+                      primary: PRIMARY_COLOR,
                     ),
                     child: Text('로그인'),
                   ),

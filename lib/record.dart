@@ -25,12 +25,16 @@ class _Record extends State<Record> {
   List<String> snack = [];
   List<String> others = [];
 
+
   late Future<MealRecord>? mealRecord;
+
 
   @override
   void initState() {
     super.initState();
+
     mealRecord = MealProvider().fetchMealRecord();
+
   }
   // test용
   @override

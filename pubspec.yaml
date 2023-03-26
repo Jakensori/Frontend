@@ -48,6 +48,8 @@ dependencies:
   dropdown_button2: ^1.2.1
   provider: ^6.0.5
 
+  flutter_native_splash:
+
 
 dev_dependencies:
   flutter_test:

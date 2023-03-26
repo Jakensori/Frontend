@@ -4,9 +4,11 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:provider/provider.dart';
 
+
 class MealProvider with ChangeNotifier {
   MealRecord? _mealRecord;
   MealRecord? get mealRecord => _mealRecord;
+
 
   Future<MealRecord> fetchMealRecord() async {
     print("함수 들어옴");
@@ -64,6 +66,13 @@ class MealRecord {
         record_byTime :json['record_byTime'],
         total_count:json['total_count']);
   }
+
+  dynamic toJson() => {
+        'name': name,
+        'meal': meal,
+        'type': type,
+        'price': price,
+      };
 }
 
 // 화면에 데이터 보여주는 코드

@@ -11,6 +11,9 @@ import 'package:temp_project/my_page.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:cupertino_icons/cupertino_icons.dart';
 
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting();
