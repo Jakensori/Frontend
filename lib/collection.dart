@@ -66,61 +66,147 @@ class CollectionPage extends State<Collection> {
                   itemCount: 8,
                   itemBuilder: (BuildContext context, int index) {
                     if (index == 0) {
-                      return Container(
-                        color: Colors.red,
-                        child: FlutterDialog1(
-                          level: _level,
-                        ),
-                      );
+                      if (_level.currentLevel == 1) {
+                        return Container(
+                          color: Colors.amber,
+                          child: FlutterDialog1(
+                            level: _level,
+                          ),
+                        );
+                      } else {
+                        return Container(
+                          color: Colors.amber,
+                          child: NotYet(),
+                        );
+                      }
                     } else if (index == 1) {
-                      return Container(
-                        color: Colors.red,
-                        child: FlutterDialog2(
-                          level: _level,
-                        ),
-                      );
+                      if (_level.currentLevel == 2) {
+                        return Container(
+                          color: Colors.amber,
+                          child: FlutterDialog1(
+                            level: _level,
+                          ),
+                        );
+                      } else if (_level.currentLevel < 2) {
+                        return Container(
+                          color: Colors.amber,
+                          child: NotYet(),
+                        );
+                      } else {
+                        return Container(
+                          color: Colors.amber,
+                          child: NotYet(),
+                        );
+                      }
                     } else if (index == 2) {
-                      return Container(
-                        color: Colors.red,
-                        child: FlutterDialog3(
-                          level: _level,
-                        ),
-                      );
+                      if (_level.currentLevel == 3) {
+                        return Container(
+                          color: Colors.amber,
+                          child: FlutterDialog1(
+                            level: _level,
+                          ),
+                        );
+                      } else if (_level.currentLevel < 3) {
+                        return Container(
+                          color: Colors.amber,
+                          child: NotYet(),
+                        );
+                      } else {
+                        return Container(
+                          color: Colors.amber,
+                          child: NotYet(),
+                        );
+                      }
                     } else if (index == 3) {
-                      return Container(
-                        color: Colors.red,
-                        child: FlutterDialog4(
-                          level: _level,
-                        ),
-                      );
+                      if (_level.currentLevel == 4) {
+                        return Container(
+                          color: Colors.amber,
+                          child: FlutterDialog1(
+                            level: _level,
+                          ),
+                        );
+                      } else {
+                        return Container(
+                          color: Colors.amber,
+                          child: NotYet(),
+                        );
+                      }
                     } else if (index == 4) {
-                      return Container(
-                        color: Colors.red,
-                        child: FlutterDialog5(
-                          level: _level,
-                        ),
-                      );
+                      if (_level.currentLevel == 5) {
+                        return Container(
+                          color: Colors.amber,
+                          child: FlutterDialog1(
+                            level: _level,
+                          ),
+                        );
+                      } else if (_level.currentLevel < 5) {
+                        return Container(
+                          color: Colors.amber,
+                          child: NotYet(),
+                        );
+                      } else {
+                        return Container(
+                          color: Colors.amber,
+                          child: NotYet(),
+                        );
+                      }
                     } else if (index == 5) {
-                      return Container(
-                        color: Colors.red,
-                        child: FlutterDialog6(
-                          level: _level,
-                        ),
-                      );
+                      if (_level.currentLevel == 6) {
+                        return Container(
+                          color: Colors.amber,
+                          child: FlutterDialog1(
+                            level: _level,
+                          ),
+                        );
+                      } else if (_level.currentLevel < 6) {
+                        return Container(
+                          color: Colors.amber,
+                          child: NotYet(),
+                        );
+                      } else {
+                        return Container(
+                          color: Colors.amber,
+                          child: NotYet(),
+                        );
+                      }
                     } else if (index == 6) {
-                      return Container(
-                        color: Colors.red,
-                        child: FlutterDialog7(
-                          level: _level,
-                        ),
-                      );
+                      if (_level.currentLevel == 7) {
+                        return Container(
+                          color: Colors.amber,
+                          child: FlutterDialog1(
+                            level: _level,
+                          ),
+                        );
+                      } else if (_level.currentLevel < 7) {
+                        return Container(
+                          color: Colors.amber,
+                          child: NotYet(),
+                        );
+                      } else {
+                        return Container(
+                          color: Colors.amber,
+                          child: NotYet(),
+                        );
+                      }
                     } else {
-                      return Container(
-                        color: Colors.red,
-                        child: FlutterDialog8(
-                          level: _level,
-                        ),
-                      );
+                      if (_level.currentLevel == 8) {
+                        return Container(
+                          color: Colors.amber,
+                          child: FlutterDialog1(
+                            level: _level,
+                          ),
+                        );
+                      } else if (_level.currentLevel < 8) {
+                        return Container(
+                          color: Colors.amber,
+                          child: NotYet(),
+                        );
+                      } else {
+                        return Container(
+                          color: Colors.amber,
+                          child: NotYet(),
+                        );
+                      }
                     }
                   },
                 ),
@@ -147,7 +233,7 @@ class FlutterDialog1 extends StatelessWidget {
             builder: (BuildContext context) => AlertDialog(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0)),
-              title: const Text('             캐릭터 이름           '),
+              title: const Text('캐릭터 '),
               content: const Text('대충 캐릭터 설명글 \n\n\n\n\n\n\n\n\n\n\n'),
               actions: <Widget>[
                 TextButton(
@@ -415,6 +501,43 @@ class FlutterDialog8 extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8.0)),
               title: const Text('             캐릭터 이름           '),
               content: const Text('대충 캐릭터 설명글 \n\n\n\n\n\n\n\n\n\n\n'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'Cancel'),
+                  child: const Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'OK'),
+                  child: const Text('OK'),
+                ),
+              ],
+            ),
+          );
+        }
+      },
+      child: const Icon(
+        Icons.quiz_outlined,
+        size: 30,
+      ),
+    );
+  }
+}
+
+class NotYet extends StatelessWidget {
+// level 매개변수 선언
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () {
+        {
+          showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0)),
+              title: const Text('아직이야'),
+              content: const Text('이건 아직 잠겨있음'),
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'Cancel'),

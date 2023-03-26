@@ -46,6 +46,7 @@ dependencies:
   syncfusion_flutter_calendar: ^19.1.55
   syncfusion_localizations: ^19.1.55
   dropdown_button2: ^1.2.1
+  provider: ^6.0.5
 
 
 dev_dependencies:
