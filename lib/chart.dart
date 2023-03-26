@@ -20,13 +20,12 @@ class Chart extends StatefulWidget {
 }
 
 class _ChartState extends State<Chart> {
-
   Future<MealRecord>? mealRecord;
 
   @override
   void initState() {
     super.initState();
-    mealRecord = fetchInfo();
+    mealRecord = MealProvider().fetchMealRecord();
   }
 
   @override
@@ -38,7 +37,6 @@ class _ChartState extends State<Chart> {
           //title: Text('chart탭 상단바'),
           backgroundColor: WHITE_COLOR,
           bottom: TabBar(
-
             labelColor: Color(0xff444444),
             unselectedLabelColor: Color(0xff999999),
             indicatorWeight: 3,
