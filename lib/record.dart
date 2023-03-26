@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:temp_project/const/colors.dart';
 import 'package:weekly_date_picker/weekly_date_picker.dart';
 import 'food.dart';
+import 'dart:async';
 
 class Record extends StatefulWidget {
   const Record({Key? key}) : super(key: key);
@@ -24,15 +25,53 @@ class _Record extends State<Record> {
   List<String> snack = [];
   List<String> others = [];
 
-  Future<MealRecord>? mealRecord;
+  late Future<MealRecord>? mealRecord;
 
   @override
   void initState() {
     super.initState();
-    mealRecord = fetchInfo();
+    mealRecord = MealProvider().fetchMealRecord();
   }
-
+  // test용
   @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('info', style: TextStyle(color: Colors.white)),
+          centerTitle: true,
+        ),
+        body: Center(
+          child: FutureBuilder<MealRecord>(
+            //통신데이터 가져오기
+            future: mealRecord,
+            builder: (context, snapshot) {
+              if ((snapshot.hasData) && (snapshot.data != null)){
+                print("성공");
+                return Column(
+                  // mainAxisAlignment: MainAxisAlignment.center,
+                  // crossAxisAlignment: CrossAxisAlignment.center,
+                  // children: [
+                  //   Text('고객번호:' + snapshot.data!.when.toString(),
+                  //       style: TextStyle(fontSize: 20)),
+                  //   Text('고객명:' + snapshot.data!.category.toString(),
+                  //       style: TextStyle(fontSize: 20)),
+                  //   Text('계좌 아이디:' + snapshot.data!.price.toString(),
+                  //       style: TextStyle(fontSize: 20)),
+                  //   Text('잔액:' + snapshot.data!.memo.toString() + '원',
+                  //       style: TextStyle(fontSize: 20)),
+                  // ],
+                );
+              } else if (snapshot.hasError) {
+                print(mealRecord);
+                return Text("${snapshot.error}에러!!");
+              }
+              return CircularProgressIndicator();
+          }
+        )
+
+        ));
+  }
+  /*@override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
@@ -655,6 +694,9 @@ class _Record extends State<Record> {
                                       child: ElevatedButton(
                                           onPressed: () {
                                             Navigator.pop(context);
+                                            print("된다?");
+                                            print("main 함수 실행");
+                                            MealProvider().fetchMealRecord();
                                           },
                                           style: ElevatedButton.styleFrom(
                                               primary: PRIMARY_COLOR,
@@ -694,5 +736,5 @@ class _Record extends State<Record> {
         ),
       ),
     );
-  }
+  }*/
 }
