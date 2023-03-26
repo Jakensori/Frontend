@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:temp_project/const/colors.dart';
 import 'login.dart';
 
 class StartPage extends StatelessWidget {
@@ -44,7 +45,7 @@ class StartPage extends StatelessWidget {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Color(0xff60695B),
+                      primary: PRIMARY_COLOR,
                     ),
                     child: Text('로그인하기'),
                   ),
@@ -57,7 +58,7 @@ class StartPage extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
-                      primary: Color(0xff60695B),
+                      primary: PRIMARY_COLOR,
                     ),
                     child: Text('회원가입하기'),
                   ),

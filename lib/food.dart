@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
+import 'package:provider/provider.dart';
 
 Future<MealRecord> fetchInfo() async {
-  var url = 'http://127.0.0.1:8000/'; // url 추가
+  var url = 'http://127.0.0.1:8000/info/'; // url 추가
   final response = await http.get(Uri.parse(url));
 
   if (response.statusCode == 200) {
@@ -37,4 +38,11 @@ class MealRecord {
         type: json["type"],
         price: json["price"]);
   }
+
+  dynamic toJson() => {
+        'name': name,
+        'meal': meal,
+        'type': type,
+        'price': price,
+      };
 }

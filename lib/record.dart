@@ -24,12 +24,12 @@ class _Record extends State<Record> {
   List<String> snack = [];
   List<String> others = [];
 
-  Future<MealRecord>? mealRecord;
+  //Future<MealRecord>? mealRecord;
 
   @override
   void initState() {
     super.initState();
-    mealRecord = fetchInfo();
+    //mealRecord = fetchInfo();
   }
 
   @override
