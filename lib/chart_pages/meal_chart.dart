@@ -4,6 +4,7 @@ import 'package:temp_project/const/colors.dart';
 import 'dart:async';
 import 'dart:math';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:temp_project/MealChart.dart';
 
 class MealChartPage extends StatefulWidget {
   MealChartPage({Key? key}) : super(key: key);
@@ -17,6 +18,14 @@ class MealChartPage extends StatefulWidget {
 }
 
 class _MealChartPageState extends State<MealChartPage> {
+  Future<MealChart>? mealChart;
+
+  @override
+  void initState() {
+    super.initState();
+    mealChart = MealProvider().fetchMealChart();
+  }
+
   final Duration animDuration = const Duration(milliseconds: 250);
   int touchedIndex = -1;
   bool isPlaying = false;
@@ -274,7 +283,8 @@ class _MealChartPageState extends State<MealChartPage> {
         default:
           return throw Error();
       }
-  });
+  }
+  );
 
   BarChartData mainBarData() {
     return BarChartData(
