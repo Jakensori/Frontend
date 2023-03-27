@@ -24,6 +24,8 @@ class MealProvider with ChangeNotifier {
       print(json.decode(utf8.decode(response.bodyBytes))); // 한글 깨짐 해결 !
       _mealRecord =
           MealRecord.fromJson(json.decode(utf8.decode(response.bodyBytes)));
+      _mealRecord =
+          MealRecord.fromJson(json.decode(utf8.decode(response.bodyBytes)));
       notifyListeners();
       return MealRecord.fromJson(json.decode(utf8.decode(response.bodyBytes)));
     } else {
@@ -36,7 +38,7 @@ class MealProvider with ChangeNotifier {
 class MealInfo {
   final String? when;
   final String? category;
-  final num? price;
+  final int? price;
   final String? memo;
 
   MealInfo(
@@ -66,14 +68,14 @@ class MealRecord {
   });
 
   factory MealRecord.fromJson(Map<String, dynamic> json) {
-    var list = json["meal"] as List;
+    var list = json["records"] as List;
     List<MealInfo> mealInfoList =
         list.map((i) => MealInfo.fromJson(i)).toList();
 
     return MealRecord(
         meal: mealInfoList,
         day_budget: json["day_budget"],
-        consumption: json["consumption"]);
+        consumption: json["comsumption"]);
   }
 
   dynamic toJson() => {
@@ -82,3 +84,45 @@ class MealRecord {
         "consumption": consumption,
       };
 }
+
+// // 화면에 데이터 보여주는 코드
+// class MyApp extends StatelessWidget {
+//   Future<MealRecord>? meal;
+//   @override
+//   Widget build(BuildContext context) {
+//     return ChangeNotifierProvider(
+//       create: (_) => MealProvider(),
+//       child: MaterialApp(
+//         title: 'Flutter Demo',
+//         home: Scaffold(
+//           appBar: AppBar(
+//             title: Text('상태 관리 예제'),
+//           ),
+//           body: Center(
+//             child: Consumer<MealProvider>(
+//               builder: (context, provider, child) {
+//                 if (provider.mealRecord == null) {
+//                   return CircularProgressIndicator();
+//                 }
+//                 return Column(
+//                   mainAxisAlignment: MainAxisAlignment.center,
+//                   children: [
+//                     // Text('메뉴명: ${provider.mealRecord!.when}'),
+//                     // Text('식사: ${provider.mealRecord!.category}'),
+//                     // Text('방식: ${provider.mealRecord!.price}'),
+//                     // Text('금액: ${provider.mealRecord!.memo}'),
+//                   ],
+//                 );
+//               },
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// void main() {
+//   print("main 함수 실행");
+//   MealProvider().fetchMealRecord();
+// }
