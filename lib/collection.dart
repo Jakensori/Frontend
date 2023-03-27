@@ -25,7 +25,7 @@ class CollectionPage extends State<Collection> {
           child: Column(
             children: <Widget>[
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 3.0),
+                padding: EdgeInsets.symmetric(horizontal: 2.0),
                 height: 160,
                 child: Stack(
                   children: [
@@ -68,7 +68,11 @@ class CollectionPage extends State<Collection> {
                     if (index == 0) {
                       if (_level.currentLevel == 1) {
                         return Container(
-                          color: Colors.amber,
+                          //color: Colors.amber[400],
+                          decoration: BoxDecoration(
+                            color: Colors.amber,
+                            borderRadius: BorderRadius.circular(30),
+                          ),
                           child: FlutterDialog1(
                             level: _level,
                           ),
@@ -89,7 +93,11 @@ class CollectionPage extends State<Collection> {
                         );
                       } else if (_level.currentLevel < 2) {
                         return Container(
-                          color: Colors.amber,
+                          //color: Colors.grey[300],
+                          decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                            borderRadius: BorderRadius.circular(30),
+                          ),
                           child: NotYet(),
                         );
                       } else {
@@ -108,7 +116,11 @@ class CollectionPage extends State<Collection> {
                         );
                       } else if (_level.currentLevel < 3) {
                         return Container(
-                          color: Colors.amber,
+                          //color: Colors.grey[300],
+                          decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                            borderRadius: BorderRadius.circular(30),
+                          ),
                           child: NotYet(),
                         );
                       } else {
@@ -127,7 +139,11 @@ class CollectionPage extends State<Collection> {
                         );
                       } else {
                         return Container(
-                          color: Colors.amber,
+                          //color: Colors.grey[300],
+                          decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                            borderRadius: BorderRadius.circular(30),
+                          ),
                           child: NotYet(),
                         );
                       }
@@ -141,7 +157,11 @@ class CollectionPage extends State<Collection> {
                         );
                       } else if (_level.currentLevel < 5) {
                         return Container(
-                          color: Colors.amber,
+                          //color: Colors.grey[300],
+                          decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                            borderRadius: BorderRadius.circular(30),
+                          ),
                           child: NotYet(),
                         );
                       } else {
@@ -160,7 +180,11 @@ class CollectionPage extends State<Collection> {
                         );
                       } else if (_level.currentLevel < 6) {
                         return Container(
-                          color: Colors.amber,
+                          //color: Colors.grey[300],
+                          decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                            borderRadius: BorderRadius.circular(30),
+                          ),
                           child: NotYet(),
                         );
                       } else {
@@ -179,7 +203,11 @@ class CollectionPage extends State<Collection> {
                         );
                       } else if (_level.currentLevel < 7) {
                         return Container(
-                          color: Colors.amber,
+                          //color: Colors.grey[300],
+                          decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                            borderRadius: BorderRadius.circular(30),
+                          ),
                           child: NotYet(),
                         );
                       } else {
@@ -198,7 +226,11 @@ class CollectionPage extends State<Collection> {
                         );
                       } else if (_level.currentLevel < 8) {
                         return Container(
-                          color: Colors.amber,
+                          //color: Colors.grey[300],
+                          decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                            borderRadius: BorderRadius.circular(30),
+                          ),
                           child: NotYet(),
                         );
                       } else {
@@ -233,8 +265,9 @@ class FlutterDialog1 extends StatelessWidget {
             builder: (BuildContext context) => AlertDialog(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0)),
-              title: const Text('캐릭터 '),
-              content: const Text('대충 캐릭터 설명글 \n\n\n\n\n\n\n\n\n\n\n'),
+              title: const Text('당근'),
+              content: const Text(
+                  '별명: ㄷㄱ \n기부 횟수: 5회\n기부 금액: 100000원 이상\n\n\n           --- 사진 첨부 예정---'),
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'Cancel'),
@@ -250,8 +283,9 @@ class FlutterDialog1 extends StatelessWidget {
         }
       },
       child: const Icon(
-        Icons.quiz_outlined,
-        size: 30,
+        Icons.accessibility_new_rounded,
+        size: 50,
+        color: Colors.black,
       ),
     );
   }
@@ -288,7 +322,8 @@ class FlutterDialog2 extends StatelessWidget {
         }
       },
       child: const Icon(
-        Icons.quiz_outlined,
+        Icons.accessibility_new_rounded,
+        color: Colors.black,
         size: 30,
       ),
     );
@@ -326,7 +361,8 @@ class FlutterDialog3 extends StatelessWidget {
         }
       },
       child: const Icon(
-        Icons.quiz_outlined,
+        Icons.accessibility_new_rounded,
+        color: Colors.black,
         size: 30,
       ),
     );
@@ -364,7 +400,8 @@ class FlutterDialog4 extends StatelessWidget {
         }
       },
       child: const Icon(
-        Icons.quiz_outlined,
+        Icons.accessibility_new_rounded,
+        color: Colors.black,
         size: 30,
       ),
     );
@@ -402,7 +439,8 @@ class FlutterDialog5 extends StatelessWidget {
         }
       },
       child: const Icon(
-        Icons.quiz_outlined,
+        Icons.accessibility_new_rounded,
+        color: Colors.black,
         size: 30,
       ),
     );
@@ -440,7 +478,8 @@ class FlutterDialog6 extends StatelessWidget {
         }
       },
       child: const Icon(
-        Icons.quiz_outlined,
+        Icons.accessibility_new_rounded,
+        color: Colors.black,
         size: 30,
       ),
     );
@@ -478,7 +517,8 @@ class FlutterDialog7 extends StatelessWidget {
         }
       },
       child: const Icon(
-        Icons.quiz_outlined,
+        Icons.accessibility_new_rounded,
+        color: Colors.black,
         size: 30,
       ),
     );
@@ -516,7 +556,8 @@ class FlutterDialog8 extends StatelessWidget {
         }
       },
       child: const Icon(
-        Icons.quiz_outlined,
+        Icons.accessibility_new_rounded,
+        color: Colors.black,
         size: 30,
       ),
     );
@@ -553,7 +594,8 @@ class NotYet extends StatelessWidget {
         }
       },
       child: const Icon(
-        Icons.quiz_outlined,
+        Icons.auto_awesome_outlined,
+        color: Colors.black,
         size: 30,
       ),
     );
