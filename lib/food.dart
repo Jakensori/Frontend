@@ -33,6 +33,18 @@ class MealProvider with ChangeNotifier {
       throw Exception('계좌정보를 불러오는데 실패했습니다');
     }
   }
+
+/*
+  _postRequest() async {
+    String url = 'http://192.168.187.25:8000/record/upload';
+
+    http.Response response = await http.post(url, headers: <String, String>{
+      'Content-Type': 'application/x-www-form-urlencoded',
+    }, body: <String, String>{
+      ''
+    });
+  }
+  */
 }
 
 class MealInfo {
@@ -84,45 +96,3 @@ class MealRecord {
         "consumption": consumption,
       };
 }
-
-// // 화면에 데이터 보여주는 코드
-// class MyApp extends StatelessWidget {
-//   Future<MealRecord>? meal;
-//   @override
-//   Widget build(BuildContext context) {
-//     return ChangeNotifierProvider(
-//       create: (_) => MealProvider(),
-//       child: MaterialApp(
-//         title: 'Flutter Demo',
-//         home: Scaffold(
-//           appBar: AppBar(
-//             title: Text('상태 관리 예제'),
-//           ),
-//           body: Center(
-//             child: Consumer<MealProvider>(
-//               builder: (context, provider, child) {
-//                 if (provider.mealRecord == null) {
-//                   return CircularProgressIndicator();
-//                 }
-//                 return Column(
-//                   mainAxisAlignment: MainAxisAlignment.center,
-//                   children: [
-//                     // Text('메뉴명: ${provider.mealRecord!.when}'),
-//                     // Text('식사: ${provider.mealRecord!.category}'),
-//                     // Text('방식: ${provider.mealRecord!.price}'),
-//                     // Text('금액: ${provider.mealRecord!.memo}'),
-//                   ],
-//                 );
-//               },
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// void main() {
-//   print("main 함수 실행");
-//   MealProvider().fetchMealRecord();
-// }
