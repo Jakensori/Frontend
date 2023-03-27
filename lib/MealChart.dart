@@ -49,14 +49,12 @@ class MealChart {
         total_count: json['total_count']);
   }
 
-/*
+
   dynamic toJson() => {
-        'name': name,
-        'meal': meal,
-        'type': type,
-        'price': price,
-      };
-*/
+        'record_byTime':record_byTime,
+        'total_count': total_count,
+  };
+
 }
 
 

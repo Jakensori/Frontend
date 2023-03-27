@@ -38,26 +38,30 @@ class _MealChartPageState extends State<MealChartPage> {
   List<String> items_year = ['2020 년', '2021 년', '2022 년', '2023 년'];
   List<String> items_month = ['전체', '1 월', '2 월', '3 월', '4 월','5 월', '6 월','7 월', '8 월', '9 월', '10 월', '11 월', '12 월'];
 
-  void getBreakfastCounts(snapshot){
-    for (int i=0;i<snapshot.record_byTime.lenght();i++){
+  double getBreakfastCounts(snapshot){
+    for (int i=0;i<snapshot.record_byTime.length();i++){
       if(snapshot.record_byTime[i]=='아침'){
         BreakfastCounts++;
       }
     }
+    return BreakfastCounts;
   }
-  void getLunchCounts(snapshot){
+
+  double getLunchCounts(snapshot){
     for (int i=0;i<snapshot.record_byTime.lenght();i++){
       if(snapshot.record_byTime[i]=='점심'){
         LunchCounts++;
       }
     }
+    return LunchCounts;
   }
-  void getDinnerCounts(snapshot){
+  double getDinnerCounts(snapshot){
     for (int i=0;i<snapshot.record_byTime.lenght();i++){
       if(snapshot.record_byTime[i]=='저녁'){
         DinnerCounts++;
       }
     }
+    return DinnerCounts;
   }
 
   @override
@@ -84,7 +88,11 @@ class _MealChartPageState extends State<MealChartPage> {
           ),
         ));
   }
+
   Widget buildList(snapshot) {
+    getBreakfastCounts(snapshot);
+    getLunchCounts(snapshot);
+    getDinnerCounts(snapshot);
     return AspectRatio(
       aspectRatio: 1,
       child: Stack(

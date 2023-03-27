@@ -5,12 +5,12 @@ import 'dart:convert';
 import 'package:provider/provider.dart';
 
 class MonthRecordProvider with ChangeNotifier {
-  MealChart? _monthRecord;
-  MealChart? get monthRecord => _monthRecord;
+  MonthRecord? _monthChart;
 
-  Future<MealChart> fetchMonthRecord() async {
+  MonthRecord? get monthRecord => _monthChart;
+
+  Future<MonthRecord> fetchMonthRecord() async {
     print("함수 들어옴");
-
     final Parameters = {'year': 2023, 'month': 3}.map((key, value) =>
         MapEntry(key, value.toString())); // int 허용 안되서 string으로 바꿔줌.
 
@@ -26,9 +26,9 @@ class MonthRecordProvider with ChangeNotifier {
       //만약 서버가 ok응답을 반환하면, json을 파싱합니다
       print('응답했다');
       print(json.decode(utf8.decode(response.bodyBytes))); // 한글 깨짐 해결 !
-      _monthRecord = MealChart.fromJson(json.decode(response.body));
+      _monthChart = MonthRecord.fromJson(json.decode(response.body));
       notifyListeners();
-      return MealChart.fromJson(json.decode(response.body));
+      return MonthRecord.fromJson(json.decode(response.body));
     } else {
       //만약 응답이 ok가 아니면 에러를 던집니다.
       throw Exception('계좌정보를 불러오는데 실패했습니다');
@@ -36,75 +36,54 @@ class MonthRecordProvider with ChangeNotifier {
   }
 }
 
-class MealChart {
-  final Map<String, int>? record_byTime;
-  final int? total_count;
-  /*final String? when;
-  final String? category;
-  final int? price;
-  final String? memo;*/
+class DailyRecord {
+  final String? today_date;
+  final int? donation;
+  final int? differ;
+  DailyRecord({ required this.today_date,required this.donation, required this.differ});
 
-  MealChart(
-      // {required this.when,
-      // required this.category,
-      // required this.price,
-      // required this.memo}
-          {required this.record_byTime,
-        required this.total_count});
+  factory DailyRecord.fromJson(Map<String,dynamic> parsedJson){
+    return DailyRecord(
+      today_date: parsedJson['today_date'],
+      donation: parsedJson['donation'],
+      differ : parsedJson['differ'],
+    );
+  }
+}
 
-  factory MealChart.fromJson(Map<String, dynamic> json) {
-    return MealChart(
-      // when: json["when"],
-      // category: json["category"],
-      // price: json["price"],
-      // memo: json["memo"]);
-        record_byTime: json['record_byTime'],
-        total_count: json['total_count']);
+class MonthRecord {
+  final List<DailyRecord>? daily_record;
+  final int? total_consume;
+  final int? total_donate;
+  final int? month_budget;
+  final int? month_saving;
+
+  MonthRecord({
+    required this.daily_record,
+    required this.total_consume,
+    required this.total_donate,
+    required this.month_budget,
+    required this.month_saving,
+  });
+
+  factory MonthRecord.fromJson(Map<String, dynamic> parsedjson) {
+    var list = parsedjson['daily_record'] as List;
+    List<DailyRecord> daily_record_list = list.map((i)=> DailyRecord.fromJson(i)).toList();
+
+    return MonthRecord(
+      daily_record: daily_record_list,
+        total_consume: parsedjson['total_consume'],
+        total_donate: parsedjson['total donate'],
+        month_budget: parsedjson['month_budget'],
+        month_saving:parsedjson['month_saving']);
   }
 
-
+  /*
   dynamic toJson() => {
         'record_byTime': record_byTime,
         'total_count': total_count,
       };
-
-}
-
-// 화면에 데이터 보여주는 코드
-class MyApp extends StatelessWidget {
-  Future<MealChart>? meal;
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => MonthRecordProvider(),
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        home: Scaffold(
-          appBar: AppBar(
-            title: Text('상태 관리 예제'),
-          ),
-          body: Center(
-            child: Consumer<MonthRecordProvider>(
-              builder: (context, provider, child) {
-                if (provider.monthRecord == null) {
-                  return CircularProgressIndicator();
-                }
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Text('메뉴명: ${provider.mealRecord!.when}'),
-                    // Text('식사: ${provider.mealRecord!.category}'),
-                    // Text('방식: ${provider.mealRecord!.price}'),
-                    // Text('금액: ${provider.mealRecord!.memo}'),
-                  ],
-                );
-              },
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+   */
 }
 
 void main() {
