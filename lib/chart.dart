@@ -20,12 +20,12 @@ class Chart extends StatefulWidget {
 }
 
 class _ChartState extends State<Chart> {
-  Future<MealRecord>? mealRecord;
+  //Future<MealRecord>? mealRecord;
 
   @override
   void initState() {
     super.initState();
-    mealRecord = MealProvider().fetchMealRecord();
+    //mealRecord = MealProvider().fetchMealRecord();
   }
 
   @override
