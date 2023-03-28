@@ -60,17 +60,16 @@ class MealRecord {
         record_byTime: json['record_byTime'],
         total_count: json['total_count']);
   }
-/*
+
   dynamic toJson() => {
         'name': name,
         'meal': meal,
         'type': type,
         'price': price,
-      };*/
+      };
 }
 
 // 화면에 데이터 보여주는 코드
-/*
 class MyApp extends StatelessWidget {
   Future<MealRecord>? meal;
   @override
@@ -106,7 +105,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-*/
+
 void main() {
   print("main 함수 실행");
   MealProvider().fetchMealRecord();

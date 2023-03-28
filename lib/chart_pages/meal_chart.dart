@@ -4,6 +4,7 @@ import 'package:temp_project/const/colors.dart';
 import 'dart:async';
 import 'dart:math';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:temp_project/MealChart.dart';
 
 class MealChartPage extends StatefulWidget {
   MealChartPage({Key? key}) : super(key: key);
@@ -17,6 +18,17 @@ class MealChartPage extends StatefulWidget {
 }
 
 class _MealChartPageState extends State<MealChartPage> {
+  Future<MealChart>? mealChart;
+  double BreakfastCounts=0;
+  double LunchCounts =0;
+  double DinnerCounts =0;
+
+  @override
+  void initState() {
+    super.initState();
+    mealChart = MealProvider().fetchMealChart();
+  }
+
   final Duration animDuration = const Duration(milliseconds: 250);
   int touchedIndex = -1;
   bool isPlaying = false;
@@ -26,8 +38,61 @@ class _MealChartPageState extends State<MealChartPage> {
   List<String> items_year = ['2020 년', '2021 년', '2022 년', '2023 년'];
   List<String> items_month = ['전체', '1 월', '2 월', '3 월', '4 월','5 월', '6 월','7 월', '8 월', '9 월', '10 월', '11 월', '12 월'];
 
+  double getBreakfastCounts(snapshot){
+    for (int i=0;i<snapshot.record_byTime.length();i++){
+      if(snapshot.record_byTime[i]=='아침'){
+        BreakfastCounts++;
+      }
+    }
+    return BreakfastCounts;
+  }
+
+  double getLunchCounts(snapshot){
+    for (int i=0;i<snapshot.record_byTime.lenght();i++){
+      if(snapshot.record_byTime[i]=='점심'){
+        LunchCounts++;
+      }
+    }
+    return LunchCounts;
+  }
+  double getDinnerCounts(snapshot){
+    for (int i=0;i<snapshot.record_byTime.lenght();i++){
+      if(snapshot.record_byTime[i]=='저녁'){
+        DinnerCounts++;
+      }
+    }
+    return DinnerCounts;
+  }
+
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+        body: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: [
+                FutureBuilder<MealChart>(
+                  //통신데이터 가져오기
+                  future: mealChart,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return buildList(snapshot.data);
+                    } else if (snapshot.hasError) {
+                      return Text("${snapshot.error}에러!!");
+                    }
+                    return CircularProgressIndicator();
+                  },
+                ),
+              ],
+            ),
+          ),
+        ));
+  }
+
+  Widget buildList(snapshot) {
+    getBreakfastCounts(snapshot);
+    getLunchCounts(snapshot);
+    getDinnerCounts(snapshot);
     return AspectRatio(
       aspectRatio: 1,
       child: Stack(
@@ -49,7 +114,7 @@ class _MealChartPageState extends State<MealChartPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const [
                               Text(
-                                '2023 년',
+                                '2023',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -119,7 +184,7 @@ class _MealChartPageState extends State<MealChartPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const [
                               Text(
-                                '3 월',
+                                '3',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -266,15 +331,16 @@ class _MealChartPageState extends State<MealChartPage> {
   List<BarChartGroupData> showingGroups() => List.generate(3, (i) {
       switch (i) {
         case 0:
-          return makeGroupData(0, 12, isTouched: i == touchedIndex);
+          return makeGroupData(0, BreakfastCounts, isTouched: i == touchedIndex);
         case 1:
-          return makeGroupData(1, 29, isTouched: i == touchedIndex);
+          return makeGroupData(1, LunchCounts, isTouched: i == touchedIndex);
         case 2:
-          return makeGroupData(2, 34, isTouched: i == touchedIndex);
+          return makeGroupData(2, DinnerCounts, isTouched: i == touchedIndex);
         default:
           return throw Error();
       }
-  });
+  }
+  );
 
   BarChartData mainBarData() {
     return BarChartData(

@@ -4,7 +4,6 @@ import 'package:temp_project/chart_pages/monthly_calendar.dart';
 import 'package:temp_project/chart_pages/expense_chart.dart';
 import 'package:temp_project/chart_pages/meal_chart.dart';
 import 'package:temp_project/const/colors.dart';
-import 'package:temp_project/food.dart';
 
 class Chart extends StatefulWidget {
   const Chart({Key? key}) : super(key: key);
@@ -20,6 +19,7 @@ class Chart extends StatefulWidget {
 }
 
 class _ChartState extends State<Chart> {
+
   Future<MealRecord>? mealRecord;
 
   @override
@@ -27,6 +27,7 @@ class _ChartState extends State<Chart> {
     super.initState();
     mealRecord = MealProvider().fetchMealRecord();
   }
+   */
 
   @override
   Widget build(BuildContext context) {
