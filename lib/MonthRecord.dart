@@ -4,7 +4,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:provider/provider.dart';
 
-
 class MonthRecordProvider with ChangeNotifier {
   MonthRecord? _monthChart;
 
@@ -28,7 +27,6 @@ class MonthRecordProvider with ChangeNotifier {
       _monthChart = MonthRecord.fromJson(json.decode(response.body));
       notifyListeners();
       return MonthRecord.fromJson(json.decode(response.body));
-
     } else {
       //만약 응답이 ok가 아니면 에러를 던집니다.
       throw Exception('계좌정보를 불러오는데 실패했습니다');
@@ -36,18 +34,18 @@ class MonthRecordProvider with ChangeNotifier {
   }
 }
 
-
 class DailyRecord {
   final String? today_date;
   final int? donation;
   final int? differ;
-  DailyRecord({ required this.today_date,required this.donation, required this.differ});
+  DailyRecord(
+      {required this.today_date, required this.donation, required this.differ});
 
-  factory DailyRecord.fromJson(Map<String,dynamic> parsedJson){
+  factory DailyRecord.fromJson(Map<String, dynamic> parsedJson) {
     return DailyRecord(
       today_date: parsedJson['today_date'],
       donation: parsedJson['donation'],
-      differ : parsedJson['differ'],
+      differ: parsedJson['differ'],
     );
   }
 }
@@ -69,14 +67,15 @@ class MonthRecord {
 
   factory MonthRecord.fromJson(Map<String, dynamic> parsedjson) {
     var list = parsedjson['daily_record'] as List;
-    List<DailyRecord> daily_record_list = list.map((i)=> DailyRecord.fromJson(i)).toList();
+    List<DailyRecord> daily_record_list =
+        list.map((i) => DailyRecord.fromJson(i)).toList();
 
     return MonthRecord(
-      daily_record: daily_record_list,
+        daily_record: daily_record_list,
         total_consume: parsedjson['total_consume'],
         total_donate: parsedjson['total donate'],
         month_budget: parsedjson['month_budget'],
-        month_saving:parsedjson['month_saving']);
+        month_saving: parsedjson['month_saving']);
   }
 
   /*
@@ -90,4 +89,4 @@ class MonthRecord {
 void main() {
   print("main 함수 실행");
   MonthRecordProvider().fetchMonthRecord();
-
+}
