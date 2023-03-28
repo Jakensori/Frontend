@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:temp_project/const/colors.dart';
 import 'package:weekly_date_picker/weekly_date_picker.dart';
-import 'food.dart';
+import 'meal.dart';
 import 'dart:async';
 
 class Record extends StatefulWidget {
