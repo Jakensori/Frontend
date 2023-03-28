@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
@@ -110,3 +110,4 @@ void main() {
   print("main 함수 실행");
   MealProvider().fetchMealRecord();
 }
+*/
