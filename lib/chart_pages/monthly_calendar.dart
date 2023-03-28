@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:temp_project/const/colors.dart';
 import 'package:syncfusion_localizations/syncfusion_localizations.dart';
+import 'package:temp_project/MonthRecord.dart';
 
 class Calendar extends StatefulWidget {
   const Calendar({Key? key}) : super(key: key);
@@ -11,7 +12,41 @@ class Calendar extends StatefulWidget {
 }
 
 class _CalendarState extends State<Calendar> {
+  Future<MonthRecord>? monthRecord;
+
   @override
+  void initState() {
+    super.initState();
+    //monthRecord = MonthRecordProvider().fetchMonthRecord();
+  }
+
+  /*
+  @override
+  Widget build(BuildContext context){
+    return Scaffold(
+        body: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: [
+                FutureBuilder<MonthRecord>(
+                  //통신데이터 가져오기
+                  future: monthRecord,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return buildList(snapshot.data);
+                    } else if (snapshot.hasError) {
+                      return Text("${snapshot.error}에러!!");
+                    }
+                    return CircularProgressIndicator();
+                  },
+                ),
+              ],
+            ),
+          ),
+        ));
+  }
+
+   */
   Widget build(BuildContext context) {
     return MaterialApp(
       localizationsDelegates: [
@@ -36,10 +71,10 @@ class _CalendarState extends State<Calendar> {
                   showNavigationArrow: true,
                   dataSource:  MeetingDataSource(_getDataSource()),
                   monthViewSettings: MonthViewSettings(
-                      appointmentDisplayCount: 3,
-                      appointmentDisplayMode:
-                      MonthAppointmentDisplayMode.appointment,
-                      navigationDirection: MonthNavigationDirection.horizontal,
+                    appointmentDisplayCount: 2,
+                    appointmentDisplayMode:
+                    MonthAppointmentDisplayMode.appointment,
+                    navigationDirection: MonthNavigationDirection.horizontal,
 
                   ),
                 ),
@@ -54,7 +89,7 @@ class _CalendarState extends State<Calendar> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text('한 달 예산 대비 \n' + '한 달 기부 저금 \n'),
-                    Text('-12,500원\n' + '+6,200원\n'),
+                    Text('-362,500원\n' + '+2,500원\n'),
                   ],
                 ),
               ),
@@ -92,11 +127,22 @@ _SavedMoneyDataSource _getCalendarDataSource() {
 
 List<Meeting> _getDataSource() {
   final List<Meeting> meetings1 = <Meeting>[
-    Meeting('saved money',DateTime(2023,3,1),DateTime(2023,3,1),Colors.blue,false),
+    Meeting('500',DateTime(2023,3,1),DateTime(2023,3,1),Colors.blue,false),
+    Meeting('4,500',DateTime(2023,3,2),DateTime(2023,3,2),Colors.blue,false),
+    Meeting('1,500',DateTime(2023,3,3),DateTime(2023,3,3),Colors.blue,false),
+    Meeting('1,900',DateTime(2023,3,4),DateTime(2023,3,4),Colors.red,false),
+    Meeting('800',DateTime(2023,3,5),DateTime(2023,3,5),Colors.blue,false),
+
+
   ];
 
   final List<Meeting> meetings2 = <Meeting>[
-    Meeting('donated money',DateTime(2023,3,1),DateTime(2023,3,1),PRIMARY_COLOR,false),
+    Meeting('0',DateTime(2023,3,1),DateTime(2023,3,1),PRIMARY_COLOR,false),
+    Meeting('1,500',DateTime(2023,3,2),DateTime(2023,3,2),PRIMARY_COLOR,false),
+    Meeting('500',DateTime(2023,3,3),DateTime(2023,3,3),PRIMARY_COLOR,false),
+    Meeting('0',DateTime(2023,3,4),DateTime(2023,3,4),PRIMARY_COLOR,false),
+    Meeting('500',DateTime(2023,3,5),DateTime(2023,3,5),PRIMARY_COLOR,false),
+
   ];
 
   final DateTime today = DateTime.now();
