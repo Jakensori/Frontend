@@ -136,17 +136,17 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
   final List<TimesDataItem> _myData1 = List.generate(
       5,
       (index) => TimesDataItem(
-            x: index,
+            x: 1,
             y1: 113,
-            y2: 49,
+            y2: 49
           ));
 
   final List<ExpenseDataItem> _myData2 = List.generate(
       5,
           (index) => ExpenseDataItem(
-        x: index,
+        x: 0,
         y1: 1521100,
-        y2: 528400,
+        y2: 528400
       ));
 
   @override
@@ -400,7 +400,7 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
                         children: [
                           Flexible(
                               child: Text(
-                                '식사 방식 (횟수)',
+                                '식사 종류 (횟수)',
                                 style: TextStyle(fontSize: 15),
                               ),
                               flex: 1),
@@ -450,7 +450,7 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
                         children: [
                           Flexible(
                               child: Text(
-                                '식사 방식 (비용)',
+                                '식사 종류 (비용)',
                                 style: TextStyle(fontSize: 15),
                               ),
                               flex: 1),
