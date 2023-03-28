@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:temp_project/const/colors.dart';
 import 'package:weekly_date_picker/weekly_date_picker.dart';
-import 'food.dart';
+import 'meal.dart';
 import 'dart:async';
 
 class Record extends StatefulWidget {
@@ -602,6 +602,107 @@ class _Record extends State<Record> {
                   },
                 ),
           SizedBox(height: 30.0),
+
+          //
+          // 하루 정산
+          ElevatedButton(
+            child: Text('하루 정산',
+                style: TextStyle(color: BLACK_COLOR, fontSize: 16.0)),
+            style: ElevatedButton.styleFrom(
+                primary: PRIMARY_COLOR, // Background color
+                fixedSize: const Size(120, 40)),
+            onPressed: () {
+              showModalBottomSheet<void>(
+                  context: context,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(100.0),
+                  ),
+                  builder: (BuildContext context) {
+                    return SingleChildScrollView(
+                      padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).viewInsets.bottom),
+                      child: Container(
+                        height: 800,
+                        decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(25),
+                              topRight: Radius.circular(25),
+                            )),
+                        child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 50.0, vertical: 30.0),
+                            child: Column(
+                              children: [
+                                Text('하루 정산',
+                                    style: TextStyle(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.w600,
+                                      color: BLACK_COLOR,
+                                    )),
+                                SizedBox(height: 40),
+                                Row(
+                                  children: [
+                                    Text('기부 가능 금액',
+                                        style: TextStyle(
+                                            fontSize: 20.0,
+                                            color: BLACK_COLOR)),
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 20.0, vertical: 0.0),
+                                        child: Text('2400원',
+                                            style: TextStyle(
+                                                fontSize: 20.0,
+                                                color: BLACK_COLOR)),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 20.0),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10.0, vertical: 0.0),
+                                        child: TextField(),
+                                      ),
+                                    ),
+                                    Text('원 기부하기',
+                                        style: TextStyle(
+                                            fontSize: 20.0,
+                                            color: BLACK_COLOR)),
+                                  ],
+                                ),
+                                SizedBox(height: 80),
+                                Container(
+                                  width: double.infinity,
+                                  child: ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                        print("된다?");
+                                        // 정산하는 함수 연결해야 함.
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                          primary: PRIMARY_COLOR,
+                                          fixedSize: Size(250, 20),
+                                          alignment: Alignment.center),
+                                      child: Text(
+                                        '기부금 정산하기',
+                                        style: TextStyle(
+                                            color: BLACK_COLOR,
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.w500),
+                                      )),
+                                )
+                              ],
+                            )),
+                      ),
+                    );
+                  });
+            },
+          ),
           //
           //
           // 기록추가 모달창
@@ -779,6 +880,14 @@ class _Record extends State<Record> {
                                         Navigator.pop(context);
                                         print("된다?");
                                         // 정산하는 함수 연결해야 함.
+                                        breakfastList[
+                                                breakfastList.length + 1] =
+                                            new MealInfo(
+                                                when: "점심",
+                                                category: "외식",
+                                                price: 9500,
+                                                memo: "덮밥");
+                                        differ -= 9500;
                                       },
                                       style: ElevatedButton.styleFrom(
                                           primary: PRIMARY_COLOR,
