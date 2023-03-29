@@ -64,7 +64,7 @@ class _MealChartPageState extends State<MealChartPage> {
     return DinnerCounts;
   }
 
-  /*
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,15 +89,14 @@ class _MealChartPageState extends State<MealChartPage> {
           ),
         ));
   }
-   */
 
-  Widget build(BuildContext context) {
-    /*
+
+  Widget buildList(snapshot) {
+
     getBreakfastCounts(snapshot);
     getLunchCounts(snapshot);
     getDinnerCounts(snapshot);
 
-     */
     return AspectRatio(
       aspectRatio: 1,
       child: Stack(
@@ -336,14 +335,14 @@ class _MealChartPageState extends State<MealChartPage> {
   List<BarChartGroupData> showingGroups() => List.generate(3, (i) {
       switch (i) {
         case 0:
-          return makeGroupData(0, 18, isTouched: i == touchedIndex);
-          //return makeGroupData(0, BreakfastCounts, isTouched: i == touchedIndex);
+          //return makeGroupData(0, 18, isTouched: i == touchedIndex);
+          return makeGroupData(0, BreakfastCounts, isTouched: i == touchedIndex);
         case 1:
-          return makeGroupData(1, 31, isTouched: i == touchedIndex);
-          //return makeGroupData(1, LunchCounts, isTouched: i == touchedIndex);
+          //return makeGroupData(1, 31, isTouched: i == touchedIndex);
+          return makeGroupData(1, LunchCounts, isTouched: i == touchedIndex);
         case 2:
-          return makeGroupData(2, 28, isTouched: i == touchedIndex);
-          //return makeGroupData(2, DinnerCounts, isTouched: i == touchedIndex);
+          //return makeGroupData(2, 28, isTouched: i == touchedIndex);
+          return makeGroupData(2, DinnerCounts, isTouched: i == touchedIndex);
         default:
           return throw Error();
       }
