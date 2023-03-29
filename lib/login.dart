@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:temp_project/const/colors.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
 
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -74,6 +79,13 @@ class Login extends StatelessWidget {
                     fontSize: 10,
                   ),
                   textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 10.0),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('뒤로가기', style: TextStyle(color: BLACK_COLOR)),
                 ),
               ],
             ),
