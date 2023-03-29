@@ -43,10 +43,14 @@ class _HomePageState extends State<HomePage> {
 
   final List<Widget> _widgetOptions = [
     Record(),
-    Chart(),
+    //Chart(),
     Donate(),
     Collection(),
-    MyPage(),
+    MyPageScreen(
+      myDonations: '',
+      myLife: '',
+      name: '',
+    ),
   ];
 
   void _onItemTapped(int index) {
