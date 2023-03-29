@@ -5,6 +5,7 @@ import 'dart:async';
 import 'dart:math';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:temp_project/MealChart.dart';
+//git 테스트
 
 class MealChartPage extends StatefulWidget {
   MealChartPage({Key? key}) : super(key: key);
