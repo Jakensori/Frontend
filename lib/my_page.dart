@@ -52,12 +52,14 @@ class MyPage extends StatelessWidget {
             Text(
               //'이름: $name',
               '이름: \n',
+
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 16),
             Text(
               //'나의 생활: $myLife',
               '나의 생활: ',
+
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 8),
@@ -69,6 +71,7 @@ class MyPage extends StatelessWidget {
             Text(
               //'나의 기부: $myDonations',
               '나의 기부: ',
+
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 8),
@@ -110,6 +113,7 @@ class MyPage extends StatelessWidget {
             ),
             /*
             SizedBox(height: 16),
+
             ElevatedButton(
               onPressed: () {
                 // 도움말 화면으로 이동
@@ -121,6 +125,7 @@ class MyPage extends StatelessWidget {
                 );
               },
               child: Text('도움말'),
+
             ),*/
           ],
         ),

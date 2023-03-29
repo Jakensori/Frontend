@@ -64,7 +64,6 @@ class _MealChartPageState extends State<MealChartPage> {
     return DinnerCounts;
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,9 +89,7 @@ class _MealChartPageState extends State<MealChartPage> {
         ));
   }
 
-
   Widget buildList(snapshot) {
-
     getBreakfastCounts(snapshot);
     getLunchCounts(snapshot);
     getDinnerCounts(snapshot);
@@ -118,7 +115,7 @@ class _MealChartPageState extends State<MealChartPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const [
                               Text(
-                                '2023 년',
+                                '2023',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -188,7 +185,7 @@ class _MealChartPageState extends State<MealChartPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const [
                               Text(
-                                '3 월',
+                                '3',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -335,13 +332,10 @@ class _MealChartPageState extends State<MealChartPage> {
   List<BarChartGroupData> showingGroups() => List.generate(3, (i) {
       switch (i) {
         case 0:
-          //return makeGroupData(0, 18, isTouched: i == touchedIndex);
           return makeGroupData(0, BreakfastCounts, isTouched: i == touchedIndex);
         case 1:
-          //return makeGroupData(1, 31, isTouched: i == touchedIndex);
           return makeGroupData(1, LunchCounts, isTouched: i == touchedIndex);
         case 2:
-          //return makeGroupData(2, 28, isTouched: i == touchedIndex);
           return makeGroupData(2, DinnerCounts, isTouched: i == touchedIndex);
         default:
           return throw Error();
