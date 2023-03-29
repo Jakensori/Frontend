@@ -13,7 +13,6 @@ import 'package:cupertino_icons/cupertino_icons.dart';
 
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting();
@@ -44,10 +43,14 @@ class _HomePageState extends State<HomePage> {
 
   final List<Widget> _widgetOptions = [
     Record(),
-    Chart(),
+    //Chart(),
     Donate(),
     Collection(),
-    MyPage(),
+    MyPageScreen(
+      myDonations: '',
+      myLife: '',
+      name: '',
+    ),
   ];
 
   void _onItemTapped(int index) {
