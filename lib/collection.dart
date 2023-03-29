@@ -42,7 +42,7 @@ class CollectionPage extends State<Collection> {
                     Container(
                       margin: EdgeInsets.fromLTRB(70, 40, 180, 5),
                       child: Text(
-                        '여기에 이제 캐릭터 나옴',
+                        '최신 레벨 캐릭터',
                         style: TextStyle(
                           fontSize: 18, // 폰트 크기
                           fontWeight: FontWeight.w600, // 폰트 두께
@@ -265,9 +265,10 @@ class FlutterDialog1 extends StatelessWidget {
             builder: (BuildContext context) => AlertDialog(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0)),
-              title: const Text('당근'),
-              content: const Text(
-                  '별명: ㄷㄱ \n기부 횟수: 5회\n기부 금액: 100000원 이상\n\n\n           --- 사진 첨부 예정---'),
+
+              title: const Text('레벨1 캐릭터 '),
+              content: const Text('레벨1 캐릭터 설명글 \n\n\n\n\n\n\n\n\n\n\n'),
+
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'Cancel'),
@@ -577,8 +578,8 @@ class NotYet extends StatelessWidget {
             builder: (BuildContext context) => AlertDialog(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0)),
-              title: const Text('아직이야'),
-              content: const Text('이건 아직 잠겨있음'),
+              title: const Text('잠겨있는 캐릭터'),
+              content: const Text('목표 달성 후 확인 가능합니다.'),
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'Cancel'),
