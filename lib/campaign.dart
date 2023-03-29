@@ -1,4 +1,4 @@
-import 'package:http/http.dart' as http;
+/*import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
@@ -7,6 +7,7 @@ Future<List<Campaign>> fetchCampaign() async {
   final response = await http.post(Uri.parse(url));
 
   if (response.statusCode == 200) {
+    print('응답했다');
     List<dynamic> jsonData = json.decode(response.body);
     List<Campaign> campaigns =
         jsonData.map((json) => Campaign.fromJson(json)).toList();
@@ -56,3 +57,4 @@ class Campaign {
     );
   }
 }
+*/

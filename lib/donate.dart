@@ -13,7 +13,7 @@ class Donate extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Color(0xffFFFFFF),
         title: Text(
-          '기부 어쩌고',
+          '기부하기',
           style: TextStyle(
             fontSize: 25, // 폰트 크기
             fontWeight: FontWeight.bold, // 폰트 두께

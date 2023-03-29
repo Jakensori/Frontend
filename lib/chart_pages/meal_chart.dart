@@ -5,6 +5,7 @@ import 'dart:async';
 import 'dart:math';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:temp_project/MealChart.dart';
+//git 테스트
 
 class MealChartPage extends StatefulWidget {
   MealChartPage({Key? key}) : super(key: key);
@@ -89,10 +90,12 @@ class _MealChartPageState extends State<MealChartPage> {
         ));
   }
 
+
   Widget buildList(snapshot) {
     getBreakfastCounts(snapshot);
     getLunchCounts(snapshot);
     getDinnerCounts(snapshot);
+
     return AspectRatio(
       aspectRatio: 1,
       child: Stack(
@@ -114,7 +117,7 @@ class _MealChartPageState extends State<MealChartPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const [
                               Text(
-                                '2023',
+                                '2023 년',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -184,7 +187,7 @@ class _MealChartPageState extends State<MealChartPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const [
                               Text(
-                                '3',
+                                '3 월',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,

@@ -36,7 +36,7 @@ class MealProvider with ChangeNotifier {
 }
 
 class MealChart {
-  final Map<String, int>? record_byTime;
+  final Map<String, dynamic>? record_byTime;
   final int? total_count;
 
   MealChart(
