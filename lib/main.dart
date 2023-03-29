@@ -46,10 +46,10 @@ class _HomePageState extends State<HomePage> {
     //Chart(),
     Donate(),
     Collection(),
-    MyPageScreen(
-      myDonations: '',
-      myLife: '',
-      name: '',
+    MyPage(
+      //myDonations: '',
+      //myLife: '',
+      //name: '',
     ),
   ];
 

@@ -89,6 +89,7 @@ class _MealChartPageState extends State<MealChartPage> {
         ));
   }
 
+
   Widget buildList(snapshot) {
     getBreakfastCounts(snapshot);
     getLunchCounts(snapshot);
@@ -115,7 +116,7 @@ class _MealChartPageState extends State<MealChartPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const [
                               Text(
-                                '2023',
+                                '2023 년',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -185,7 +186,7 @@ class _MealChartPageState extends State<MealChartPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const [
                               Text(
-                                '3',
+                                '3 월',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
