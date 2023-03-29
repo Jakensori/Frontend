@@ -93,6 +93,7 @@ class _MealChartPageState extends State<MealChartPage> {
     getBreakfastCounts(snapshot);
     getLunchCounts(snapshot);
     getDinnerCounts(snapshot);
+
     return AspectRatio(
       aspectRatio: 1,
       child: Stack(

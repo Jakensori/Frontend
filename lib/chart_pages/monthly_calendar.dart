@@ -17,10 +17,9 @@ class _CalendarState extends State<Calendar> {
   @override
   void initState() {
     super.initState();
-    //monthRecord = MonthRecordProvider().fetchMonthRecord();
+    monthRecord = MonthRecordProvider().fetchMonthRecord();
   }
 
-  /*
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -45,9 +44,12 @@ class _CalendarState extends State<Calendar> {
           ),
         ));
   }
+  Widget buildList(snapshot) {
 
-   */
-  Widget build(BuildContext context) {
+
+
+
+
     return MaterialApp(
       localizationsDelegates: [
         //GlobalMaterialLocalizations.delegate,
@@ -132,8 +134,6 @@ List<Meeting> _getDataSource() {
     Meeting('1,500',DateTime(2023,3,3),DateTime(2023,3,3),Colors.blue,false),
     Meeting('1,900',DateTime(2023,3,4),DateTime(2023,3,4),Colors.red,false),
     Meeting('800',DateTime(2023,3,5),DateTime(2023,3,5),Colors.blue,false),
-
-
   ];
 
   final List<Meeting> meetings2 = <Meeting>[
@@ -142,7 +142,6 @@ List<Meeting> _getDataSource() {
     Meeting('500',DateTime(2023,3,3),DateTime(2023,3,3),PRIMARY_COLOR,false),
     Meeting('0',DateTime(2023,3,4),DateTime(2023,3,4),PRIMARY_COLOR,false),
     Meeting('500',DateTime(2023,3,5),DateTime(2023,3,5),PRIMARY_COLOR,false),
-
   ];
 
   final DateTime today = DateTime.now();
