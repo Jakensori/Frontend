@@ -8,6 +8,8 @@ import 'package:temp_project/donate.dart';
 import 'package:temp_project/collection.dart';
 import 'package:temp_project/my_page.dart';
 
+import 'package:temp_project/start.dart';
+
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:cupertino_icons/cupertino_icons.dart';
 
@@ -26,7 +28,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: StartPage(),
+      //home: HomePage(),
     );
   }
 }

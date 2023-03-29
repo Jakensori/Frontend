@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:temp_project/const/colors.dart';
 import 'login.dart';
+import 'join.dart';
 
 class StartPage extends StatelessWidget {
   const StartPage({Key? key}) : super(key: key);
@@ -24,15 +25,16 @@ class StartPage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(20),
                 ),
+                SizedBox(height: 50.0),
                 Text(
-                  '내끼\n니끼',
+                  'PASS\nthe\nMEAL',
                   style: TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 50.0),
+                SizedBox(height: 60.0),
                 Container(
                   width: double.infinity,
                   height: 40.0,
@@ -47,20 +49,27 @@ class StartPage extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       primary: PRIMARY_COLOR,
                     ),
-                    child: Text('로그인하기'),
+                    child: Text('로그인하기',
+                        style: TextStyle(fontSize: 17, color: BLACK_COLOR)),
                   ),
                 ),
-                SizedBox(height: 15.0),
+                SizedBox(height: 18.0),
                 Container(
                   width: double.infinity,
                   height: 40.0,
                   margin: const EdgeInsets.fromLTRB(50, 0, 50, 0),
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Join()),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       primary: PRIMARY_COLOR,
                     ),
-                    child: Text('회원가입하기'),
+                    child: Text('회원가입하기',
+                        style: TextStyle(fontSize: 17, color: BLACK_COLOR)),
                   ),
                 ),
               ],
