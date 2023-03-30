@@ -8,15 +8,16 @@ class MealProvider with ChangeNotifier {
   MealRecord? _mealRecord;
   MealRecord? get mealRecord => _mealRecord;
 
+  //GET 함수
   Future<MealRecord> fetchMealRecord() async {
     print("함수 들어옴");
 
-    var url = Uri.parse('http://192.168.187.25:8000/record/2/');
+    var url = Uri.parse('http://192.168.187.21:8000/record/2/');
     Map<String, String>? headers = {
       'Content-Type': 'application/json; charset=UTF-8',
     };
     final response = await http.get(url, headers: headers);
-    print('응답했다');
+    print('GET 응답');
 
     if (response.statusCode == 200) {
       //만약 서버가 ok응답을 반환하면, json을 파싱합니다
@@ -34,24 +35,31 @@ class MealProvider with ChangeNotifier {
     }
   }
 
-/*
-  _postRequest() async {
-    String url = 'http://192.168.187.25:8000/record/upload';
+  Future<http.Response> postMealRecord(MealInfo mealInfo) async {
+    var url = Uri.parse('http://192.168.187.25:8000/record/upload');
 
-    http.Response response = await http.post(url, headers: <String, String>{
-      'Content-Type': 'application/x-www-form-urlencoded',
-    }, body: <String, String>{
-      ''
+    http.Response? response = await http.post(url, headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    }, body: <String, dynamic>{
+      'when': mealInfo.when,
+      'category': mealInfo.category,
+      'price': mealInfo.price,
+      'memo': mealInfo.memo
     });
+    print('POST 응답');
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw Exception('POST 실패');
+    }
   }
-  */
 }
 
 class MealInfo {
-  final String? when;
-  final String? category;
-  final int? price;
-  final String? memo;
+  String? when;
+  String? category;
+  int? price;
+  String? memo;
 
   MealInfo(
       {required this.when,
@@ -90,9 +98,11 @@ class MealRecord {
         consumption: json["comsumption"]);
   }
 
+/*
   dynamic toJson() => {
         "meal": meal,
         "day_budget": day_budget,
         "consumption": consumption,
       };
+*/
 }

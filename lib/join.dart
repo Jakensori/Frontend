@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:temp_project/const/colors.dart';
+import 'package:temp_project/main.dart';
 
 class Join extends StatefulWidget {
   const Join({Key? key}) : super(key: key);
@@ -73,7 +74,12 @@ class _Join extends State<Join> {
                   height: 40.0,
                   margin: const EdgeInsets.only(top: 30),
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomePage()),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       primary: PRIMARY_COLOR,
                     ),

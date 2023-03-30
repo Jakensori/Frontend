@@ -28,8 +28,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      //home: StartPage(),
+
       home: HomePage(),
+      //home: StartPage(),
+
     );
   }
 }
@@ -50,10 +52,10 @@ class _HomePageState extends State<HomePage> {
     Donate(),
     Collection(),
     MyPage(
-      //myDonations: '',
-      //myLife: '',
-      //name: '',
-    ),
+        //myDonations: '',
+        //myLife: '',
+        //name: '',
+        ),
   ];
 
   void _onItemTapped(int index) {

@@ -49,7 +49,7 @@ class Donate extends StatelessWidget {
             margin: EdgeInsets.fromLTRB(70, 200, 180, 5),
             child: TextButton(
               child: Text(
-                '저금 내역 보기',
+                '기부 리스트 보기',
                 style: TextStyle(
                   fontSize: 12, // 폰트 크기
                   fontWeight: FontWeight.w600, // 폰트 두께
@@ -60,7 +60,10 @@ class Donate extends StatelessWidget {
                 // 페이지 이동
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Savings()),
+                  MaterialPageRoute(
+                      builder: (context) => SavingPage(
+                            title: '',
+                          )),
                 );
               },
             ),
