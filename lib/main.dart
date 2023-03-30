@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: StartPage(),
+
       //home: HomePage(),
     );
   }
@@ -46,7 +47,7 @@ class _HomePageState extends State<HomePage> {
 
   final List<Widget> _widgetOptions = [
     Record(),
-    //Chart(),
+    Chart(),
     Donate(),
     Collection(),
     MyPage(
