@@ -1,5 +1,6 @@
 import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -26,6 +27,7 @@ class _Record extends State<Record> {
   List<MealInfo> othersList = [];
 
   late final Future<MealRecord>? mealRecord;
+  MealInfo mealInfo = new MealInfo(when: '', category: '', price: 0, memo: '');
 
   @override
   void initState() {
@@ -80,6 +82,7 @@ class _Record extends State<Record> {
               child: Text('No data found'),
             );
             // Future 객체가 null 인 경우
+
           }
         });
   }
@@ -777,8 +780,9 @@ class _Record extends State<Record> {
                                     "기타"
                                   ],
                                   buttonLables: ["아침", "점심", "저녁", "간식", "기타"],
-                                  checkBoxButtonValues: (values) {
-                                    print(values);
+                                  checkBoxButtonValues: (when) {
+                                    mealInfo.when = when.toString();
+                                    print(when);
                                   },
                                   spacing: 2,
                                   horizontal: false,
@@ -816,8 +820,9 @@ class _Record extends State<Record> {
                                     "기타"
                                   ],
                                   buttonLables: ["집밥", "외식", "배달", "카페", "기타"],
-                                  checkBoxButtonValues: (values) {
-                                    print(values);
+                                  checkBoxButtonValues: (category) {
+                                    mealInfo.category = category.toString();
+                                    print(category);
                                   },
                                   spacing: 2,
                                   horizontal: false,
@@ -843,7 +848,13 @@ class _Record extends State<Record> {
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 20.0, vertical: 0.0),
-                                        child: TextField(),
+                                        child: TextField(
+                                          onChanged: (text) {
+                                            setState(() {
+                                              mealInfo.price = int.parse(text);
+                                            });
+                                          },
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -866,7 +877,13 @@ class _Record extends State<Record> {
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 20.0, vertical: 0.0),
-                                        child: TextField(),
+                                        child: TextField(
+                                          onChanged: (text) {
+                                            setState(() {
+                                              mealInfo.when = text;
+                                            });
+                                          },
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -880,14 +897,7 @@ class _Record extends State<Record> {
                                         Navigator.pop(context);
                                         print("된다?");
                                         // 정산하는 함수 연결해야 함.
-                                        breakfastList[
-                                                breakfastList.length + 1] =
-                                            new MealInfo(
-                                                when: "점심",
-                                                category: "외식",
-                                                price: 9500,
-                                                memo: "덮밥");
-                                        differ -= 9500;
+                                        MealProvider().postMealRecord(mealInfo);
                                       },
                                       style: ElevatedButton.styleFrom(
                                           primary: PRIMARY_COLOR,

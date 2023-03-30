@@ -35,28 +35,31 @@ class MealProvider with ChangeNotifier {
     }
   }
 
-/*
-  Future<http.Response> postMealRecord() async {
+  Future<http.Response> postMealRecord(MealInfo mealInfo) async {
     var url = Uri.parse('http://192.168.187.25:8000/record/upload');
 
-    http.Response response = await http.post(url, headers: <String, String>{
-      'Content-Type': 'application/x-www-form-urlencoded',
+    http.Response? response = await http.post(url, headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
     }, body: <String, dynamic>{
-      'meal': MealRecord,
-      'consumption' :
+      'when': mealInfo.when,
+      'category': mealInfo.category,
+      'price': mealInfo.price,
+      'memo': mealInfo.memo
     });
     print('POST 응답');
-
-    return json.decode(source);
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw Exception('POST 실패');
+    }
   }
-*/
 }
 
 class MealInfo {
-  final String? when;
-  final String? category;
-  final int? price;
-  final String? memo;
+  String? when;
+  String? category;
+  int? price;
+  String? memo;
 
   MealInfo(
       {required this.when,
