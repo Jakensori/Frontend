@@ -11,7 +11,7 @@ class MealProvider with ChangeNotifier {
   Future<MealRecord> fetchMealRecord() async {
     print("함수 들어옴");
 
-    var url = Uri.parse('http://192.168.187.25:8000/record/2/');
+    var url = Uri.parse('http://192.168.187.21:8000/record/2/');
     Map<String, String>? headers = {
       'Content-Type': 'application/json; charset=UTF-8',
     };

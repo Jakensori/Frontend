@@ -11,10 +11,10 @@ class MonthRecordProvider with ChangeNotifier {
 
   Future<MonthRecord> fetchMonthRecord() async {
     print("함수 들어옴");
-    //final Parameters = {'year': 2023, 'month': 3}.map((key, value) =>
-    //    MapEntry(key, value.toString())); // int 허용 안되서 string으로 바꿔줌.
+    final Parameters = {'year': 2023, 'month': 0}.map((key, value) =>
+       MapEntry(key, value.toString())); // int 허용 안되서 string으로 바꿔줌.
 
-    var url = Uri.parse('http://192.168.187.25:8000/record/2/');
+    var url = Uri.parse('http://192.168.187.21:8000/record/accountbook/');
     Map<String, String>? headers = {
       'Content-Type': 'application/json; charset=UTF-8',
     };
@@ -26,9 +26,9 @@ class MonthRecordProvider with ChangeNotifier {
       //만약 서버가 ok응답을 반환하면, json을 파싱합니다
       print('응답했다');
       print(json.decode(utf8.decode(response.bodyBytes))); // 한글 깨짐 해결 !
-      _monthChart = MonthRecord.fromJson(json.decode(response.body));
+      _monthChart = MonthRecord.fromJson(json.decode(utf8.decode(response.bodyBytes)));
       notifyListeners();
-      return MonthRecord.fromJson(json.decode(response.body));
+      return MonthRecord.fromJson(json.decode(utf8.decode(response.bodyBytes)));
     } else {
       //만약 응답이 ok가 아니면 에러를 던집니다.
       throw Exception('계좌정보를 불러오는데 실패했습니다');
@@ -67,7 +67,7 @@ class MonthRecord {
   });
 
   factory MonthRecord.fromJson(Map<String, dynamic> parsedjson) {
-    var list = parsedjson['daily_record'] as List;
+    var list = parsedjson['하루 기록들'] as List;
     List<DailyRecord> daily_record_list = list.map((i)=> DailyRecord.fromJson(i)).toList();
 
     return MonthRecord(
