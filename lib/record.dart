@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:temp_project/const/colors.dart';
+import 'package:temp_project/settlement.dart';
 import 'package:weekly_date_picker/weekly_date_picker.dart';
 import 'meal.dart';
 import 'dart:async';
@@ -27,12 +28,15 @@ class _Record extends State<Record> {
   List<MealInfo> othersList = [];
 
   late final Future<MealRecord>? mealRecord;
+  late final Future<SettlementInfo>? settleInfo;
+
   MealInfo mealInfo = new MealInfo(when: '', category: '', price: 0, memo: '');
 
   @override
   void initState() {
     super.initState();
     mealRecord = MealProvider().fetchMealRecord();
+    settleInfo = SettlementProvider().getSettlement();
   }
 
   @override
