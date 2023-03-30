@@ -50,10 +50,10 @@ class _HomePageState extends State<HomePage> {
     Donate(),
     Collection(),
     MyPage(
-      //myDonations: '',
-      //myLife: '',
-      //name: '',
-    ),
+        //myDonations: '',
+        //myLife: '',
+        //name: '',
+        ),
   ];
 
   void _onItemTapped(int index) {
