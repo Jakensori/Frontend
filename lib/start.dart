@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'package:temp_project/const/colors.dart';
 import 'login.dart';
 import 'join.dart';
@@ -80,3 +80,4 @@ class StartPage extends StatelessWidget {
     );
   }
 }
+*/

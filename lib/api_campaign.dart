@@ -47,7 +47,7 @@ class CampaignRecord {
 
 Future<List<CampaignRecord>> fetchCampaign() async {
   final response =
-      await http.get(Uri.parse('http://127.0.0.1:8000/campaigns/'));
+      await http.get(Uri.parse('http://127.0.0.1:8000/campaigns/posts/all'));
   if (response.statusCode == 200) {
     final List<dynamic> jsonData = json.decode(utf8.decode(response.bodyBytes));
     return jsonData
@@ -74,13 +74,13 @@ class MyApp extends StatelessWidget {
             initialData: [],
           ),
         ],
-        child: HomePage(),
+        child: CampaignPage(),
       ),
     );
   }
 }
 
-class HomePage extends StatelessWidget {
+class CampaignPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final campaigns = context.watch<List<CampaignRecord>>();

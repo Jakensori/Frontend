@@ -16,7 +16,6 @@ class _MyPageState extends State<MyPage> {
 import 'package:flutter/material.dart';
 import 'package:temp_project/collection.dart';
 
-
 class MyPage extends StatelessWidget {
   /*final String name;
   final String myLife;
@@ -30,14 +29,11 @@ class MyPage extends StatelessWidget {
   }*/
       );
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
         backgroundColor: Color(0xffFFC646),
-
         title: Text(
           '마이페이지',
           style: TextStyle(
@@ -46,9 +42,7 @@ class MyPage extends StatelessWidget {
             color: Colors.black, // 폰트 색상
           ),
         ),
-
         centerTitle: true,
-
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -56,7 +50,6 @@ class MyPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-
               //'이름: $name',
               '이름: \n',
 
@@ -64,7 +57,6 @@ class MyPage extends StatelessWidget {
             ),
             SizedBox(height: 16),
             Text(
-
               //'나의 생활: $myLife',
               '나의 생활: ',
 
@@ -72,14 +64,11 @@ class MyPage extends StatelessWidget {
             ),
             SizedBox(height: 8),
             Text(
-
               '- 한 달 식비 예산 입력\n\n',
-
               style: TextStyle(fontSize: 16),
             ),
             SizedBox(height: 16),
             Text(
-
               //'나의 기부: $myDonations',
               '나의 기부: ',
 
@@ -87,9 +76,7 @@ class MyPage extends StatelessWidget {
             ),
             SizedBox(height: 8),
             Text(
-
               '- 기부금 적립 퍼센트 입력\n',
-
               style: TextStyle(fontSize: 16),
             ),
             SizedBox(height: 8),
@@ -104,14 +91,11 @@ class MyPage extends StatelessWidget {
                 );
               },
               child: Text(
-
                 '- 기부 내역 보기\n',
-
                 style: TextStyle(fontSize: 16),
               ),
             ),
             SizedBox(height: 16),
-
             Text(
               //'나의 기부: $myDonations',
               '도움말 ',
@@ -143,7 +127,6 @@ class MyPage extends StatelessWidget {
               child: Text('도움말'),
 
             ),*/
-
           ],
         ),
       ),
@@ -157,16 +140,12 @@ class DonationHistoryScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('기부 내역'),
-
         backgroundColor: Color(0xffFFC646),
-
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Text(
-
           '기부 내역을 여기에 추가할 예정입니다.',
-
           style: TextStyle(fontSize: 20),
         ),
       ),
