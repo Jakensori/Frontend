@@ -47,7 +47,9 @@ class CampaignRecord {
 
 Future<List<CampaignRecord>> fetchCampaign() async {
   final response =
-      await http.get(Uri.parse('http://127.0.0.1:8000/campaigns/posts/all'));
+
+      await http.get(Uri.parse('http://192.168.187.21:8000/campaign/posts/all'));
+
   if (response.statusCode == 200) {
     final List<dynamic> jsonData = json.decode(utf8.decode(response.bodyBytes));
     return jsonData

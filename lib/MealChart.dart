@@ -13,7 +13,7 @@ class MealProvider with ChangeNotifier {
     final Parameters = {'year': 2023, 'month': 3}.map((key, value) =>
         MapEntry(key, value.toString())); // int 허용 안되서 string으로 바꿔줌.
 
-    var url = Uri.parse('http://172.30.1.47:8000/record/time/2/');
+    var url = Uri.parse('http://192.168.187.21:8000/record/time/2/');
     Map<String, String>? headers = {
       'Content-Type': 'application/json; charset=UTF-8',
     };
@@ -25,9 +25,9 @@ class MealProvider with ChangeNotifier {
       //만약 서버가 ok응답을 반환하면, json을 파싱합니다
       print('응답했다');
       print(json.decode(utf8.decode(response.bodyBytes))); // 한글 깨짐 해결 !
-      _mealChart = MealChart.fromJson(json.decode(response.body));
+      _mealChart = MealChart.fromJson(json.decode(utf8.decode(response.bodyBytes)));
       notifyListeners();
-      return MealChart.fromJson(json.decode(response.body));
+      return MealChart.fromJson(json.decode(utf8.decode(response.bodyBytes)));
     } else {
       //만약 응답이 ok가 아니면 에러를 던집니다.
       throw Exception('계좌정보를 불러오는데 실패했습니다');
