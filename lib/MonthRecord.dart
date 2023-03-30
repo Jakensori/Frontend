@@ -11,8 +11,10 @@ class MonthRecordProvider with ChangeNotifier {
 
   Future<MonthRecord> fetchMonthRecord() async {
     print("함수 들어옴");
+
     final Parameters = {'year': 2023, 'month': 0}.map((key, value) =>
        MapEntry(key, value.toString())); // int 허용 안되서 string으로 바꿔줌.
+
 
     var url = Uri.parse('http://192.168.187.21:8000/record/accountbook/');
     Map<String, String>? headers = {

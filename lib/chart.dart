@@ -1,9 +1,10 @@
-/*import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:temp_project/chart_pages/monthly_calendar.dart';
 import 'package:temp_project/chart_pages/expense_chart.dart';
 import 'package:temp_project/chart_pages/meal_chart.dart';
 import 'package:temp_project/const/colors.dart';
+import 'MealChart.dart';
 
 class Chart extends StatefulWidget {
   const Chart({Key? key}) : super(key: key);
@@ -19,12 +20,12 @@ class Chart extends StatefulWidget {
 }
 
 class _ChartState extends State<Chart> {
-  Future<MealRecord>? mealRecord;
+  Future<MealChart>? mealChart;
 
   @override
   void initState() {
     super.initState();
-    mealRecord = MealProvider().fetchMealRecord();
+    //mealChart = MealProvider().fetchMealChart();
   }
 
   @override
@@ -54,6 +55,7 @@ class _ChartState extends State<Chart> {
     );
   }
 }
+
 */
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -112,3 +114,4 @@ class _ChartState extends State<Chart> {
     );
   }
 }
+
