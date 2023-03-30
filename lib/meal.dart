@@ -8,6 +8,7 @@ class MealProvider with ChangeNotifier {
   MealRecord? _mealRecord;
   MealRecord? get mealRecord => _mealRecord;
 
+  //GET 함수
   Future<MealRecord> fetchMealRecord() async {
     print("함수 들어옴");
 
@@ -16,7 +17,7 @@ class MealProvider with ChangeNotifier {
       'Content-Type': 'application/json; charset=UTF-8',
     };
     final response = await http.get(url, headers: headers);
-    print('응답했다');
+    print('GET 응답');
 
     if (response.statusCode == 200) {
       //만약 서버가 ok응답을 반환하면, json을 파싱합니다
@@ -35,16 +36,20 @@ class MealProvider with ChangeNotifier {
   }
 
 /*
-  _postRequest() async {
-    String url = 'http://192.168.187.25:8000/record/upload';
+  Future<http.Response> postMealRecord() async {
+    var url = Uri.parse('http://192.168.187.25:8000/record/upload');
 
     http.Response response = await http.post(url, headers: <String, String>{
       'Content-Type': 'application/x-www-form-urlencoded',
-    }, body: <String, String>{
-      ''
+    }, body: <String, dynamic>{
+      'meal': MealRecord,
+      'consumption' :
     });
+    print('POST 응답');
+
+    return json.decode(source);
   }
-  */
+*/
 }
 
 class MealInfo {
@@ -90,9 +95,11 @@ class MealRecord {
         consumption: json["comsumption"]);
   }
 
+/*
   dynamic toJson() => {
         "meal": meal,
         "day_budget": day_budget,
         "consumption": consumption,
       };
+*/
 }
