@@ -29,6 +29,7 @@ class _Record extends State<Record> {
 
   late final Future<MealRecord>? mealRecord;
   late final Future<SettlementInfo>? settleInfo;
+  Future<MealInfo>? _futurePost;
 
   MealInfo mealInfo = new MealInfo(when: '', category: '', price: 0, memo: '');
 
@@ -221,42 +222,12 @@ class _Record extends State<Record> {
 
           SizedBox(height: 40.0),
           // 아침 기록
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: Text(
-              '아침',
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontSize: 17,
-                color: GREY_COLOR,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
+          mealTime('아침'),
           SizedBox(
             height: 5.0,
           ),
           breakfastList.isEmpty
-              ? Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 12.0),
-                  child: Card(
-                    color: Color(0xffF9F9F9),
-                    elevation: 2,
-                    margin:
-                        EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)),
-                    child: ListTile(
-                      title: Text(
-                        '아침식사를 입력하세요',
-                        style: TextStyle(
-                          fontSize: 17.5,
-                          color: BLACK_COLOR,
-                        ),
-                      ),
-                    ),
-                  ),
-                )
+              ? noticeRecord('아침식사')
               : ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -299,42 +270,12 @@ class _Record extends State<Record> {
           SizedBox(height: 30.0),
 
           // 점심 기록
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12.0),
-            child: Text(
-              '점심',
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontSize: 17,
-                color: GREY_COLOR,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
+          mealTime('점심'),
           SizedBox(
             height: 5.0,
           ),
           launchList.isEmpty
-              ? Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 12.0),
-                  child: Card(
-                    color: Color(0xffF9F9F9),
-                    elevation: 2,
-                    margin:
-                        EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)),
-                    child: ListTile(
-                      title: Text(
-                        '점심식사를 입력하세요',
-                        style: TextStyle(
-                          fontSize: 17.5,
-                          color: BLACK_COLOR,
-                        ),
-                      ),
-                    ),
-                  ),
-                )
+              ? noticeRecord('점심식사')
               : ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -377,42 +318,12 @@ class _Record extends State<Record> {
           SizedBox(height: 30.0),
 
           //저녁 기록
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12.0),
-            child: Text(
-              '저녁',
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontSize: 17,
-                color: GREY_COLOR,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
+          mealTime('저녁'),
           SizedBox(
             height: 5.0,
           ),
           dinnerList.isEmpty
-              ? Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 12.0),
-                  child: Card(
-                    color: Color(0xffF9F9F9),
-                    elevation: 2,
-                    margin:
-                        EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)),
-                    child: ListTile(
-                      title: Text(
-                        '저녁식사를 입력하세요',
-                        style: TextStyle(
-                          fontSize: 17.5,
-                          color: BLACK_COLOR,
-                        ),
-                      ),
-                    ),
-                  ),
-                )
+              ? noticeRecord('저녁식사')
               : ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -455,42 +366,12 @@ class _Record extends State<Record> {
           SizedBox(height: 30.0),
 
           //간식 기록
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12.0),
-            child: Text(
-              '간식',
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontSize: 17,
-                color: GREY_COLOR,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
+          mealTime('간식'),
           SizedBox(
             height: 5.0,
           ),
           snackList.isEmpty
-              ? Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 12.0),
-                  child: Card(
-                    color: Color(0xffF9F9F9),
-                    elevation: 2,
-                    margin:
-                        EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)),
-                    child: ListTile(
-                      title: Text(
-                        '간식을 입력하세요',
-                        style: TextStyle(
-                          fontSize: 17.5,
-                          color: BLACK_COLOR,
-                        ),
-                      ),
-                    ),
-                  ),
-                )
+              ? noticeRecord('간식')
               : ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -533,42 +414,12 @@ class _Record extends State<Record> {
           SizedBox(height: 30.0),
 
           //기타
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12.0),
-            child: Text(
-              '기타',
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontSize: 17,
-                color: GREY_COLOR,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
+          mealTime('기타'),
           SizedBox(
             height: 5.0,
           ),
           othersList.isEmpty
-              ? Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 12.0),
-                  child: Card(
-                    color: Color(0xffF9F9F9),
-                    elevation: 2,
-                    margin:
-                        EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)),
-                    child: ListTile(
-                      title: Text(
-                        '기타 식사를 입력하세요',
-                        style: TextStyle(
-                          fontSize: 17.5,
-                          color: BLACK_COLOR,
-                        ),
-                      ),
-                    ),
-                  ),
-                )
+              ? noticeRecord('기타 식사')
               : ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -785,7 +636,8 @@ class _Record extends State<Record> {
                                   ],
                                   buttonLables: ["아침", "점심", "저녁", "간식", "기타"],
                                   checkBoxButtonValues: (when) {
-                                    mealInfo.when = when.toString();
+                                    mealInfo.when =
+                                        when.toString().substring(1, 3);
                                     print(when);
                                   },
                                   spacing: 2,
@@ -825,7 +677,8 @@ class _Record extends State<Record> {
                                   ],
                                   buttonLables: ["집밥", "외식", "배달", "카페", "기타"],
                                   checkBoxButtonValues: (category) {
-                                    mealInfo.category = category.toString();
+                                    mealInfo.category =
+                                        category.toString().substring(1, 3);
                                     print(category);
                                   },
                                   spacing: 2,
@@ -884,7 +737,7 @@ class _Record extends State<Record> {
                                         child: TextField(
                                           onChanged: (text) {
                                             setState(() {
-                                              mealInfo.when = text;
+                                              mealInfo.memo = text;
                                             });
                                           },
                                         ),
@@ -898,10 +751,12 @@ class _Record extends State<Record> {
                                   width: double.infinity,
                                   child: ElevatedButton(
                                       onPressed: () {
+                                        setState(() {
+                                          _futurePost = MealProvider()
+                                              .postMealRecord(mealInfo);
+                                        });
                                         Navigator.pop(context);
                                         print("된다?");
-                                        // 정산하는 함수 연결해야 함.
-                                        MealProvider().postMealRecord(mealInfo);
                                       },
                                       style: ElevatedButton.styleFrom(
                                           primary: PRIMARY_COLOR,
@@ -940,4 +795,60 @@ class _Record extends State<Record> {
       ),
     );
   }
+
+  Padding noticeRecord(String meal) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 12.0),
+      child: Card(
+        color: Color(0xffF9F9F9),
+        elevation: 2,
+        margin: EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: ListTile(
+          title: Text(
+            '{$meal}를 입력하세요',
+            style: TextStyle(
+              fontSize: 17.5,
+              color: BLACK_COLOR,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Padding mealTime(String when) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20.0),
+      child: Text(
+        '$when',
+        textAlign: TextAlign.left,
+        style: TextStyle(
+          fontSize: 17,
+          color: GREY_COLOR,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    );
+  }
 }
+
+/*
+class DaySettlement extends StatefulWidget {
+  const DaySettlement({Key? key}) : super(key: key);
+
+  @override
+  State<DaySettlement> createState() => _DaySettlement();
+}
+
+class _DaySettlement extends State<DaySettlement> {
+  late final Future<SettlementInfo>? settleInfo;
+  
+  @override
+  void initState() {
+    super.initState();
+    mealRecord = MealProvider().fetchMealRecord();
+    settleInfo = SettlementProvider().getSettlement();
+  }
+}
+*/

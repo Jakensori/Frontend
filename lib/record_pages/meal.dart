@@ -35,22 +35,24 @@ class MealProvider with ChangeNotifier {
     }
   }
 
-  Future<http.Response> postMealRecord(MealInfo mealInfo) async {
+  //POST
+  Future<MealInfo> postMealRecord(MealInfo mealInfo) async {
     var url = Uri.parse('http://192.168.187.25:8000/record/upload');
 
-    http.Response? response = await http.post(url,
+    final response = await http.post(url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode({
+        body: json.encode(<String, dynamic>{
           'when': mealInfo.when,
           'category': mealInfo.category,
           'price': mealInfo.price,
           'memo': mealInfo.memo
         }));
+
     print('POST 응답');
-    if (response.statusCode == 200) {
-      return json.decode(response.body);
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      return MealInfo.fromJson(json.decode(utf8.decode(response.bodyBytes)));
     } else {
       throw Exception('POST 실패');
     }
