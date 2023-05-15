@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:temp_project/const/colors.dart';
+import 'package:temp_project/record_pages/record_controller.dart';
 import 'package:temp_project/settlement.dart';
 import 'package:weekly_date_picker/weekly_date_picker.dart';
 import 'meal.dart';
@@ -36,7 +37,7 @@ class _Record extends State<Record> {
   @override
   void initState() {
     super.initState();
-    mealRecord = MealProvider().fetchMealRecord();
+    mealRecord = MealProvider().getMealRecord();
     settleInfo = SettlementProvider().getSettlement();
   }
 
@@ -93,6 +94,11 @@ class _Record extends State<Record> {
   }
 
   Widget buildList(snapshot) {
+    breakfastList = [];
+    launchList = [];
+    dinnerList = [];
+    snackList = [];
+    othersList = [];
     for (int i = 0; i < snapshot.meal.length; i++) {
       if ((snapshot.meal[i].when) == "아침") {
         breakfastList.add(snapshot.meal[i]);
@@ -806,7 +812,7 @@ class _Record extends State<Record> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: ListTile(
           title: Text(
-            '{$meal}를 입력하세요',
+            '$meal를 입력하세요',
             style: TextStyle(
               fontSize: 17.5,
               color: BLACK_COLOR,
