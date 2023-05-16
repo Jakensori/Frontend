@@ -2,7 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:temp_project/record.dart';
+import 'package:temp_project/record_pages/record.dart';
 import 'package:temp_project/chart.dart';
 import 'package:temp_project/donate.dart';
 import 'package:temp_project/collection.dart';
@@ -28,10 +28,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-
-      home: HomePage(),
       //home: StartPage(),
-
+      home: HomePage(),
     );
   }
 }
