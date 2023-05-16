@@ -30,7 +30,7 @@ class _Record extends State<Record> {
 
   late final Future<MealRecord>? mealRecord;
   late final Future<SettlementInfo>? settleInfo;
-  Future<MealInfo>? _futurePost;
+  Future<MealInfo>? _mealInfo;
 
   MealInfo mealInfo = new MealInfo(when: '', category: '', price: 0, memo: '');
 
@@ -64,6 +64,27 @@ class _Record extends State<Record> {
       ),
       backgroundColor: Color(0xffFFFFFF),
       body: _Fetch(context),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          showModalBottomSheet<void>(
+              context: context,
+              isScrollControlled: true,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(100.0),
+              ),
+              builder: (BuildContext context) {
+                return add_record(context);
+              });
+        },
+        label: const Text(
+          '추가하기',
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold
+              //color: BLACK_COLOR,
+              ),
+        ),
+        icon: const Icon(Icons.add),
+        backgroundColor: PRIMARY_COLOR,
+      ),
     ));
   }
 
@@ -99,19 +120,24 @@ class _Record extends State<Record> {
     dinnerList = [];
     snackList = [];
     othersList = [];
+
     for (int i = 0; i < snapshot.meal.length; i++) {
-      if ((snapshot.meal[i].when) == "아침") {
-        breakfastList.add(snapshot.meal[i]);
-      } else if ((snapshot.meal[i].when) == "점심") {
-        launchList.add(snapshot.meal[i]);
-        print(snapshot.meal[i]);
-      } else if ((snapshot.meal[i].when) == "저녁") {
-        dinnerList.add(snapshot.meal[i]);
-        print(snapshot.meal[i]);
-      } else if ((snapshot.meal[i].when) == "간식") {
-        snackList.add(snapshot.meal[i]);
-      } else if ((snapshot.meal[i].when) == "기타") {
-        othersList.add(snapshot.meal[i]);
+      switch (snapshot.meal[i].when) {
+        case "아침":
+          breakfastList.add(snapshot.meal[i]);
+          break;
+        case "점심":
+          launchList.add(snapshot.meal[i]);
+          break;
+        case "저녁":
+          dinnerList.add(snapshot.meal[i]);
+          break;
+        case "간식":
+          snackList.add(snapshot.meal[i]);
+          break;
+        case "기타":
+          othersList.add(snapshot.meal[i]);
+          break;
       }
     }
     var differ = (snapshot.day_budget - snapshot.consumption);
@@ -144,10 +170,7 @@ class _Record extends State<Record> {
           Stack(
             children: [
               Container(
-                width: double.infinity,
-                height: 180,
-                color: PRIMARY_COLOR,
-              ),
+                  width: double.infinity, height: 180, color: PRIMARY_COLOR),
               Container(
                   width: 460,
                   height: 150,
@@ -239,8 +262,7 @@ class _Record extends State<Record> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: breakfastList.length,
                   itemBuilder: (context, index) {
-                    MealInfo breakfast =
-                        breakfastList[index]; // index에 해당하는 bucket 가져오기
+                    MealInfo breakfast = breakfastList[index];
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: Card(
@@ -287,8 +309,7 @@ class _Record extends State<Record> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: launchList.length,
                   itemBuilder: (context, index) {
-                    MealInfo launch =
-                        launchList[index]; // index에 해당하는 bucket 가져오기
+                    MealInfo launch = launchList[index];
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: Card(
@@ -335,8 +356,7 @@ class _Record extends State<Record> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: dinnerList.length,
                   itemBuilder: (context, index) {
-                    MealInfo dinner =
-                        dinnerList[index]; // index에 해당하는 bucket 가져오기
+                    MealInfo dinner = dinnerList[index];
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: Card(
@@ -383,8 +403,7 @@ class _Record extends State<Record> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: snackList.length,
                   itemBuilder: (context, index) {
-                    MealInfo snack =
-                        snackList[index]; // index에 해당하는 bucket 가져오기
+                    MealInfo snack = snackList[index];
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: Card(
@@ -431,8 +450,7 @@ class _Record extends State<Record> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: othersList.length,
                   itemBuilder: (context, index) {
-                    MealInfo others =
-                        othersList[index]; // index에 해당하는 bucket 가져오기
+                    MealInfo others = othersList[index];
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: Card(
@@ -567,237 +585,192 @@ class _Record extends State<Record> {
                   });
             },
           ),
-          //
-          //
-          // 기록추가 모달창
-          Container(
-            alignment: Alignment.bottomRight,
-            child: MaterialButton(
-              onPressed: () {
-                showModalBottomSheet<void>(
-                    context: context,
-                    isScrollControlled: true,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(100.0),
-                    ),
-                    builder: (BuildContext context) {
-                      return SingleChildScrollView(
-                        padding: EdgeInsets.only(
-                            bottom: MediaQuery.of(context).viewInsets.bottom),
-                        child: Container(
-                          height: 800,
-                          decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(25),
-                                topRight: Radius.circular(25),
-                              )),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 22.0, vertical: 40.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              // ignore: prefer_const_literals_to_create_immutables
-                              children: [
-                                SizedBox(height: 10.0),
-                                Container(
-                                  width: double.maxFinite,
-                                  child: Text(
-                                    '기록하기',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.w600,
-                                      color: BLACK_COLOR,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(height: 20.0),
-
-                                // 식사 체크
-                                Text(
-                                  '식사',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                    fontSize: 19,
-                                    color: GREY_COLOR,
-                                  ),
-                                ),
-                                CustomCheckBoxGroup(
-                                  selectedColor: PRIMARY_COLOR,
-                                  unSelectedColor: Colors.white,
-                                  buttonTextStyle: ButtonTextStyle(
-                                      selectedColor: BLACK_COLOR,
-                                      unSelectedColor: BLACK_COLOR,
-                                      textStyle: TextStyle(
-                                        fontSize: 15,
-                                        color: BLACK_COLOR,
-                                      )),
-                                  buttonValuesList: [
-                                    "아침",
-                                    "점심",
-                                    "저녁",
-                                    "간식",
-                                    "기타"
-                                  ],
-                                  buttonLables: ["아침", "점심", "저녁", "간식", "기타"],
-                                  checkBoxButtonValues: (when) {
-                                    mealInfo.when =
-                                        when.toString().substring(1, 3);
-                                    print(when);
-                                  },
-                                  spacing: 2,
-                                  horizontal: false,
-                                  enableButtonWrap: true,
-                                  width: 60,
-                                  padding: 5,
-                                  enableShape: true,
-                                ),
-                                SizedBox(height: 13.0),
-
-                                //방식 체크
-                                Text(
-                                  '방식',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                    fontSize: 19,
-                                    color: Color(0xff999999),
-                                  ),
-                                ),
-                                CustomCheckBoxGroup(
-                                  selectedColor: PRIMARY_COLOR,
-                                  unSelectedColor: Colors.white,
-                                  buttonTextStyle: ButtonTextStyle(
-                                      selectedColor: BLACK_COLOR,
-                                      unSelectedColor: BLACK_COLOR,
-                                      textStyle: TextStyle(
-                                        fontSize: 15,
-                                        color: BLACK_COLOR,
-                                      )),
-                                  buttonValuesList: [
-                                    "집밥",
-                                    "외식",
-                                    "배달",
-                                    "카페",
-                                    "기타"
-                                  ],
-                                  buttonLables: ["집밥", "외식", "배달", "카페", "기타"],
-                                  checkBoxButtonValues: (category) {
-                                    mealInfo.category =
-                                        category.toString().substring(1, 3);
-                                    print(category);
-                                  },
-                                  spacing: 2,
-                                  horizontal: false,
-                                  enableButtonWrap: true,
-                                  width: 60,
-                                  padding: 5,
-                                  enableShape: true,
-                                ),
-                                SizedBox(height: 13.0),
-
-                                // 가격 입력
-                                Row(
-                                  children: [
-                                    Text(
-                                      '금액',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontSize: 19,
-                                        color: GREY_COLOR,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 20.0, vertical: 0.0),
-                                        child: TextField(
-                                          onChanged: (text) {
-                                            setState(() {
-                                              mealInfo.price = int.parse(text);
-                                            });
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-
-                                SizedBox(height: 13.0),
-
-                                // 내용 입력
-                                Row(
-                                  children: [
-                                    Text(
-                                      '내용',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontSize: 19,
-                                        color: GREY_COLOR,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 20.0, vertical: 0.0),
-                                        child: TextField(
-                                          onChanged: (text) {
-                                            setState(() {
-                                              mealInfo.memo = text;
-                                            });
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 13.0),
-
-                                Container(
-                                  width: double.infinity,
-                                  child: ElevatedButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          _futurePost = MealProvider()
-                                              .postMealRecord(mealInfo);
-                                        });
-                                        Navigator.pop(context);
-                                        print("된다?");
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                          primary: PRIMARY_COLOR,
-                                          fixedSize: Size(250, 20),
-                                          alignment: Alignment.center),
-                                      child: Text(
-                                        '저장하기',
-                                        style: TextStyle(
-                                            color: BLACK_COLOR,
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.w500),
-                                      )),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    });
-              },
-
-              // 기록추가 버튼
-              color: PRIMARY_COLOR,
-              textColor: Colors.white,
-              child: Icon(
-                Icons.add,
-                size: 24,
-              ),
-              padding: EdgeInsets.all(16),
-              shape: CircleBorder(),
-            ),
-          ),
 
           SizedBox(height: 20.0),
         ],
+      ),
+    );
+  }
+
+  SingleChildScrollView add_record(BuildContext context) {
+    return SingleChildScrollView(
+      padding:
+          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      child: Container(
+        height: 800,
+        decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25), topRight: Radius.circular(25))),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 22.0, vertical: 40.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            // ignore: prefer_const_literals_to_create_immutables
+            children: [
+              SizedBox(height: 10.0),
+              Container(
+                width: double.maxFinite,
+                child: Text(
+                  '기록하기',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.w600,
+                    color: BLACK_COLOR,
+                  ),
+                ),
+              ),
+              SizedBox(height: 20.0),
+
+              // 식사 체크
+              Text(
+                '식사',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: 19,
+                  color: GREY_COLOR,
+                ),
+              ),
+              CustomCheckBoxGroup(
+                selectedColor: PRIMARY_COLOR,
+                unSelectedColor: Colors.white,
+                buttonTextStyle: ButtonTextStyle(
+                    selectedColor: BLACK_COLOR,
+                    unSelectedColor: BLACK_COLOR,
+                    textStyle: TextStyle(
+                      fontSize: 15,
+                      color: BLACK_COLOR,
+                    )),
+                buttonValuesList: ["아침", "점심", "저녁", "간식", "기타"],
+                buttonLables: ["아침", "점심", "저녁", "간식", "기타"],
+                checkBoxButtonValues: (when) {
+                  mealInfo.when = when.toString().substring(1, 3);
+                },
+                spacing: 2,
+                horizontal: false,
+                enableButtonWrap: true,
+                width: 60,
+                padding: 5,
+                enableShape: true,
+              ),
+              SizedBox(height: 13.0),
+
+              //방식 체크
+              Text(
+                '방식',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: 19,
+                  color: Color(0xff999999),
+                ),
+              ),
+              CustomCheckBoxGroup(
+                selectedColor: PRIMARY_COLOR,
+                unSelectedColor: Colors.white,
+                buttonTextStyle: ButtonTextStyle(
+                    selectedColor: BLACK_COLOR,
+                    unSelectedColor: BLACK_COLOR,
+                    textStyle: TextStyle(
+                      fontSize: 15,
+                      color: BLACK_COLOR,
+                    )),
+                buttonValuesList: ["집밥", "외식", "배달", "카페", "기타"],
+                buttonLables: ["집밥", "외식", "배달", "카페", "기타"],
+                checkBoxButtonValues: (category) {
+                  mealInfo.category = category.toString().substring(1, 3);
+                },
+                spacing: 2,
+                horizontal: false,
+                enableButtonWrap: true,
+                width: 60,
+                padding: 5,
+                enableShape: true,
+              ),
+              SizedBox(height: 13.0),
+
+              // 가격 입력
+              Row(
+                children: [
+                  Text(
+                    '금액',
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 19,
+                      color: GREY_COLOR,
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 0.0),
+                      child: TextField(
+                        onChanged: (text) {
+                          setState(() {
+                            mealInfo.price = int.parse(text);
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              SizedBox(height: 13.0),
+
+              // 내용 입력
+              Row(
+                children: [
+                  Text(
+                    '내용',
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 19,
+                      color: GREY_COLOR,
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 0.0),
+                      child: TextField(
+                        onChanged: (text) {
+                          setState(() {
+                            mealInfo.memo = text;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 13.0),
+
+              Container(
+                width: double.infinity,
+                child: ElevatedButton(
+                    onPressed: () async {
+                      setState(() {
+                        _mealInfo = MealProvider().postMealRecord(mealInfo);
+                        mealRecord;
+                      });
+                      Navigator.pop(context);
+                    },
+                    style: ElevatedButton.styleFrom(
+                        primary: PRIMARY_COLOR,
+                        fixedSize: Size(250, 20),
+                        alignment: Alignment.center),
+                    child: Text(
+                      '저장하기',
+                      style: TextStyle(
+                          color: BLACK_COLOR,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w500),
+                    )),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
