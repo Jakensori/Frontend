@@ -14,6 +14,7 @@ class Calendar extends StatefulWidget {
 class _CalendarState extends State<Calendar> {
   Future<MonthRecord>? monthRecord;
 
+
   @override
   void initState() {
     super.initState();
@@ -44,10 +45,43 @@ class _CalendarState extends State<Calendar> {
           ),
         ));
   }
+
+
+
   Widget buildList(snapshot) {
+    final List<Meeting> meetings1 = <Meeting>[];
+    final List<Meeting> meetings2 = <Meeting>[];
+    List<Meeting> _getDataSource() {return meetings1+meetings2;}
+
+    String showing_month_donation =snapshot.total_donate.toString();
+    String showing_total_saving = snapshot.month_saving.toString();
 
 
+    
+    for(int i=0;i<snapshot.daily_record.length;i++){
+      String temp_day = snapshot.daily_record[i].today_date;
+      int temp_int_year = int.parse(temp_day.substring(0,4));
+      int temp_int_month = int.parse(temp_day.substring(5,7));
+      int temp_int_date = int.parse(temp_day.substring(8,10));
 
+      int temp_differ=snapshot.daily_record[i].differ;
+      int temp_donation=snapshot.daily_record[i].donation;
+
+      if(temp_differ>=0){
+        meetings1.add(Meeting(temp_differ.toString(),DateTime(temp_int_year,temp_int_month,temp_int_date),DateTime(temp_int_year,temp_int_month,temp_int_date),Colors.blue,false));
+      }
+      else{
+        meetings1.add(Meeting(temp_differ.toString(),DateTime(temp_int_year,temp_int_month,temp_int_date),DateTime(temp_int_year,temp_int_month,temp_int_date),Colors.red,false));
+      }
+
+      meetings2.add( Meeting(temp_donation.toString(),DateTime(temp_int_year,temp_int_month,temp_int_date),DateTime(temp_int_year,temp_int_month,temp_int_date),PRIMARY_COLOR,false));
+
+      //List<Meeting> DailyData = _getTempDataSource();
+
+    }
+
+
+  //Widget build(BuildContext context){
 
 
     return MaterialApp(
@@ -91,7 +125,7 @@ class _CalendarState extends State<Calendar> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text('한 달 예산 대비 \n' + '한 달 기부 저금 \n'),
-                    Text('-362,500원\n' + '+2,500원\n'),
+                    Text('$showing_total_saving원\n' + '$showing_month_donation원\n'),
                   ],
                 ),
               ),
@@ -100,10 +134,34 @@ class _CalendarState extends State<Calendar> {
         ),
       ),
     );
+  }//buildList
+}
+/*
+List<Meeting> _getTempDataSource() {
+  final int temp_year = 2023;
+  final int temp_month = 3;
+  final int temp_date = 1;
+  final String temp_differ='600';
+  final String temp_donation='0';
+  var temp_int_differ=int.parse(temp_differ);
+
+
+  final List<Meeting> meetings1 = <Meeting>[];
+  if(temp_int_differ>=0){
+    meetings1.add(Meeting(temp_differ,DateTime(temp_year,temp_month,temp_date),DateTime(temp_year,temp_month,temp_date),Colors.blue,false));
+  }
+  else{
+    meetings1.add(Meeting(temp_differ,DateTime(temp_year,temp_month,temp_date),DateTime(temp_year,temp_month,temp_date),Colors.red,false));
   }
 
 
+
+  final List<Meeting> meetings2 = <Meeting>[];
+  meetings2.add( Meeting(temp_donation,DateTime(temp_year,temp_month,temp_date),DateTime(temp_year,temp_month,temp_date),PRIMARY_COLOR,false));
+
+  return meetings1+meetings2;
 }
+*/
 /*
 class _SavedMoneyDataSource extends CalendarDataSource {
   _SavedMoneyDataSource(List<Appointment> source) {
@@ -127,29 +185,7 @@ _SavedMoneyDataSource _getCalendarDataSource() {
 }
  */
 
-List<Meeting> _getDataSource() {
-  final List<Meeting> meetings1 = <Meeting>[
-    Meeting('500',DateTime(2023,3,1),DateTime(2023,3,1),Colors.blue,false),
-    Meeting('4,500',DateTime(2023,3,2),DateTime(2023,3,2),Colors.blue,false),
-    Meeting('1,500',DateTime(2023,3,3),DateTime(2023,3,3),Colors.blue,false),
-    Meeting('1,900',DateTime(2023,3,4),DateTime(2023,3,4),Colors.red,false),
-    Meeting('800',DateTime(2023,3,5),DateTime(2023,3,5),Colors.blue,false),
-  ];
 
-  final List<Meeting> meetings2 = <Meeting>[
-    Meeting('0',DateTime(2023,3,1),DateTime(2023,3,1),PRIMARY_COLOR,false),
-    Meeting('1,500',DateTime(2023,3,2),DateTime(2023,3,2),PRIMARY_COLOR,false),
-    Meeting('500',DateTime(2023,3,3),DateTime(2023,3,3),PRIMARY_COLOR,false),
-    Meeting('0',DateTime(2023,3,4),DateTime(2023,3,4),PRIMARY_COLOR,false),
-    Meeting('500',DateTime(2023,3,5),DateTime(2023,3,5),PRIMARY_COLOR,false),
-  ];
-
-  final DateTime today = DateTime.now();
-  //final DateTime startTime =
-  //DateTime(today.year, today.month, today.day, 9, 0, 0);
-  //final DateTime endTime = startTime.add(const Duration(hours: 2));
-  return meetings1+meetings2;
-}
 
 class MeetingDataSource extends CalendarDataSource {
   MeetingDataSource(List<Meeting> source) {

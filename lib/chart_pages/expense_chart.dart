@@ -108,7 +108,7 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
   //String _date = '${DateTime.now().year} - ${DateTime.now().month}';
   String? _value1;
   String? _value2;
-  List<String> items_year = ['2020 년', '2021 년', '2022 년', '2023 년'];
+  List<String> items_year = ['2020', '2021', '2022', '2023'];
 
   /*
   for({int i=2000}; i<=DateTime.now().year; i++){
@@ -118,18 +118,18 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
   */
   List<String> items_month = [
     '전체',
-    '1 월',
-    '2 월',
-    '3 월',
-    '4 월',
-    '5 월',
-    '6 월',
-    '7 월',
-    '8 월',
-    '9 월',
-    '10 월',
-    '11 월',
-    '12 월',
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10',
+    '11',
+    '12',
   ];
 
   //bar chart 데이터
@@ -172,7 +172,7 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
                         Text(
-                          '2023 년',
+                          '2023',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -242,7 +242,7 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
                         Text(
-                          '3 월',
+                          '3',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,

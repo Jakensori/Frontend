@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> {
 
   final List<Widget> _widgetOptions = [
     Record(),
-    //Chart(),
+    Chart(),
     Donate(),
     Collection(),
     MyPage(
