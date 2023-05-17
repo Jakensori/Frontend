@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:temp_project/const/colors.dart';
 import 'package:temp_project/record_pages/record_controller.dart';
-import 'package:temp_project/settlement.dart';
+import 'package:temp_project/record_pages/settlement.dart';
+import 'package:temp_project/record_pages/settlement_controller.dart';
 import 'package:weekly_date_picker/weekly_date_picker.dart';
 import 'meal.dart';
 import 'dart:async';
@@ -31,6 +32,7 @@ class _Record extends State<Record> {
   late final Future<MealRecord>? mealRecord;
   late final Future<SettlementInfo>? settleInfo;
   Future<MealInfo>? _mealInfo;
+  int today_donation = 0;
 
   MealInfo mealInfo = new MealInfo(when: '', category: '', price: 0, memo: '');
 
@@ -99,8 +101,6 @@ class _Record extends State<Record> {
               );
               // 에러가 발생한 경우
             } else if (snapshot.hasData && snapshot.data != null) {
-              // hasData
-              print("성공");
               return buildList(snapshot.data);
             }
             return CircularProgressIndicator();
@@ -108,8 +108,6 @@ class _Record extends State<Record> {
             return const Center(
               child: Text('No data found'),
             );
-            // Future 객체가 null 인 경우
-
           }
         });
   }
@@ -140,6 +138,7 @@ class _Record extends State<Record> {
           break;
       }
     }
+
     var differ = (snapshot.day_budget - snapshot.consumption);
     if (differ <= 0) {
       differ = 0;
@@ -214,11 +213,9 @@ class _Record extends State<Record> {
                             Container(
                                 child: Column(
                               children: [
-                                Text(
-                                  '예산',
-                                  style: TextStyle(
-                                      fontSize: 15, color: GREY_COLOR),
-                                ),
+                                Text('예산',
+                                    style: TextStyle(
+                                        fontSize: 15, color: GREY_COLOR)),
                                 Text(snapshot.day_budget.toString(),
                                     style: TextStyle(
                                         fontSize: 21, color: BLACK_COLOR)),
@@ -229,16 +226,12 @@ class _Record extends State<Record> {
                             Container(
                                 child: Column(
                               children: [
-                                Text(
-                                  '소비',
-                                  style: TextStyle(
-                                      fontSize: 15, color: GREY_COLOR),
-                                ),
-                                Text(
-                                  snapshot.consumption.toString(),
-                                  style: TextStyle(
-                                      fontSize: 21, color: BLACK_COLOR),
-                                )
+                                Text('소비',
+                                    style: TextStyle(
+                                        fontSize: 15, color: GREY_COLOR)),
+                                Text(snapshot.consumption.toString(),
+                                    style: TextStyle(
+                                        fontSize: 21, color: BLACK_COLOR))
                               ],
                             ))
                           ],
@@ -533,7 +526,7 @@ class _Record extends State<Record> {
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 20.0, vertical: 0.0),
-                                        child: Text('2400원',
+                                        child: Text('${differ} 원',
                                             style: TextStyle(
                                                 fontSize: 20.0,
                                                 color: BLACK_COLOR)),
@@ -548,7 +541,13 @@ class _Record extends State<Record> {
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 10.0, vertical: 0.0),
-                                        child: TextField(),
+                                        child: TextField(
+                                          onChanged: (text) {
+                                            setState(() {
+                                              today_donation = int.parse(text);
+                                            });
+                                          },
+                                        ),
                                       ),
                                     ),
                                     Text('원 기부하기',
@@ -561,10 +560,11 @@ class _Record extends State<Record> {
                                 Container(
                                   width: double.infinity,
                                   child: ElevatedButton(
-                                      onPressed: () {
+                                      onPressed: () async {
+                                        print("오늘 기부 금액: $today_donation 원");
+                                        SettlementProvider()
+                                            .postSettlement(today_donation);
                                         Navigator.pop(context);
-                                        print("된다?");
-                                        // 정산하는 함수 연결해야 함.
                                       },
                                       style: ElevatedButton.styleFrom(
                                           primary: PRIMARY_COLOR,
@@ -752,7 +752,6 @@ class _Record extends State<Record> {
                     onPressed: () async {
                       setState(() {
                         _mealInfo = MealProvider().postMealRecord(mealInfo);
-                        mealRecord;
                       });
                       Navigator.pop(context);
                     },
@@ -803,31 +802,8 @@ class _Record extends State<Record> {
         '$when',
         textAlign: TextAlign.left,
         style: TextStyle(
-          fontSize: 17,
-          color: GREY_COLOR,
-          fontWeight: FontWeight.w500,
-        ),
+            fontSize: 17, color: GREY_COLOR, fontWeight: FontWeight.w500),
       ),
     );
   }
 }
-
-/*
-class DaySettlement extends StatefulWidget {
-  const DaySettlement({Key? key}) : super(key: key);
-
-  @override
-  State<DaySettlement> createState() => _DaySettlement();
-}
-
-class _DaySettlement extends State<DaySettlement> {
-  late final Future<SettlementInfo>? settleInfo;
-  
-  @override
-  void initState() {
-    super.initState();
-    mealRecord = MealProvider().fetchMealRecord();
-    settleInfo = SettlementProvider().getSettlement();
-  }
-}
-*/

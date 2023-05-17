@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:temp_project/const/colors.dart';
-import 'login.dart';
-import 'join.dart';
+import 'user_control/login.dart';
+import 'user_control/join.dart';
 
 class StartPage extends StatelessWidget {
   const StartPage({Key? key}) : super(key: key);
