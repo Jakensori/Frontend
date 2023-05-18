@@ -100,11 +100,11 @@ class MealRecord {
         consumption: json["comsumption"]);
   }
 
-/*
+
   dynamic toJson() => {
         "meal": meal,
         "day_budget": day_budget,
         "consumption": consumption,
       };
-*/
+
 }

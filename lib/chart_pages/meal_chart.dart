@@ -5,7 +5,6 @@ import 'dart:async';
 import 'dart:math';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:temp_project/MealChart.dart';
-//git 테스트
 
 class MealChartPage extends StatefulWidget {
   MealChartPage({Key? key}) : super(key: key);
@@ -28,6 +27,13 @@ class _MealChartPageState extends State<MealChartPage> {
   void initState() {
     super.initState();
     mealChart = MealProvider().fetchMealChart();
+    /*
+    setState(() {
+      _selectedYear = items_year[0];
+      _selectedMonth = items_month[0];
+    });
+
+     */
   }
 
   final Duration animDuration = const Duration(milliseconds: 250);
@@ -38,7 +44,8 @@ class _MealChartPageState extends State<MealChartPage> {
   String? _value2;
   List<String> items_year = ['2020', '2021', '2022', '2023'];
   List<String> items_month = ['전체', '1', '2', '3', '4','5', '6','7', '8', '9', '10', '11', '12'];
-
+  //String? _selectedYear;
+  //String? _selectedMonth;
 
 
   @override
@@ -70,17 +77,37 @@ class _MealChartPageState extends State<MealChartPage> {
   Widget buildList(snapshot) {
 
     double getBreakfastCounts(snapshot){
-      for (int i=0;i<snapshot.record_byTime.length;i++){
-        if(snapshot.record_byTime[i]=='아침'){
-          BreakfastCounts++;
-        }
-      }
+      BreakfastCounts = snapshot.breakfast.toDouble();
       return BreakfastCounts;
     }
 
     double getLunchCounts(snapshot){
+      LunchCounts = snapshot.lunch.toDouble();
+      return LunchCounts;
+    }
+
+    double getDinnerCounts(snapshot){
+      DinnerCounts = snapshot.dinner.toDouble();
+      return DinnerCounts;
+    }
+    getBreakfastCounts(snapshot);
+    getLunchCounts(snapshot);
+    getDinnerCounts(snapshot);
+
+    /*
+    //0518 수정
+    double getBreakfastCounts(snapshot){
       for (int i=0;i<snapshot.record_byTime.length;i++){
-        if(snapshot.record_byTime[i]=='점심'){
+        BreakfastCounts = snapshot.mealtime[i].breakfast;
+      }
+      // print(BreakfastCounts);
+      return BreakfastCounts;
+    }
+    // getBreakfastCounts(snapshot);
+
+    double getLunchCounts(snapshot){
+      for (int i=0;i<snapshot.record_byTime.length;i++){
+        if(snapshot.record_byTime[i]=="점심"){
           LunchCounts++;
         }
       }
@@ -89,7 +116,7 @@ class _MealChartPageState extends State<MealChartPage> {
 
     double getDinnerCounts(snapshot){
       for (int i=0;i<snapshot.record_byTime.length;i++){
-        if(snapshot.record_byTime[i]=='저녁'){
+        if(snapshot.record_byTime[i]=="저녁"){
           DinnerCounts++;
         }
       }
@@ -99,6 +126,11 @@ class _MealChartPageState extends State<MealChartPage> {
     getBreakfastCounts(snapshot);
     getLunchCounts(snapshot);
     getDinnerCounts(snapshot);
+
+    //0518수정
+     */
+
+
 
     return AspectRatio(
       aspectRatio: 1,
@@ -191,7 +223,7 @@ class _MealChartPageState extends State<MealChartPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const [
                               Text(
-                                '3',
+                                '5',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,

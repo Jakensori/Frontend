@@ -108,7 +108,8 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
   //String _date = '${DateTime.now().year} - ${DateTime.now().month}';
   String? _value1;
   String? _value2;
-  List<String> items_year = ['2020', '2021', '2022', '2023'];
+  final List<String> items_year = ['2020', '2021', '2022', '2023'];
+  String? _selectedYear;
 
   /*
   for({int i=2000}; i<=DateTime.now().year; i++){
@@ -116,7 +117,7 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
     items_year.add(year);
   }
   */
-  List<String> items_month = [
+  final List<String> items_month = [
     '전체',
     '1',
     '2',
@@ -131,6 +132,7 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
     '11',
     '12',
   ];
+  String? _selectedMonth;
 
   //bar chart 데이터
   final List<TimesDataItem> _myData1 = List.generate(
@@ -242,7 +244,7 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
                         Text(
-                          '3',
+                          '5',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,

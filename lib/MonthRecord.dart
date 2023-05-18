@@ -6,22 +6,20 @@ import 'package:provider/provider.dart';
 
 class MonthRecordProvider with ChangeNotifier {
   MonthRecord? _monthChart;
-
   MonthRecord? get monthRecord => _monthChart;
 
   Future<MonthRecord> fetchMonthRecord() async {
     print("함수 들어옴");
-
-    final Parameters = {'year': 2023, 'month': 0}.map((key, value) =>
+    final Parameters = {'year': 2023, 'month': 5}.map((key, value) =>
        MapEntry(key, value.toString())); // int 허용 안되서 string으로 바꿔줌.
 
 
-    var url = Uri.parse('http://192.168.187.21:8000/record/accountbook/');
+    var url = Uri.parse('http://52.78.205.224:8000/record/accountbook/1/');
     Map<String, String>? headers = {
       'Content-Type': 'application/json; charset=UTF-8',
     };
-    //final newURI = url.replace(queryParameters: Parameters); // 쿼리 파라미터 보내줌
-    final response = await http.get(url, headers: headers);
+    final newURI = url.replace(queryParameters: Parameters); // 쿼리 파라미터 보내줌
+    final response = await http.get(newURI, headers: headers);
     print('응답했다');
 
     if (response.statusCode == 200) {
@@ -44,11 +42,11 @@ class DailyRecord {
   final int? differ;
   DailyRecord({ required this.today_date,required this.donation, required this.differ});
 
-  factory DailyRecord.fromJson(Map<String,dynamic> parsedJson){
+  factory DailyRecord.fromJson(Map<String,dynamic> json){
     return DailyRecord(
-      today_date: parsedJson['today_date'],
-      donation: parsedJson['donation'],
-      differ : parsedJson['differ'],
+      today_date: json["today_date"],
+      donation: json["donation"],
+      differ : json["differ"],
     );
   }
 }
@@ -68,16 +66,16 @@ class MonthRecord {
     required this.month_saving,
   });
 
-  factory MonthRecord.fromJson(Map<String, dynamic> parsedjson) {
-    var list = parsedjson['하루 기록들'] as List;
+  factory MonthRecord.fromJson(Map<String, dynamic> json) {
+    var list = json["하루 기록들"] as List;
     List<DailyRecord> daily_record_list = list.map((i)=> DailyRecord.fromJson(i)).toList();
 
     return MonthRecord(
         daily_record: daily_record_list,
-        total_consume: parsedjson['total_consume'],
-        total_donate: parsedjson['total donate'],
-        month_budget: parsedjson['month_budget'],
-        month_saving:parsedjson['month_saving']);
+        total_consume: json["총 소비금"],
+        total_donate: json["총 기부금"],
+        month_budget: json["한 달 예산"],
+        month_saving:json["남은 금액"]);
   }
 
 /*
