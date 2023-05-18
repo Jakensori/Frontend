@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'api_campaign.dart';
+import 'four_api_campaign.dart';
 import 'dart:async';
 import 'package:intl/intl.dart';
 
@@ -46,42 +46,7 @@ class _SavingPageState extends State<SavingPage> {
         body: Center(
             child: FutureBuilder<List<CampaignRecord>>(
                 future: _futureCampaign,
-                builder: (context,
-                        snapshot) /* {
-                  if (snapshot.hasData) {
-                    return ListView.builder(
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (context, index) {
-                        final campaign = snapshot.data![index];
-                        return ListTile(
-                          title: Container(
-                            width: 300, // 
-                            child: Text(
-                              campaign.title ?? '',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
-                          ),
-                          subtitle: Container(
-                            width: 200, // 
-                            child: Text(campaign.summary ?? ''),
-                          ),
-                          leading: Container(
-                            width: 100, // 
-                            child: Image.network(campaign.image ?? ''),
-                          ),
-                          trailing: Container(
-                            width: 50, // 
-                            child: Text(
-                              '${campaign.currentAmount ?? 0}원 / ${campaign.goalAmount ?? 0}원',
-                            ),
-                          ),
-                        );
-                      },
-                    );*/
-                    {
+                builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return ListView(
                       scrollDirection: Axis.horizontal,
@@ -174,49 +139,11 @@ class _SavingPageState extends State<SavingPage> {
                     return Text("${snapshot.error}");
                   }
                   return CircularProgressIndicator();
-                }))
-        /*
-      ListView(
-        children: [
-          Container(
-            margin: EdgeInsets.fromLTRB(5, 10, 180, 5),
-            child: Text(
-              '기부 목록',
-              style: TextStyle(
-                fontSize: 24, // 폰트 크기
-                fontWeight: FontWeight.w700, // 폰트 두께
-                color: Colors.black, // 폰트 색상
-              ),
-            ),
-          ),
-          /*Container(
-            child: Text(" 300000원"),
-          ),*/
-
-          /* Container(
-              margin: EdgeInsets.fromLTRB(5, 50, 180, 5),
-              child: (SingleChildScrollView(
-                  child: Column(children: [
-                Square(),
-                Square2(),
-                Square(),
-                Square2(),
-                Square(),
-                Square2(),
-                Square(),
-                Square2(),
-                Square(),
-                Square2(),
-                Square(),
-              ]))))*/
-        ],
-      ),*/
-        );
+                })));
   }
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     throw UnimplementedError();
   }
 }

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'package:temp_project/level.dart';
 
 class Collection extends StatefulWidget {
@@ -30,38 +30,106 @@ class CollectionPage extends State<Collection> {
                 child: Stack(
                   children: [
                     Container(
-                      width: 600,
-                      height: 400,
+                      width: 300,
+                      height: 600,
                       margin:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                       decoration: BoxDecoration(
                         color: Colors.amber,
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
+                    /*
                     Container(
-                      margin: EdgeInsets.fromLTRB(70, 40, 180, 5),
-                      child: Text(
-                        '최신 레벨 캐릭터',
-                        style: TextStyle(
-                          fontSize: 18, // 폰트 크기
-                          fontWeight: FontWeight.w600, // 폰트 두께
-                          color: Colors.black, // 폰트 색상
-                        ),
+                      margin: EdgeInsets.fromLTRB(30, 40, 180, 50),
+                      child: Row(
+                        children: [
+                          Text(
+                            '여기에 캐릭터 소개가 들어가려나..\n근데 너무 졸려요',
+                            style: TextStyle(
+                              fontSize: 14, // 폰트 크기
+                              fontWeight: FontWeight.w600, // 폰트 두께
+                              color: Colors.black, // 폰트 색상
+                            ),
+                          ),
+                          SizedBox(width: 2), // 이미지와 텍스트 사이 간격 조절
+                          Image.asset(
+                            'assets/rice.jpg',
+                            width: 400, // 이미지 크기 설정
+                          ),
+                        ],
+                      ),
+                    ),*/
+                    Container(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: LayoutBuilder(
+                              builder: (context, constraints) {
+                                if (constraints.maxWidth > 600) {
+                                  return Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          '여기에 캐릭터 소개가 들어가려나..\n근데 너무 졸려요',
+                                          style: TextStyle(
+                                            fontSize: 14, // 폰트 크기
+                                            fontWeight:
+                                                FontWeight.w600, // 폰트 두께
+                                            color: Colors.black, // 폰트 색상
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(width: 40), // 이미지와 텍스트 사이 간격 조절
+                                      Expanded(
+                                        child: Image.asset(
+                                          'assets/rice.jpg',
+                                          fit: BoxFit
+                                              .contain, // 이미지가 자리를 차지하도록 설정
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                } else {
+                                  return Column(
+                                    children: [
+                                      Text(
+                                        '여기에 캐릭터 소개가 들어가려나..\n근데 너무 졸려요',
+                                        style: TextStyle(
+                                          fontSize: 14, // 폰트 크기
+                                          fontWeight: FontWeight.w600, // 폰트 두께
+                                          color: Colors.black, // 폰트 색상
+                                        ),
+                                      ),
+                                      SizedBox(height: 40), // 이미지와 텍스트 사이 간격 조절
+                                      Image.asset(
+                                        'assets/rice.jpg',
+                                        height: 30, // 이미지 크기 설정
+                                        fit: BoxFit.cover, // 이미지가 자리를 차지하도록 설정
+                                      ),
+                                    ],
+                                  );
+                                }
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
               ),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 2.0),
-                height: 400,
+                padding: EdgeInsets.symmetric(horizontal: 34.0),
+                height: 600,
                 child: GridView.builder(
                   scrollDirection: Axis.vertical,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
-                    crossAxisSpacing: 8.0,
-                    mainAxisSpacing: 8.0,
+                    crossAxisSpacing: 10.0,
+                    mainAxisSpacing: 10.0,
                   ),
                   itemCount: 8,
                   itemBuilder: (BuildContext context, int index) {
@@ -71,7 +139,7 @@ class CollectionPage extends State<Collection> {
                           //color: Colors.amber[400],
                           decoration: BoxDecoration(
                             color: Colors.amber,
-                            borderRadius: BorderRadius.circular(30),
+                            borderRadius: BorderRadius.circular(20),
                           ),
                           child: FlutterDialog1(
                             level: _level,
@@ -96,7 +164,7 @@ class CollectionPage extends State<Collection> {
                           //color: Colors.grey[300],
                           decoration: BoxDecoration(
                             color: Colors.grey[300],
-                            borderRadius: BorderRadius.circular(30),
+                            borderRadius: BorderRadius.circular(20),
                           ),
                           child: NotYet(),
                         );
@@ -255,6 +323,7 @@ class FlutterDialog1 extends StatelessWidget {
   final Level level; // level 매개변수 선언
 
   const FlutterDialog1({Key? key, required this.level}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return TextButton(
@@ -264,11 +333,27 @@ class FlutterDialog1 extends StatelessWidget {
             context: context,
             builder: (BuildContext context) => AlertDialog(
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0)),
-
-              title: const Text('레벨1 캐릭터 '),
-              content: const Text('레벨1 캐릭터 설명글 \n\n\n\n\n\n\n\n\n\n\n'),
-
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              title: const Text('캐릭터 이름'),
+              content: Row(
+                children: [
+                  Expanded(
+                    child: Image.asset(
+                      'assets/rice.jpg',
+                      fit: BoxFit.contain,
+                      height: 200,
+                      width: 200,
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      '대충 캐릭터 설명글',
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'Cancel'),
@@ -283,10 +368,11 @@ class FlutterDialog1 extends StatelessWidget {
           );
         }
       },
-      child: const Icon(
-        Icons.accessibility_new_rounded,
-        size: 50,
-        color: Colors.black,
+      child: Image.asset(
+        'assets/rice.jpg',
+        fit: BoxFit.contain,
+        height: 100,
+        width: 100,
       ),
     );
   }
@@ -296,6 +382,7 @@ class FlutterDialog2 extends StatelessWidget {
   final Level level; // level 매개변수 선언
 
   const FlutterDialog2({Key? key, required this.level}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return TextButton(
@@ -305,9 +392,27 @@ class FlutterDialog2 extends StatelessWidget {
             context: context,
             builder: (BuildContext context) => AlertDialog(
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0)),
-              title: const Text('             캐릭터 이름           '),
-              content: const Text('대충 캐릭터 설명글 \n\n\n\n\n\n\n\n\n\n\n'),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              title: const Text('캐릭터 이름'),
+              content: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      '대충 캐릭터 설명글',
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Expanded(
+                    child: Image.asset(
+                      'images/rice.png',
+                      fit: BoxFit.contain,
+                      height: 100,
+                      width: 100,
+                    ),
+                  ),
+                ],
+              ),
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'Cancel'),
@@ -322,10 +427,17 @@ class FlutterDialog2 extends StatelessWidget {
           );
         }
       },
+      /*
       child: const Icon(
         Icons.accessibility_new_rounded,
         color: Colors.black,
         size: 30,
+      ),*/
+      child: Image.asset(
+        'images/rice.png',
+        fit: BoxFit.contain,
+        height: 100,
+        width: 100,
       ),
     );
   }
@@ -602,3 +714,4 @@ class NotYet extends StatelessWidget {
     );
   }
 }
+*/
