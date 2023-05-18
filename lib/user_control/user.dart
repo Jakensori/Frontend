@@ -4,27 +4,38 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:provider/provider.dart';
 
-class userInfo {
+class UserInfo {
+  int? id;
   String? username;
+  String? email;
   String? password;
+  String? token;
 
-  userInfo({
+  UserInfo({
+    required this.id,
     required this.username,
+    required this.email,
     required this.password,
+    required this.token,
   });
 
-  factory userInfo.fromJson(Map<String, dynamic> json) {
-    return userInfo(
-      username: json["user_id"],
-      password: json["password"],
-    );
+  factory UserInfo.fromJson(Map<String, dynamic> json) {
+    return UserInfo(
+        id: json["user_info"]["id"],
+        username: json["user_info"]["username"],
+        email: json["user_info"]["email"],
+        password: json["user_info"]["password"],
+        token: json["token"]);
   }
-
+/*
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
     data['user_id'] = this.username;
+    data['email'] = this.email;
     data['password'] = this.password;
 
     return data;
   }
+  */
 }

@@ -36,11 +36,6 @@ class MealInfo {
 }
 
 class MealRecord {
-  List<MealInfo>? breakfast;
-  List<MealInfo>? launch;
-  List<MealInfo>? dinner;
-  List<MealInfo>? snack;
-  List<MealInfo>? others;
   final List<MealInfo>? meal;
 
   final int? day_budget;
