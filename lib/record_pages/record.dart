@@ -1,6 +1,4 @@
 import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
-import 'package:fl_chart/fl_chart.dart';
-import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -31,15 +29,19 @@ class _Record extends State<Record> {
 
   late final Future<MealRecord>? mealRecord;
   late final Future<SettlementInfo>? settleInfo;
-  Future<MealInfo>? _mealInfo;
+  Future<MealRecord>? _mealInfo;
   int today_donation = 0;
 
+  int formatYear = int.parse(DateFormat('yyyy').format(DateTime.now()));
+  int formatMonth = int.parse(DateFormat('M').format(DateTime.now()));
+  int formatDay = int.parse(DateFormat('d').format(DateTime.now()));
   MealInfo mealInfo = new MealInfo(when: '', category: '', price: 0, memo: '');
 
   @override
   void initState() {
     super.initState();
-    mealRecord = MealProvider().getMealRecord();
+    mealRecord =
+        MealProvider().getMealRecord(formatYear, formatMonth, formatDay);
     settleInfo = SettlementProvider().getSettlement();
   }
 
@@ -155,6 +157,10 @@ class _Record extends State<Record> {
               changeDay: (value) => setState(() {
                 _selectedDay = value;
                 formatDate = DateFormat('yyyy년 M월 d일').format(value);
+                formatYear = int.parse(DateFormat('yyyy').format(value));
+                formatMonth = int.parse(DateFormat('M').format(value));
+                formatDay = int.parse(DateFormat('d').format(value));
+                mealRecord;
               }),
               enableWeeknumberText: false,
               weeknumberTextColor: Colors.white,
@@ -270,18 +276,11 @@ class _Record extends State<Record> {
                             breakfast.category.toString(),
                             style: TextStyle(color: GREY_COLOR),
                           ),
-                          title: Text(
-                            breakfast.memo.toString(),
-                            style: TextStyle(
-                              fontSize: 20,
-                            ),
-                          ),
+                          title: Text(breakfast.memo.toString(),
+                              style: TextStyle(fontSize: 20)),
                           trailing: Text(
                             breakfast.price.toString(),
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: GREY_COLOR,
-                            ),
+                            style: TextStyle(fontSize: 18, color: GREY_COLOR),
                           ),
                         ),
                       ),
@@ -313,22 +312,15 @@ class _Record extends State<Record> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12)),
                         child: ListTile(
-                          leading: Text(
-                            launch.category.toString(),
-                            style: TextStyle(color: GREY_COLOR),
-                          ),
+                          leading: Text(launch.category.toString(),
+                              style: TextStyle(color: GREY_COLOR)),
                           title: Text(
                             launch.memo.toString(),
-                            style: TextStyle(
-                              fontSize: 20,
-                            ),
+                            style: TextStyle(fontSize: 20),
                           ),
                           trailing: Text(
                             launch.price.toString(),
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: GREY_COLOR,
-                            ),
+                            style: TextStyle(fontSize: 18, color: GREY_COLOR),
                           ),
                         ),
                       ),
@@ -360,22 +352,13 @@ class _Record extends State<Record> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12)),
                         child: ListTile(
-                          leading: Text(
-                            dinner.category.toString(),
-                            style: TextStyle(color: GREY_COLOR),
-                          ),
-                          title: Text(
-                            dinner.memo.toString(),
-                            style: TextStyle(
-                              fontSize: 20,
-                            ),
-                          ),
+                          leading: Text(dinner.category.toString(),
+                              style: TextStyle(color: GREY_COLOR)),
+                          title: Text(dinner.memo.toString(),
+                              style: TextStyle(fontSize: 20)),
                           trailing: Text(
                             dinner.price.toString(),
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: GREY_COLOR,
-                            ),
+                            style: TextStyle(fontSize: 18, color: GREY_COLOR),
                           ),
                         ),
                       ),
@@ -407,22 +390,15 @@ class _Record extends State<Record> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12)),
                         child: ListTile(
-                          leading: Text(
-                            snack.category.toString(),
-                            style: TextStyle(color: GREY_COLOR),
-                          ),
+                          leading: Text(snack.category.toString(),
+                              style: TextStyle(color: GREY_COLOR)),
                           title: Text(
                             snack.memo.toString(),
-                            style: TextStyle(
-                              fontSize: 20,
-                            ),
+                            style: TextStyle(fontSize: 20),
                           ),
                           trailing: Text(
                             snack.price.toString(),
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: GREY_COLOR,
-                            ),
+                            style: TextStyle(fontSize: 18, color: GREY_COLOR),
                           ),
                         ),
                       ),
@@ -454,22 +430,15 @@ class _Record extends State<Record> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12)),
                         child: ListTile(
-                          leading: Text(
-                            others.category.toString(),
-                            style: TextStyle(color: GREY_COLOR),
-                          ),
+                          leading: Text(others.category.toString(),
+                              style: TextStyle(color: GREY_COLOR)),
                           title: Text(
                             others.memo.toString(),
-                            style: TextStyle(
-                              fontSize: 20,
-                            ),
+                            style: TextStyle(fontSize: 20),
                           ),
                           trailing: Text(
                             others.price.toString(),
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: GREY_COLOR,
-                            ),
+                            style: TextStyle(fontSize: 18, color: GREY_COLOR),
                           ),
                         ),
                       ),
@@ -480,62 +449,73 @@ class _Record extends State<Record> {
 
           //
           // 하루 정산
-          ElevatedButton(
-            child: Text('하루 정산',
-                style: TextStyle(color: BLACK_COLOR, fontSize: 16.0)),
-            style: ElevatedButton.styleFrom(
-                primary: PRIMARY_COLOR, // Background color
-                fixedSize: const Size(120, 40)),
-            onPressed: () {
-              showModalBottomSheet<void>(
-                  context: context,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(100.0),
-                  ),
-                  builder: (BuildContext context) {
-                    return SingleChildScrollView(
-                      padding: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).viewInsets.bottom),
-                      child: Container(
-                        height: 800,
-                        decoration: const BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(25),
-                              topRight: Radius.circular(25),
-                            )),
-                        child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 50.0, vertical: 30.0),
-                            child: Column(
-                              children: [
-                                Text('하루 정산',
-                                    style: TextStyle(
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.w600,
-                                      color: BLACK_COLOR,
-                                    )),
-                                SizedBox(height: 40),
-                                Row(
-                                  children: [
-                                    Text('기부 가능 금액',
-                                        style: TextStyle(
-                                            fontSize: 20.0,
-                                            color: BLACK_COLOR)),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 20.0, vertical: 0.0),
-                                        child: Text('${differ} 원',
-                                            style: TextStyle(
-                                                fontSize: 20.0,
-                                                color: BLACK_COLOR)),
-                                      ),
-                                    ),
-                                  ],
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 25),
+            child: SettleButton(differ),
+          ),
+
+          SizedBox(height: 20.0),
+        ],
+      ),
+    );
+  }
+
+  ElevatedButton SettleButton(differ) {
+    return ElevatedButton(
+      child:
+          Text('하루 정산', style: TextStyle(color: BLACK_COLOR, fontSize: 16.0)),
+      style: ElevatedButton.styleFrom(
+          primary: PRIMARY_COLOR, // Background color
+          fixedSize: const Size(120, 40)),
+      onPressed: () {
+        showModalBottomSheet<void>(
+            context: context,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(100.0),
+            ),
+            builder: (BuildContext context) {
+              return SingleChildScrollView(
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
+                child: Container(
+                  height: 800,
+                  decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(25),
+                        topRight: Radius.circular(25),
+                      )),
+                  child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 50.0, vertical: 30.0),
+                      child: Column(
+                        children: [
+                          Text('하루 정산',
+                              style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.w600,
+                                color: BLACK_COLOR,
+                              )),
+                          SizedBox(height: 40),
+                          Row(
+                            children: [
+                              Text('기부 가능 금액',
+                                  style: TextStyle(
+                                      fontSize: 20.0, color: BLACK_COLOR)),
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20.0, vertical: 0.0),
+                                  child: Text('${differ} 원',
+                                      style: TextStyle(
+                                          fontSize: 20.0, color: BLACK_COLOR)),
                                 ),
-                                SizedBox(height: 20.0),
-                                Row(
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 20.0),
+                          differ != 0
+                              ? Row(
                                   children: [
                                     Expanded(
                                       child: Padding(
@@ -555,40 +535,45 @@ class _Record extends State<Record> {
                                             fontSize: 20.0,
                                             color: BLACK_COLOR)),
                                   ],
-                                ),
-                                SizedBox(height: 80),
-                                Container(
-                                  width: double.infinity,
-                                  child: ElevatedButton(
-                                      onPressed: () async {
-                                        print("오늘 기부 금액: $today_donation 원");
-                                        SettlementProvider()
-                                            .postSettlement(today_donation);
-                                        Navigator.pop(context);
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                          primary: PRIMARY_COLOR,
-                                          fixedSize: Size(250, 20),
-                                          alignment: Alignment.center),
-                                      child: Text(
-                                        '기부금 정산하기',
-                                        style: TextStyle(
-                                            color: BLACK_COLOR,
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.w500),
-                                      )),
                                 )
-                              ],
-                            )),
-                      ),
-                    );
-                  });
-            },
-          ),
-
-          SizedBox(height: 20.0),
-        ],
-      ),
+                              : Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10.0, vertical: 0.0),
+                                  child: Text(
+                                    "오늘은 기부할 수 있는 금액이 없어요",
+                                    style: TextStyle(
+                                        color: BLACK_COLOR,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500),
+                                  )),
+                          SizedBox(height: 80),
+                          Container(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                                onPressed: () async {
+                                  print("오늘 기부 금액: $today_donation 원");
+                                  SettlementProvider()
+                                      .postSettlement(today_donation);
+                                  Navigator.pop(context);
+                                },
+                                style: ElevatedButton.styleFrom(
+                                    primary: PRIMARY_COLOR,
+                                    fixedSize: Size(250, 20),
+                                    alignment: Alignment.center),
+                                child: Text(
+                                  '기부금 정산하기',
+                                  style: TextStyle(
+                                      color: BLACK_COLOR,
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w500),
+                                )),
+                          )
+                        ],
+                      )),
+                ),
+              );
+            });
+      },
     );
   }
 
@@ -750,9 +735,7 @@ class _Record extends State<Record> {
                 width: double.infinity,
                 child: ElevatedButton(
                     onPressed: () async {
-                      setState(() {
-                        _mealInfo = MealProvider().postMealRecord(mealInfo);
-                      });
+                      await MealProvider().postMealRecord(mealInfo);
                       Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(

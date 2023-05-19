@@ -5,23 +5,29 @@ import 'dart:convert';
 import 'package:temp_project/record_pages/meal.dart';
 
 class MealProvider with ChangeNotifier {
-  // MealRecord? _mealRecord;
-  //MealRecord? get mealRecord => _mealRecord;
   String token =
       "14512be45c73564040b3b964dbf7f356cf0f5a21e63c9898006d4fa2217edddc";
 
   //GET 함수
-  Future<MealRecord> getMealRecord() async {
+  Future<MealRecord> getMealRecord(int year, int month, int day) async {
+    print("<<<기록 GET 실행>>>");
+    final Parameters = {'year': year, 'month': month, 'day': day}
+        .map((key, value) => MapEntry(key, value.toString()));
+
     var url = Uri.parse('http://52.78.205.224:8000/record/1/');
+
     Map<String, String>? headers = {
       'Content-Type': 'application/json; charset=UTF-8',
       //'Autorization': 'token $token'
       //"token":"18a314e1cd9b753888a44a2fc05942995bc7d6c470004fc4b86dd08fab04821c",
     };
-    var response = await http.get(url, headers: headers);
 
-    //print('response Code : ${response.statusCode}');
-    //print(response);
+    var newURI = url.replace(queryParameters: Parameters);
+    print(newURI);
+    var response = await http.get(newURI, headers: headers);
+
+    print('response Code : ${response.statusCode}');
+    // print(MealRecord.fromJson(json.decode(utf8.decode(response.bodyBytes))));
 
     if (response.statusCode == 200) {
       print('GET 성공');
@@ -33,7 +39,7 @@ class MealProvider with ChangeNotifier {
   }
 
   //POST
-  Future<MealInfo> postMealRecord(MealInfo mealInfo) async {
+  Future<void> postMealRecord(MealInfo mealInfo) async {
     print("<<<POST 실행>>>");
 
     var url = Uri.parse('http://52.78.205.224:8000/record/upload/1/');
@@ -56,8 +62,9 @@ class MealProvider with ChangeNotifier {
     print("기록 Code: ${response.statusCode}");
 
     if (response.statusCode == 201 || response.statusCode == 200) {
+      print(response);
       print("<<<기록 POST 성공>>>");
-      return MealInfo.fromJson(json.decode(utf8.decode(response.bodyBytes)));
+      //return MealRecord.fromJson(json.decode(utf8.decode(response.bodyBytes)));
     } else {
       throw Exception('기록 POST 실패');
     }

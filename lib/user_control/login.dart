@@ -13,7 +13,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  Future<UserInfo>? userResponse;
+  UserInfo? userResponse;
 
   TextEditingController idController = TextEditingController();
   TextEditingController pwController = TextEditingController();
@@ -85,17 +85,15 @@ class _LoginState extends State<Login> {
                   height: 40.0,
                   margin: const EdgeInsets.only(top: 30),
                   child: ElevatedButton(
-                    onPressed: () {
-                      userResponse = UserProvider()
+                    onPressed: () async {
+                      userResponse = await UserProvider()
                           .postUserInfo(idController.text, pwController.text);
-                      print(userResponse);
-                      /*
+                      print(userResponse!.token);
+
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => HomePage()),
-                        
                       );
-                      */
                     },
                     style: ElevatedButton.styleFrom(
                       primary: PRIMARY_COLOR,

@@ -184,6 +184,9 @@ class DonationHistoryScreen extends StatelessWidget {
 }
 
 class BudgetScreen extends StatelessWidget {
+  TextEditingController budgetControl = TextEditingController();
+  int? day_budget;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -192,7 +195,7 @@ class BudgetScreen extends StatelessWidget {
         child: AppBar(
           backgroundColor: PRIMARY_COLOR,
           title: Text(
-            '한 달 식비',
+            '식비 수정하기',
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.normal,
@@ -205,10 +208,64 @@ class BudgetScreen extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Text(
-          '한 달 식비 예산을 여기에 추가합니다.',
-          style: TextStyle(fontSize: 20),
+        padding: const EdgeInsets.symmetric(vertical: 25.0, horizontal: 30),
+        child: Column(
+          children: [
+            Text(
+              '한 달 식비를 입력하세요',
+              style: TextStyle(fontSize: 20),
+            ),
+            SizedBox(height: 15.0),
+            TextField(
+              controller: budgetControl,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: '식비',
+              ),
+              onChanged: (text) {
+                int? budget = int.parse(text);
+                day_budget = CalculateBudget(budget);
+              },
+            ),
+            SizedBox(height: 15.0),
+            Container(
+              width: double.infinity,
+              child: ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        barrierDismissible: true, // 바깥 영역 터치시 닫을지 여부
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            //content: day_budget,
+                            insetPadding:
+                                const EdgeInsets.fromLTRB(0, 80, 0, 80),
+                            actions: [
+                              TextButton(
+                                child: Text('하루 식비 : $day_budget'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        });
+
+                    //Navigator.pop(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                      primary: PRIMARY_COLOR,
+                      fixedSize: Size(50, 20),
+                      alignment: Alignment.center),
+                  child: Text(
+                    '확인',
+                    style: TextStyle(
+                        color: BLACK_COLOR,
+                        fontSize: 17,
+                        fontWeight: FontWeight.w500),
+                  )),
+            )
+          ],
         ),
       ),
     );
@@ -232,4 +289,9 @@ class NoticesScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+int CalculateBudget(int budget) {
+  print(budget);
+  return (budget ~/ 30);
 }
