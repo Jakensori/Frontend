@@ -1,24 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:temp_project/savings.dart';
-import 'four_campaign.dart';
-import 'four_api_campaign.dart';
+import 'api_campaign.dart';
 import 'one_campaign.dart';
+import 'savings.dart';
+//import 'four_campaign.dart';
+//import 'four_api_campaign.dart';
+
 //import 'four_campaign.dart';
 
-class Donate extends StatelessWidget {
-  Donate({Key? key}) : super(key: key);
+class Donating extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: DonatingPage(title: 'Donating Page'),
+    );
+  }
+}
 
-  get width => null;
+class DonatingPage extends StatefulWidget {
+  final String title;
 
+  DonatingPage({Key? key, required this.title}) : super(key: key);
+
+  @override
+  _DonatingPageState createState() => _DonatingPageState();
+}
+
+class _DonatingPageState extends State<DonatingPage> {
   late Future<List<CampaignRecord>> _futureCampaign;
 
   @override
   void initState() {
-    initState();
+    super.initState();
     _futureCampaign = fetchCampaign();
   }
 
+  get width => null;
+
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
@@ -47,7 +66,7 @@ class Donate extends StatelessWidget {
             ),
           ),
           Container(
-            margin: EdgeInsets.fromLTRB(70, 80, 180, 5),
+            margin: EdgeInsets.fromLTRB(70, 80, 10, 5),
             child: Text(
               '나의 기부 저금통',
               style: TextStyle(
@@ -72,13 +91,16 @@ class Donate extends StatelessWidget {
                 // 페이지 이동
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Donate()),
+                  MaterialPageRoute(
+                      builder: (context) => SavingPage(
+                            title: '',
+                          )),
                 );
               },
             ),
           ),
           Container(
-              margin: EdgeInsets.fromLTRB(70, 400, 180, 5),
+              margin: EdgeInsets.fromLTRB(10, 300, 10, 0),
               child: FutureBuilder<List<CampaignRecord>>(
                   future: _futureCampaign,
                   builder: (context, snapshot) {
@@ -129,7 +151,7 @@ class Donate extends StatelessWidget {
                               child: Row(
                                 children: [
                                   Container(
-                                    width: 200,
+                                    width: 150,
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -145,7 +167,7 @@ class Donate extends StatelessWidget {
                                             ),
                                           ),
                                         ),
-                                        SizedBox(height: 50),
+                                        SizedBox(height: 20),
                                         Container(
                                           width: double.infinity,
                                           child: Image.network(
@@ -153,7 +175,7 @@ class Donate extends StatelessWidget {
                                             fit: BoxFit.scaleDown,
                                           ),
                                         ),
-                                        SizedBox(height: 50),
+                                        SizedBox(height: 20),
                                         Text(
                                           campaign.summary ?? '',
                                         ),

@@ -31,7 +31,6 @@ class MyApp extends StatelessWidget {
 
       home: HomePage(),
       //home: StartPage(),
-
     );
   }
 }
@@ -49,7 +48,9 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _widgetOptions = [
     Record(),
     Chart(),
-    Donate(),
+    DonatingPage(
+      title: '',
+    ),
     Collection(),
     MyPage(
         //myDonations: '',
