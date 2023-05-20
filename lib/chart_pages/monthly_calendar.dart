@@ -42,8 +42,8 @@ class MeetingDataSource extends CalendarDataSource {
 }
 
 
-final List<Meeting> meetings1 = <Meeting>[]; //지출 +-가 담긴 리스트
-final List<Meeting> meetings2 = <Meeting>[]; //donation이 담긴 리스트
+List<Meeting> meetings1 = <Meeting>[]; //지출 +-가 담긴 리스트
+List<Meeting> meetings2 = <Meeting>[]; //donation이 담긴 리스트
 List<Meeting> _getDataSource() {
   return meetings1+meetings2;
 }
@@ -68,55 +68,47 @@ class _CalendarState extends State<Calendar> {
 
   @override
   Widget build(BuildContext context){
-    return Scaffold(
-        body: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              children: [
-                FutureBuilder<MonthRecord>(
-                  //통신데이터 가져오기
-                  future: monthRecord,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return buildList(snapshot.data);
-                    } else if (snapshot.hasError) {
-                      return Text("${snapshot.error}에러!!");
-                    }
-                    return CircularProgressIndicator();
-                  },
-                ),
-              ],
+    return MaterialApp(
+      locale: const Locale('ko'),
+      supportedLocales: const [
+        Locale('ko'), // 한국어
+      ],
+      localizationsDelegates: [
+        SfGlobalLocalizations.delegate,
+      ],
+      home: Scaffold(
+          body: SingleChildScrollView(
+            child: Center(
+              child: Column(
+                children: [
+                  FutureBuilder<MonthRecord>(
+                    //통신데이터 가져오기
+                    future: monthRecord,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return buildList(snapshot.data);
+                      } else if (snapshot.hasError) {
+                        return Text("${snapshot.error}에러!!");
+                      }
+                      return CircularProgressIndicator();
+                    },
+                  ),
+                ],
+              ),
             ),
-          ),
-        ));
+          )),
+    );
   }
 
 
   Widget buildList(snapshot) {
+    meetings1 = [];
+    meetings2 = [];
+
     String? showing_month_donation =snapshot.total_donate.toString();
     String? showing_total_saving = snapshot.month_saving.toString();
     print(showing_month_donation);
     print(showing_total_saving);
-
-
-    /*
-    String temp_day = "2023-05-01";
-    int temp_int_year = int.parse(temp_day.substring(0, 4));
-    int temp_int_month = int.parse(temp_day.substring(5, 7));
-    int temp_int_date = int.parse(temp_day.substring(8, 10));
-    int temp_differ = -8323;
-    int temp_donation = 1000;
-    if(temp_differ>=0){
-      meetings1.add(Meeting(temp_differ.toString(),DateTime(temp_int_year,temp_int_month,temp_int_date),DateTime(temp_int_year,temp_int_month,temp_int_date),Colors.blue,false));
-    }
-    else{
-      meetings1.add(Meeting(temp_differ.toString(),DateTime(temp_int_year,temp_int_month,temp_int_date),DateTime(temp_int_year,temp_int_month,temp_int_date),Colors.red,false));
-    }
-    meetings2.add( Meeting(temp_donation.toString(),DateTime(temp_int_year,temp_int_month,temp_int_date),DateTime(temp_int_year,temp_int_month,temp_int_date),PRIMARY_COLOR,false));
-
-
-     */
-
 
     //snapshot.daily_record.length
     for(int i=0;i<snapshot.daily_record.length;i++){
@@ -137,22 +129,41 @@ class _CalendarState extends State<Calendar> {
 
     //Widget build(BuildContext context){
     return SingleChildScrollView(
-      child: Container(
-        height: MediaQuery.of(context).size.height*0.6, // 화면의 높이를 사용하여 컨테이너의 높이를 설정합니다.
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SfCalendar(
-            view: CalendarView.month,
-            showNavigationArrow: true,
-            dataSource: MeetingDataSource(_getDataSource()),
-            monthViewSettings: MonthViewSettings(
-              appointmentDisplayCount: 2,
-              appointmentDisplayMode: MonthAppointmentDisplayMode.appointment,
-              navigationDirection: MonthNavigationDirection.horizontal,
-            ), //MonthViewSettings
-          ), //SfCalendar
-        ), //Padding
+      child: Column(
+        children: [
+          SizedBox(
+            height: MediaQuery.of(context).size.height*0.6, // 화면의 높이를 사용하여 컨테이너의 높이를 설정합니다.
+            width: MediaQuery.of(context).size.width*0.95,
+            //child: Padding(
+              //padding: const EdgeInsets.all(8.0),
+              child: SfCalendar(
+                view: CalendarView.month,
+                showNavigationArrow: true,
+                dataSource: MeetingDataSource(_getDataSource()),
+                monthViewSettings: MonthViewSettings(
+                  appointmentDisplayCount: 2,
+                  appointmentDisplayMode: MonthAppointmentDisplayMode.appointment,
+                  navigationDirection: MonthNavigationDirection.horizontal,
+                ), //MonthViewSettings
+              ), //SfCalendar
+           // ), //Padding
+          ),
+          Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height*0.1, // 화면의 높이를 사용하여 컨테이너의 높이를 설정합니다.
+              width: MediaQuery.of(context).size.width*0.9,
+              child:Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text('한 달 예산 대비    \n'+'한 달 기부 저금    \n'),
+                  Text('$showing_total_saving 원\n' + '$showing_month_donation 원\n')
+                ],
+              )
+            ),
+          )
+        ],
       ), //Container
-    );//SingleChildScrollView
+    );
   }//buildList
 }//_CalendarState
