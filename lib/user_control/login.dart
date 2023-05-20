@@ -4,6 +4,7 @@ import 'package:temp_project/const/colors.dart';
 import 'package:temp_project/main.dart';
 import 'package:temp_project/user_control/user.dart';
 import 'package:temp_project/user_control/user_controller.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -23,6 +24,7 @@ class _LoginState extends State<Login> {
     idController.dispose();
     pwController.dispose();
     super.dispose();
+    //super.initState();
   }
 
   @override
@@ -30,22 +32,15 @@ class _LoginState extends State<Login> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        /*
         appBar: AppBar(
           backgroundColor: Color(0xffFFFFFF),
           title: Text(
             '',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w500,
-              letterSpacing: 1.5,
-              color: BLACK_COLOR,
-            ),
+            style: TextStyle(),
           ),
           centerTitle: true,
           elevation: 0.0,
         ),
-        */
         backgroundColor: Color(0xffFFFFFF),
         body: SingleChildScrollView(
           child: Padding(
@@ -89,6 +84,7 @@ class _LoginState extends State<Login> {
                       userResponse = await UserProvider()
                           .postUserInfo(idController.text, pwController.text);
                       print(userResponse!.token);
+                      //print(token);
 
                       Navigator.pushReplacement(
                         context,

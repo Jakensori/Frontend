@@ -1,6 +1,7 @@
 //import 'dart:html';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:temp_project/record_pages/record.dart';
 import 'package:temp_project/chart.dart';
@@ -28,8 +29,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      //home: StartPage(),
-      home: HomePage(),
+      home: StartPage(),
+      //home: HomePage(),
     );
   }
 }

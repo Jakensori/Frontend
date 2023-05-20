@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 import 'package:temp_project/user_control/user.dart';
 
 class UserProvider with ChangeNotifier {
+  final storage = FlutterSecureStorage();
   //GET 함수
   Future<UserInfo> getUserInfo() async {
     var url = Uri.parse('http://52.78.205.224:8000/user/login/');
@@ -45,12 +47,15 @@ class UserProvider with ChangeNotifier {
           //'Autorization': 'token $token',
         },
         body: body);
+    UserInfo userinfo =
+        UserInfo.fromJson(json.decode(utf8.decode(response.bodyBytes)));
 
+    await storage.write(key: 'token', value: userinfo.token);
     print("로그인 Code: ${response.statusCode}");
 
     if (response.statusCode == 201 || response.statusCode == 200) {
       print("<<<로그인 POST 성공>>>");
-      return UserInfo.fromJson(json.decode(utf8.decode(response.bodyBytes)));
+      return userinfo;
     } else {
       throw Exception('<<<로그인 POST 실패>>>');
     }

@@ -3,14 +3,16 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 import 'package:temp_project/record_pages/meal.dart';
+import 'package:temp_project/user_control/user_controller.dart';
 
 class MealProvider with ChangeNotifier {
-  String token =
-      "14512be45c73564040b3b964dbf7f356cf0f5a21e63c9898006d4fa2217edddc";
-
   //GET 함수
   Future<MealRecord> getMealRecord(int year, int month, int day) async {
     print("<<<기록 GET 실행>>>");
+
+    String? token = await UserProvider().storage.read(key: 'token');
+    print(token);
+
     final Parameters = {'year': year, 'month': month, 'day': day}
         .map((key, value) => MapEntry(key, value.toString()));
 

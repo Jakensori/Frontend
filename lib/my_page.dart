@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
+import 'package:temp_project/budget_controller.dart';
 import 'package:temp_project/collection.dart';
 
 import 'const/colors.dart';
@@ -185,7 +186,7 @@ class DonationHistoryScreen extends StatelessWidget {
 
 class BudgetScreen extends StatelessWidget {
   TextEditingController budgetControl = TextEditingController();
-  int? day_budget;
+  int day_budget = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -243,7 +244,9 @@ class BudgetScreen extends StatelessWidget {
                             actions: [
                               TextButton(
                                 child: Text('하루 식비 : $day_budget'),
-                                onPressed: () {
+                                onPressed: () async {
+                                  budgetProvider().patchBudget(
+                                      int.parse(budgetControl.text));
                                   Navigator.of(context).pop();
                                 },
                               ),
