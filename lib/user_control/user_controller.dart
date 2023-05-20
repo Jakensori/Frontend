@@ -60,4 +60,36 @@ class UserProvider with ChangeNotifier {
       throw Exception('<<<로그인 POST 실패>>>');
     }
   }
+
+  //POST
+  Future<UserInfo> postNewUserInfo(
+      String id, String pw, String name, String email) async {
+    print("<<<회원가입 POST 실행>>>");
+
+    var url = Uri.parse('http://52.78.205.224:8000/user/register/');
+
+    var body = json.encode(<String, dynamic>{
+      'password': pw,
+      'username': name,
+      'userid': id,
+      'email': email
+    });
+
+    final response = await http.post(url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Charset': 'utf-8',
+          //'Autorization': 'token $token',
+        },
+        body: body);
+    print("회원가입 Code: ${response.statusCode}");
+
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      print(response.body);
+      print("<<<회원가입 POST 성공>>>");
+      return UserInfo.fromJson(json.decode(utf8.decode(response.bodyBytes)));
+    } else {
+      throw Exception('<<<회원가입 POST 실패>>>');
+    }
+  }
 }

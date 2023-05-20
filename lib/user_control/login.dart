@@ -20,11 +20,15 @@ class _LoginState extends State<Login> {
   TextEditingController pwController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   void dispose() {
     idController.dispose();
     pwController.dispose();
     super.dispose();
-    //super.initState();
   }
 
   @override
