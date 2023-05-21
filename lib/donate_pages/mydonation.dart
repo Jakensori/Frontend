@@ -1,33 +1,30 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'dart:async';
 import 'package:intl/intl.dart';
-import 'api_campaign.dart';
+
+import 'api_mydonation.dart';
 import 'one_campaign.dart';
-import 'savings.dart';
-//import 'four_campaign.dart';
-//import 'four_api_campaign.dart';
 
-//import 'four_campaign.dart';
-
-class Donating extends StatelessWidget {
+class Mydonation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: DonatingPage(title: 'Donating Page'),
-    );
+    return MaterialApp();
   }
 }
 
-class DonatingPage extends StatefulWidget {
+class MydonationPage extends StatefulWidget {
+  MydonationPage({Key? key, required this.title}) : super(key: key);
+
   final String title;
 
-  DonatingPage({Key? key, required this.title}) : super(key: key);
-
   @override
-  _DonatingPageState createState() => _DonatingPageState();
+  _SavingPageState createState() => _SavingPageState();
 }
 
-class _DonatingPageState extends State<DonatingPage> {
-  late Future<List<CampaignRecord>> _futureCampaign;
+class _SavingPageState extends State<MydonationPage> {
+  late Future<List<MyCampaignRecord>> _futureCampaign;
 
   @override
   void initState() {
@@ -35,78 +32,28 @@ class _DonatingPageState extends State<DonatingPage> {
     _futureCampaign = fetchCampaign();
   }
 
-  get width => null;
-
-  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xffFFFFFF),
-        title: Text(
-          '기부하기',
-          style: TextStyle(
-            fontSize: 25, // 폰트 크기
-            fontWeight: FontWeight.bold, // 폰트 두께
-            color: Colors.black, // 폰트 색상
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.amber,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_rounded),
+            onPressed: () {
+              Navigator.pop(context);
+            },
           ),
         ),
-        centerTitle: true,
-      ),
-      body: Container(
-          child: Stack(
-        children: [
-          Container(
-            width: 600,
-            height: 150,
-            margin: EdgeInsets.symmetric(horizontal: 50, vertical: 30),
-            decoration: BoxDecoration(
-              color: Colors.amber,
-              borderRadius: BorderRadius.circular(10),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.fromLTRB(70, 50, 10, 5),
-            child: Text(
-              '나의 기부 저금통',
-              style: TextStyle(
-                fontSize: 18, // 폰트 크기
-                fontWeight: FontWeight.w600, // 폰트 두께
-                color: Colors.black, // 폰트 색상
-              ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.fromLTRB(70, 130, 180, 5),
-            child: TextButton(
-              child: Text(
-                '기부 리스트 보기',
-                style: TextStyle(
-                  fontSize: 12, // 폰트 크기
-                  fontWeight: FontWeight.w600, // 폰트 두께
-                  color: Colors.black, // 폰트 색상
-                ),
-              ),
-              onPressed: () {
-                // 페이지 이동
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => SavingPage(
-                            title: '',
-                          )),
-                );
-              },
-            ),
-          ),
-          Container(
-              margin: EdgeInsets.fromLTRB(10, 250, 10, 0),
-              child: FutureBuilder<List<CampaignRecord>>(
+        backgroundColor: Colors.white,
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.0),
+          child: Container(
+              width: double.infinity,
+              child: FutureBuilder<List<MyCampaignRecord>>(
                   future: _futureCampaign,
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       return ListView(
-                        scrollDirection: Axis.horizontal,
+                        scrollDirection: Axis.vertical,
                         children: [
                           for (final campaign in snapshot.data!)
                             GestureDetector(
@@ -151,15 +98,17 @@ class _DonatingPageState extends State<DonatingPage> {
                               child: Row(
                                 children: [
                                   Container(
-                                    width: 150,
+                                    width: 330,
                                     child: Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                          CrossAxisAlignment.center,
                                       children: [
+                                        SizedBox(height: 15),
                                         Container(
-                                          width: double.infinity,
+                                          width: 230,
                                           child: Text(
                                             campaign.title ?? '',
+                                            textAlign: TextAlign.center,
                                             style: TextStyle(
                                               fontSize: 15,
                                               fontWeight: FontWeight.bold,
@@ -167,26 +116,46 @@ class _DonatingPageState extends State<DonatingPage> {
                                             ),
                                           ),
                                         ),
-                                        SizedBox(height: 10),
+                                        SizedBox(height: 15),
                                         Container(
-                                          width: double.infinity,
-                                          child: Image.network(
-                                            campaign.image ?? '',
-                                            fit: BoxFit.scaleDown,
+                                          width: 230,
+                                          child: Align(
+                                            alignment: Alignment.center,
+                                            child: Image.network(
+                                              campaign.image ?? '',
+                                              fit: BoxFit.scaleDown,
+                                            ),
                                           ),
                                         ),
                                         SizedBox(height: 10),
-                                        Text(
-                                          campaign.summary ?? '',
+                                        Container(
+                                          width: 230,
+                                          child: Text(
+                                            campaign.summary ?? '',
+                                            textAlign: TextAlign.center,
+                                          ),
                                         ),
-                                        SizedBox(width: 10),
-                                        Text(
-                                          '${campaign.currentAmount ?? 0}원 / ${campaign.goalAmount ?? 0}원',
+                                        SizedBox(height: 10),
+                                        Container(
+                                          width: 230,
+                                          child: Text(
+                                            '${campaign.currentAmount ?? 0}원 / ${campaign.goalAmount ?? 0}원',
+                                            textAlign: TextAlign.center,
+                                          ),
                                         ),
+                                        SizedBox(height: 10),
+                                        Container(
+                                          width: 230,
+                                          child: Text(
+                                            '${campaign.mydonation_amount ?? 0}원 기부했어요:) ',
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                        SizedBox(height: 20),
                                       ],
                                     ),
                                   ),
-                                  SizedBox(width: 20), // 각 항목 사이의 가로 간격
+                                  //SizedBox(width: 50), // 각 항목 사이의 가로 간격
                                 ],
                               ),
                             ),
@@ -196,9 +165,12 @@ class _DonatingPageState extends State<DonatingPage> {
                       return Text("${snapshot.error}");
                     }
                     return CircularProgressIndicator();
-                  }))
-        ],
-      )),
-    ));
+                  })),
+        ));
+  }
+
+  @override
+  State<StatefulWidget> createState() {
+    throw UnimplementedError();
   }
 }

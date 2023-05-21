@@ -45,7 +45,7 @@ class CollectionPage extends State<Collection> {
                   ),
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 14.0),
+                      padding: EdgeInsets.symmetric(horizontal: 8.0),
                       child: Image.asset(
                         'assets/rice.png',
                         fit: BoxFit.contain, // 이미지가 자리를 차지하도록 설정
