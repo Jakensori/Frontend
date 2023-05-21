@@ -83,6 +83,12 @@ flutter:
   assets:
       - assets/rice.jpg
       - assets/logo.png
+      - assets/bread.png
+      - assets/carrot.png
+      - assets/eggplant.png
+      - assets/lock.png
+      - assets/rice.png
+      - assets/skewer.png
       
       
 

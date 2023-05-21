@@ -58,15 +58,15 @@ class _DonatingPageState extends State<DonatingPage> {
         children: [
           Container(
             width: 600,
-            height: 200,
-            margin: EdgeInsets.symmetric(horizontal: 50, vertical: 50),
+            height: 150,
+            margin: EdgeInsets.symmetric(horizontal: 50, vertical: 30),
             decoration: BoxDecoration(
               color: Colors.amber,
               borderRadius: BorderRadius.circular(10),
             ),
           ),
           Container(
-            margin: EdgeInsets.fromLTRB(70, 80, 10, 5),
+            margin: EdgeInsets.fromLTRB(70, 50, 10, 5),
             child: Text(
               '나의 기부 저금통',
               style: TextStyle(
@@ -77,7 +77,7 @@ class _DonatingPageState extends State<DonatingPage> {
             ),
           ),
           Container(
-            margin: EdgeInsets.fromLTRB(70, 200, 180, 5),
+            margin: EdgeInsets.fromLTRB(70, 130, 180, 5),
             child: TextButton(
               child: Text(
                 '기부 리스트 보기',
@@ -100,7 +100,7 @@ class _DonatingPageState extends State<DonatingPage> {
             ),
           ),
           Container(
-              margin: EdgeInsets.fromLTRB(10, 300, 10, 0),
+              margin: EdgeInsets.fromLTRB(10, 250, 10, 0),
               child: FutureBuilder<List<CampaignRecord>>(
                   future: _futureCampaign,
                   builder: (context, snapshot) {
@@ -167,7 +167,7 @@ class _DonatingPageState extends State<DonatingPage> {
                                             ),
                                           ),
                                         ),
-                                        SizedBox(height: 20),
+                                        SizedBox(height: 10),
                                         Container(
                                           width: double.infinity,
                                           child: Image.network(
@@ -175,7 +175,7 @@ class _DonatingPageState extends State<DonatingPage> {
                                             fit: BoxFit.scaleDown,
                                           ),
                                         ),
-                                        SizedBox(height: 20),
+                                        SizedBox(height: 10),
                                         Text(
                                           campaign.summary ?? '',
                                         ),

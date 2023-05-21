@@ -21,108 +21,43 @@ class CollectionPage extends State<Collection> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(8.0),
+          //padding: EdgeInsets.all(30.0),
           child: Column(
             children: <Widget>[
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 2.0),
-                height: 160,
-                child: Stack(
-                  children: [
-                    Container(
-                      width: 300,
-                      height: 600,
-                      margin:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                      decoration: BoxDecoration(
-                        color: Colors.amber,
-                        borderRadius: BorderRadius.circular(10),
+              Row(
+                children: [
+                  Container(
+                    margin:
+                        EdgeInsets.symmetric(horizontal: 30.0, vertical: 50.0),
+                    padding: EdgeInsets.symmetric(horizontal: 24.0),
+                    decoration: BoxDecoration(
+                      color: Colors.amber,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    width: 200,
+                    height: 120,
+                    child: Center(
+                      child: Text(
+                        '여기에 캐릭터 설명이 들어가야할까 아님 뭐가 들어가야할까..?',
+                        style: TextStyle(fontSize: 15),
                       ),
                     ),
-                    /*
-                    Container(
-                      margin: EdgeInsets.fromLTRB(30, 40, 180, 50),
-                      child: Row(
-                        children: [
-                          Text(
-                            '여기에 캐릭터 소개가 들어가려나..\n근데 너무 졸려요',
-                            style: TextStyle(
-                              fontSize: 14, // 폰트 크기
-                              fontWeight: FontWeight.w600, // 폰트 두께
-                              color: Colors.black, // 폰트 색상
-                            ),
-                          ),
-                          SizedBox(width: 2), // 이미지와 텍스트 사이 간격 조절
-                          Image.asset(
-                            'assets/rice.jpg',
-                            width: 400, // 이미지 크기 설정
-                          ),
-                        ],
-                      ),
-                    ),*/
-                    Container(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: LayoutBuilder(
-                              builder: (context, constraints) {
-                                if (constraints.maxWidth > 600) {
-                                  return Row(
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          '여기에 캐릭터 소개가 들어가려나..\n근데 너무 졸려요',
-                                          style: TextStyle(
-                                            fontSize: 14, // 폰트 크기
-                                            fontWeight:
-                                                FontWeight.w600, // 폰트 두께
-                                            color: Colors.black, // 폰트 색상
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(width: 40), // 이미지와 텍스트 사이 간격 조절
-                                      Expanded(
-                                        child: Image.asset(
-                                          'assets/rice.jpg',
-                                          fit: BoxFit
-                                              .contain, // 이미지가 자리를 차지하도록 설정
-                                        ),
-                                      ),
-                                    ],
-                                  );
-                                } else {
-                                  return Column(
-                                    children: [
-                                      Text(
-                                        '여기에 캐릭터 소개가 들어가려나..\n근데 너무 졸려요',
-                                        style: TextStyle(
-                                          fontSize: 14, // 폰트 크기
-                                          fontWeight: FontWeight.w600, // 폰트 두께
-                                          color: Colors.black, // 폰트 색상
-                                        ),
-                                      ),
-                                      SizedBox(height: 40), // 이미지와 텍스트 사이 간격 조절
-                                      Image.asset(
-                                        'assets/rice.jpg',
-                                        height: 30, // 이미지 크기 설정
-                                        fit: BoxFit.cover, // 이미지가 자리를 차지하도록 설정
-                                      ),
-                                    ],
-                                  );
-                                }
-                              },
-                            ),
-                          ),
-                        ],
+                  ),
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 14.0),
+                      child: Image.asset(
+                        'assets/rice.png',
+                        fit: BoxFit.contain, // 이미지가 자리를 차지하도록 설정
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
+              //Spacer(flex: 2),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 34.0),
+                margin: EdgeInsets.symmetric(horizontal: 15.0),
+                padding: EdgeInsets.only(top: 20.0, left: 15.0, right: 15.0),
                 height: 600,
                 child: GridView.builder(
                   scrollDirection: Axis.vertical,
@@ -369,7 +304,7 @@ class FlutterDialog1 extends StatelessWidget {
         }
       },
       child: Image.asset(
-        'assets/rice.jpg',
+        'assets/rice.png',
         fit: BoxFit.contain,
         height: 100,
         width: 100,
@@ -473,10 +408,11 @@ class FlutterDialog3 extends StatelessWidget {
           );
         }
       },
-      child: const Icon(
-        Icons.accessibility_new_rounded,
-        color: Colors.black,
-        size: 30,
+      child: Image.asset(
+        'assets/lock.png',
+        fit: BoxFit.contain,
+        height: 100,
+        width: 100,
       ),
     );
   }
@@ -512,10 +448,11 @@ class FlutterDialog4 extends StatelessWidget {
           );
         }
       },
-      child: const Icon(
-        Icons.accessibility_new_rounded,
-        color: Colors.black,
-        size: 30,
+      child: Image.asset(
+        'assets/lock.png',
+        fit: BoxFit.contain,
+        height: 100,
+        width: 100,
       ),
     );
   }
@@ -551,10 +488,11 @@ class FlutterDialog5 extends StatelessWidget {
           );
         }
       },
-      child: const Icon(
-        Icons.accessibility_new_rounded,
-        color: Colors.black,
-        size: 30,
+      child: Image.asset(
+        'assets/lock.png',
+        fit: BoxFit.contain,
+        height: 100,
+        width: 100,
       ),
     );
   }
@@ -706,10 +644,11 @@ class NotYet extends StatelessWidget {
           );
         }
       },
-      child: const Icon(
-        Icons.auto_awesome_outlined,
-        color: Colors.black,
-        size: 30,
+      child: Image.asset(
+        'assets/lock.png',
+        fit: BoxFit.contain,
+        height: 100,
+        width: 100,
       ),
     );
   }
