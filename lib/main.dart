@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:temp_project/record.dart';
 import 'package:temp_project/chart.dart';
 
-import 'package:temp_project/collection.dart';
+import 'package:temp_project/collection_pages/collection.dart';
 import 'package:temp_project/my_page.dart';
 
 import 'package:temp_project/start.dart';

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:temp_project/level.dart';
+import 'package:temp_project/collection_pages/level.dart';
+
+import 'api_mealpoint.dart';
 
 class Collection extends StatefulWidget {
   const Collection({Key? key}) : super(key: key);
@@ -10,6 +12,17 @@ class Collection extends StatefulWidget {
 
 class CollectionPage extends State<Collection> {
   Level _level = Level(1, 10);
+
+  late Future<Map<String, dynamic>> _futureMoneyBox;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _futureMoneyBox = fetchMoneyBox();
+  }
+
+  get width => null;
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +49,41 @@ class CollectionPage extends State<Collection> {
                     ),
                     width: 200,
                     height: 120,
-                    child: Center(
-                      child: Text(
-                        '여기에 캐릭터 설명이 들어가야할까 아님 뭐가 들어가야할까..?',
-                        style: TextStyle(fontSize: 15),
-                      ),
+                    child: FutureBuilder<Map<String, dynamic>>(
+                      future: _futureMoneyBox,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text("${snapshot.error}");
+                        } else {
+                          final moneyBoxData = snapshot.data;
+                          final mealPoint = moneyBoxData?['mealPoint'] ?? 0;
+                          final level = moneyBoxData?['level'] ?? 0;
+
+                          return Container(
+                            width: 150,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  child: Text(
+                                    '현재 보유중인 mealpoint: $mealPoint',
+                                  ),
+                                ),
+                                Container(
+                                  child: Text(
+                                    '현재 레벨: $level',
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                      },
                     ),
                   ),
                   Expanded(

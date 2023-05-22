@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
+import 'package:temp_project/donate_pages/api_moneybox.dart';
+import 'api_moneybox.dart';
 import 'api_campaign.dart';
 import 'mydonation.dart';
 import 'one_campaign.dart';
@@ -30,11 +31,13 @@ class DonatingPage extends StatefulWidget {
 
 class _DonatingPageState extends State<DonatingPage> {
   late Future<List<CampaignRecord>> _futureCampaign;
+  late Future<Map<String, dynamic>> _futureMoneyBox;
 
   @override
   void initState() {
     super.initState();
     _futureCampaign = fetchCampaign();
+    _futureMoneyBox = fetchMoneyBox();
   }
 
   get width => null;
@@ -68,7 +71,7 @@ class _DonatingPageState extends State<DonatingPage> {
             ),
           ),
           Container(
-            margin: EdgeInsets.fromLTRB(70, 50, 10, 5),
+            margin: EdgeInsets.fromLTRB(170, 50, 10, 5),
             child: Text(
               '나의 기부 저금통',
               style: TextStyle(
@@ -78,6 +81,34 @@ class _DonatingPageState extends State<DonatingPage> {
               ),
             ),
           ),
+          Container(
+              child: FutureBuilder<Map<String, dynamic>>(
+            future: _futureMoneyBox,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                return Text("${snapshot.error}");
+              } else {
+                final moneyBoxData = snapshot.data;
+                final savings = moneyBoxData?['savings'] ?? 0;
+
+                return Container(
+                  width: 150,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        child: Text(
+                          '$savings 원',
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }
+            },
+          )),
           Container(
             margin: EdgeInsets.fromLTRB(70, 130, 180, 5),
             child: TextButton(

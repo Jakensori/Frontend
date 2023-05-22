@@ -14,7 +14,6 @@ class _MyPageState extends State<MyPage> {
   }
 }*/
 import 'package:flutter/material.dart';
-import 'package:temp_project/collection.dart';
 
 class MyPage extends StatelessWidget {
   /*final String name;
