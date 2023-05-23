@@ -8,9 +8,11 @@ class MonthRecordProvider with ChangeNotifier {
   MonthRecord? _monthChart;
   MonthRecord? get monthRecord => _monthChart;
 
-  Future<MonthRecord> fetchMonthRecord() async {
+  Future<MonthRecord> fetchMonthRecord(int currentYear, int currentMonth) async {
     print("함수 들어옴");
-    final Parameters = {'year': 2023, 'month': 5}.map((key, value) =>
+    int currentYear = DateTime.now().year;
+    int currentMonth = DateTime.now().month;
+    final Parameters = {'year': currentYear, 'month': currentMonth}.map((key, value) =>
        MapEntry(key, value.toString())); // int 허용 안되서 string으로 바꿔줌.
 
 
@@ -78,15 +80,4 @@ class MonthRecord {
         month_saving:json["남은 금액"]);
   }
 
-/*
-  dynamic toJson() => {
-        'record_byTime': record_byTime,
-        'total_count': total_count,
-      };
-   */
-}
-
-void main() {
-  print("main 함수 실행");
-  MonthRecordProvider().fetchMonthRecord();
 }

@@ -4,14 +4,13 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:provider/provider.dart';
 
-class MealProvider with ChangeNotifier {
-  Future<MealChart> fetchMealChart(int currentYear,int currentMonth) async {
-    int currentYear = DateTime.now().year;
-    int currentMonth = DateTime.now().month;
-    final Parameters = {'year': currentYear, 'month': currentMonth}.map((key, value) =>
+class ExpenseProvider with ChangeNotifier {
+  Future<ExpenseChart> fetchExpenseChart() async {
+    //print("함수 들어옴");
+    final Parameters = {'year': 2023, 'month': 5}.map((key, value) =>
         MapEntry(key, value.toString())); // int 허용 안되서 string으로 바꿔줌.
 
-    var url = Uri.parse('http://52.78.205.224:8000/record/time/1/');
+    var url = Uri.parse('http://52.78.205.224:8000/record/category/1/');
     Map<String, String>? headers = {
       'Content-Type': 'application/json; charset=UTF-8',
     };
@@ -25,7 +24,7 @@ class MealProvider with ChangeNotifier {
 
       print(json.decode(utf8.decode(response.bodyBytes))); // 한글 깨짐 해결 !
       notifyListeners();
-      return MealChart.fromJson(json.decode(utf8.decode(response.bodyBytes)));
+      return ExpenseChart.fromJson(json.decode(utf8.decode(response.bodyBytes)));
     } else {
       //만약 응답이 ok가 아니면 에러를 던집니다.
       throw Exception('계좌정보를 불러오는데 실패했습니다');
@@ -33,26 +32,33 @@ class MealProvider with ChangeNotifier {
   }
 }
 
-class MealChart {
-  final int? breakfast;
-  final int? lunch;
-  final int? dinner;
-  final int? snack;
+class ExpenseChart {
+  final int? homemade;
+  final int? eating_out;
+  final int? delivery;
+  final int? cafe;
+  final int? etc;
   final int? total_count;
 
-  MealChart({required this.breakfast,
-    required this.lunch,
-    required this.dinner,
-    required this.snack,
+  ExpenseChart({required this.homemade,
+    required this.eating_out,
+    required this.delivery,
+    required this.cafe,
+    required this.etc,
     required this.total_count});
 
-  factory MealChart.fromJson(Map<String, dynamic> json) {
-    return MealChart(
-        breakfast: json["record_byTime"]["아침"],
-        lunch: json["record_byTime"]["점심"],
-        dinner: json["record_byTime"]["저녁"],
-        snack: json["record_byTime"]["간식"],
+  factory ExpenseChart.fromJson(Map<String, dynamic> json) {
+    return ExpenseChart(
+        homemade: json["record_byCategory"]["집밥"],
+        eating_out: json["record_byCategory"]["외식"],
+        delivery: json["record_byCategory"]["배달"],
+        cafe: json["record_byCategory"]["카페"],
+        etc: json["record_byCategory"]["기타"],
         total_count: json["total_count"]
     );
   }
+}
+void main() {
+  print("main 함수 실행");
+  ExpenseProvider().fetchExpenseChart();
 }

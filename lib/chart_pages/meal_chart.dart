@@ -18,6 +18,9 @@ class MealChartPage extends StatefulWidget {
 }
 
 class _MealChartPageState extends State<MealChartPage> {
+  final int currentYear = DateTime.now().year;
+  final int currentMonth = DateTime.now().month;
+
   Future<MealChart>? mealChart;
   double BreakfastCounts=0;
   double LunchCounts =0;
@@ -25,14 +28,14 @@ class _MealChartPageState extends State<MealChartPage> {
 
   @override
   void initState() {
+
     super.initState();
-    mealChart = MealProvider().fetchMealChart();
+    mealChart = MealProvider().fetchMealChart(currentYear,currentMonth);
     /*
     setState(() {
       _selectedYear = items_year[0];
       _selectedMonth = items_month[0];
     });
-
      */
   }
 
@@ -75,6 +78,10 @@ class _MealChartPageState extends State<MealChartPage> {
 
 
   Widget buildList(snapshot) {
+    final int currentYear = DateTime.now().year;
+    final int currentMonth = DateTime.now().month;
+    String selectedYear = currentYear.toString();
+    String selectedMonth = currentMonth.toString();
 
     double getBreakfastCounts(snapshot){
       BreakfastCounts = snapshot.breakfast.toDouble();
@@ -93,44 +100,6 @@ class _MealChartPageState extends State<MealChartPage> {
     getBreakfastCounts(snapshot);
     getLunchCounts(snapshot);
     getDinnerCounts(snapshot);
-
-    /*
-    //0518 수정
-    double getBreakfastCounts(snapshot){
-      for (int i=0;i<snapshot.record_byTime.length;i++){
-        BreakfastCounts = snapshot.mealtime[i].breakfast;
-      }
-      // print(BreakfastCounts);
-      return BreakfastCounts;
-    }
-    // getBreakfastCounts(snapshot);
-
-    double getLunchCounts(snapshot){
-      for (int i=0;i<snapshot.record_byTime.length;i++){
-        if(snapshot.record_byTime[i]=="점심"){
-          LunchCounts++;
-        }
-      }
-      return LunchCounts;
-    }
-
-    double getDinnerCounts(snapshot){
-      for (int i=0;i<snapshot.record_byTime.length;i++){
-        if(snapshot.record_byTime[i]=="저녁"){
-          DinnerCounts++;
-        }
-      }
-      return DinnerCounts;
-    }
-
-    getBreakfastCounts(snapshot);
-    getLunchCounts(snapshot);
-    getDinnerCounts(snapshot);
-
-    //0518수정
-     */
-
-
 
     return AspectRatio(
       aspectRatio: 1,
@@ -151,9 +120,9 @@ class _MealChartPageState extends State<MealChartPage> {
                           isExpanded: true,
                           hint: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children:  [
                               Text(
-                                '2023',
+                                currentYear.toString(),
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -221,9 +190,9 @@ class _MealChartPageState extends State<MealChartPage> {
                           isExpanded: true,
                           hint: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               Text(
-                                '5',
+                                currentMonth.toString(),
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -289,8 +258,6 @@ class _MealChartPageState extends State<MealChartPage> {
                     ],
                   ),
                 ),
-
-
 
                 Expanded(
                   child: Padding(

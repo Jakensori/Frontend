@@ -58,12 +58,15 @@ class Calendar extends StatefulWidget {
 
 class _CalendarState extends State<Calendar> {
   Future<MonthRecord>? monthRecord;
+  final int currentYear = DateTime.now().year;
+  final int currentMonth = DateTime.now().month;
+  int? selectedMonth;
 
   @override
   void initState() {
     super.initState();
 
-    monthRecord = MonthRecordProvider().fetchMonthRecord();
+    monthRecord = MonthRecordProvider().fetchMonthRecord(currentYear, currentMonth);
   }
 
   @override
@@ -107,10 +110,8 @@ class _CalendarState extends State<Calendar> {
 
     String? showing_month_donation =snapshot.total_donate.toString();
     String? showing_total_saving = snapshot.month_saving.toString();
-    print(showing_month_donation);
-    print(showing_total_saving);
+    //int? selectedMonth;
 
-    //snapshot.daily_record.length
     for(int i=0;i<snapshot.daily_record.length;i++){
       String temp_day = snapshot.daily_record[i].today_date;
       int temp_int_year = int.parse(temp_day.substring(0, 4));
@@ -134,8 +135,6 @@ class _CalendarState extends State<Calendar> {
           SizedBox(
             height: MediaQuery.of(context).size.height*0.6, // 화면의 높이를 사용하여 컨테이너의 높이를 설정합니다.
             width: MediaQuery.of(context).size.width*0.95,
-            //child: Padding(
-              //padding: const EdgeInsets.all(8.0),
               child: SfCalendar(
                 view: CalendarView.month,
                 showNavigationArrow: true,
@@ -146,7 +145,6 @@ class _CalendarState extends State<Calendar> {
                   navigationDirection: MonthNavigationDirection.horizontal,
                 ), //MonthViewSettings
               ), //SfCalendar
-           // ), //Padding
           ),
           Padding(
             padding: const EdgeInsets.all(15.0),
