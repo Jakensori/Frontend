@@ -50,6 +50,8 @@ dependencies:
 
   flutter_native_splash:
   flutter_secure_storage: ^8.0.0
+  toss_payment: ^0.2.6
+
 
 
 dev_dependencies:

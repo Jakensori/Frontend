@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:temp_project/budget_controller.dart';
 import 'package:temp_project/collection.dart';
+import 'package:temp_project/user_control/user_controller.dart';
 
 import 'const/colors.dart';
 
@@ -228,31 +229,57 @@ class BudgetScreen extends StatelessWidget {
                 day_budget = CalculateBudget(budget);
               },
             ),
-            SizedBox(height: 15.0),
+            SizedBox(height: 20.0),
             Container(
               width: double.infinity,
               child: ElevatedButton(
                   onPressed: () {
                     showDialog(
-                        context: context,
-                        barrierDismissible: true, // 바깥 영역 터치시 닫을지 여부
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            //content: day_budget,
-                            insetPadding:
-                                const EdgeInsets.fromLTRB(0, 80, 0, 80),
-                            actions: [
-                              TextButton(
-                                child: Text('하루 식비 : $day_budget'),
-                                onPressed: () async {
-                                  budgetProvider().patchBudget(
-                                      int.parse(budgetControl.text));
-                                  Navigator.of(context).pop();
-                                },
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0)),
+                          title: Text('하루에',
+                              style: TextStyle(
+                                fontSize: 18.0,
+                              )),
+                          content: SingleChildScrollView(
+                            child: Text(
+                              '$day_budget 원을 쓸 수 있어요 !',
+                              style: TextStyle(fontSize: 18.0),
+                            ),
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () async {
+                                await budgetProvider()
+                                    .patchBudget(int.parse(budgetControl.text));
+
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            MyPage()),
+                                    (route) => false);
+                              },
+                              child: Text(
+                                '확인',
+                                style: TextStyle(color: GREY_COLOR),
                               ),
-                            ],
-                          );
-                        });
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text('취소',
+                                  style: TextStyle(color: GREY_COLOR)),
+                            ),
+                          ],
+                        );
+                      },
+                    );
 
                     //Navigator.pop(context);
                   },

@@ -737,6 +737,27 @@ class _Record extends State<Record> {
                     onPressed: () async {
                       await MealProvider().postMealRecord(mealInfo);
                       Navigator.pop(context);
+                      setState(() {
+                        for (int i = 0; i < snapshot.meal.length; i++) {
+                          switch (snapshot.meal[i].when) {
+                            case "아침":
+                              breakfastList.add(snapshot.meal[i]);
+                              break;
+                            case "점심":
+                              launchList.add(snapshot.meal[i]);
+                              break;
+                            case "저녁":
+                              dinnerList.add(snapshot.meal[i]);
+                              break;
+                            case "간식":
+                              snackList.add(snapshot.meal[i]);
+                              break;
+                            case "기타":
+                              othersList.add(snapshot.meal[i]);
+                              break;
+                          }
+                        }
+                      });
                     },
                     style: ElevatedButton.styleFrom(
                         primary: PRIMARY_COLOR,

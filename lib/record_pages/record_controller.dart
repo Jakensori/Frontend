@@ -64,7 +64,7 @@ class MealProvider with ChangeNotifier {
     print("기록 Code: ${response.statusCode}");
 
     if (response.statusCode == 201 || response.statusCode == 200) {
-      print(response);
+      print(response.body);
       print("<<<기록 POST 성공>>>");
       //return MealRecord.fromJson(json.decode(utf8.decode(response.bodyBytes)));
     } else {
