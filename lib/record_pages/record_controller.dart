@@ -28,15 +28,14 @@ class MealProvider with ChangeNotifier {
     print(newURI);
     var response = await http.get(newURI, headers: headers);
 
-    print('response Code : ${response.statusCode}');
-    // print(MealRecord.fromJson(json.decode(utf8.decode(response.bodyBytes))));
+    print('기록 response Code : ${response.statusCode}');
 
     if (response.statusCode == 200) {
-      print('GET 성공');
+      print('기록 GET 성공');
       notifyListeners();
       return MealRecord.fromJson(json.decode(utf8.decode(response.bodyBytes)));
     } else {
-      throw Exception('GET 실패');
+      throw Exception('기록 GET 실패');
     }
   }
 

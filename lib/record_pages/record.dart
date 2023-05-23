@@ -27,9 +27,8 @@ class _Record extends State<Record> {
   List<MealInfo> snackList = [];
   List<MealInfo> othersList = [];
 
-  late final Future<MealRecord>? mealRecord;
+  late Future<MealRecord> mealRecord;
   late final Future<SettlementInfo>? settleInfo;
-  Future<MealRecord>? _mealInfo;
   int today_donation = 0;
 
   int formatYear = int.parse(DateFormat('yyyy').format(DateTime.now()));
@@ -160,7 +159,9 @@ class _Record extends State<Record> {
                 formatYear = int.parse(DateFormat('yyyy').format(value));
                 formatMonth = int.parse(DateFormat('M').format(value));
                 formatDay = int.parse(DateFormat('d').format(value));
-                mealRecord;
+                onRefresh:
+                mealRecord = MealProvider()
+                    .getMealRecord(formatYear, formatMonth, formatDay);
               }),
               enableWeeknumberText: false,
               weeknumberTextColor: Colors.white,
@@ -737,27 +738,9 @@ class _Record extends State<Record> {
                     onPressed: () async {
                       await MealProvider().postMealRecord(mealInfo);
                       Navigator.pop(context);
-                      setState(() {
-                        for (int i = 0; i < snapshot.meal.length; i++) {
-                          switch (snapshot.meal[i].when) {
-                            case "아침":
-                              breakfastList.add(snapshot.meal[i]);
-                              break;
-                            case "점심":
-                              launchList.add(snapshot.meal[i]);
-                              break;
-                            case "저녁":
-                              dinnerList.add(snapshot.meal[i]);
-                              break;
-                            case "간식":
-                              snackList.add(snapshot.meal[i]);
-                              break;
-                            case "기타":
-                              othersList.add(snapshot.meal[i]);
-                              break;
-                          }
-                        }
-                      });
+                      onRefresh:
+                      mealRecord = MealProvider()
+                          .getMealRecord(formatYear, formatMonth, formatDay);
                     },
                     style: ElevatedButton.styleFrom(
                         primary: PRIMARY_COLOR,
