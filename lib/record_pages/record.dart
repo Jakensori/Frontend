@@ -41,7 +41,8 @@ class _Record extends State<Record> {
     super.initState();
     mealRecord =
         MealProvider().getMealRecord(formatYear, formatMonth, formatDay);
-    settleInfo = SettlementProvider().getSettlement();
+    settleInfo =
+        SettlementProvider().getSettlement(formatYear, formatMonth, formatDay);
   }
 
   @override
@@ -97,10 +98,10 @@ class _Record extends State<Record> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError) {
+              print(snapshot.error.toString());
               return Center(
                 child: Text(snapshot.error.toString()),
               );
-              // 에러가 발생한 경우
             } else if (snapshot.hasData && snapshot.data != null) {
               return buildList(snapshot.data);
             }
@@ -121,6 +122,9 @@ class _Record extends State<Record> {
     othersList = [];
 
     for (int i = 0; i < snapshot.meal.length; i++) {
+      if (snapshot.meal == null) {
+        break;
+      }
       switch (snapshot.meal[i].when) {
         case "아침":
           breakfastList.add(snapshot.meal[i]);
@@ -624,10 +628,7 @@ class _Record extends State<Record> {
                 buttonTextStyle: ButtonTextStyle(
                     selectedColor: BLACK_COLOR,
                     unSelectedColor: BLACK_COLOR,
-                    textStyle: TextStyle(
-                      fontSize: 15,
-                      color: BLACK_COLOR,
-                    )),
+                    textStyle: TextStyle(fontSize: 15, color: BLACK_COLOR)),
                 buttonValuesList: ["아침", "점심", "저녁", "간식", "기타"],
                 buttonLables: ["아침", "점심", "저녁", "간식", "기타"],
                 checkBoxButtonValues: (when) {

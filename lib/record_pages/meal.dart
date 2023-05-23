@@ -48,10 +48,14 @@ class MealRecord {
   });
 
   factory MealRecord.fromJson(Map<String, dynamic> json) {
-    var list = json["records"] as List;
-    List<MealInfo> mealInfoList =
-        list.map((i) => MealInfo.fromJson(i)).toList();
-
+    List<MealInfo> mealInfoList;
+    if (json["records"] == null) {
+      print("<<<기록 없음>>>");
+      mealInfoList = [];
+    } else {
+      var list = json["records"] as List;
+      mealInfoList = list.map((i) => MealInfo.fromJson(i)).toList();
+    }
     return MealRecord(
         meal: mealInfoList,
         day_budget: json["day_budget"],

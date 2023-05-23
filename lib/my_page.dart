@@ -257,12 +257,13 @@ class BudgetScreen extends StatelessWidget {
                                 await budgetProvider()
                                     .patchBudget(int.parse(budgetControl.text));
 
+                                /*
                                 Navigator.pushAndRemoveUntil(
                                     context,
                                     MaterialPageRoute(
                                         builder: (BuildContext context) =>
                                             MyPage()),
-                                    (route) => false);
+                                    (route) => false);*/
                               },
                               child: Text(
                                 '확인',

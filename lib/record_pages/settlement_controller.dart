@@ -10,12 +10,18 @@ class SettlementProvider with ChangeNotifier {
   // SettlementInfo? get mealRecord => _settleInfo;
 
   //GET 함수
-  Future<SettlementInfo> getSettlement() async {
+  Future<SettlementInfo> getSettlement(int year, int month, int day) async {
+    final Parameters = {'year': year, 'month': month, 'day': day}
+        .map((key, value) => MapEntry(key, value.toString()));
+
     var url = Uri.parse('http://52.78.205.224:8000/record/settlement/1/');
     Map<String, String>? headers = {
       'Content-Type': 'application/json; charset=UTF-8',
     };
-    var response = await http.get(url, headers: headers);
+
+    var newURI = url.replace(queryParameters: Parameters);
+    print(newURI);
+    var response = await http.get(newURI, headers: headers);
     print('정산 GET 응답');
 
     if (response.statusCode == 200) {
