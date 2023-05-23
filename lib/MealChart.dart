@@ -5,10 +5,8 @@ import 'dart:convert';
 import 'package:provider/provider.dart';
 
 class MealProvider with ChangeNotifier {
-  Future<MealChart> fetchMealChart(int currentYear,int currentMonth) async {
-    int currentYear = DateTime.now().year;
-    int currentMonth = DateTime.now().month;
-    final Parameters = {'year': currentYear, 'month': currentMonth}.map((key, value) =>
+  Future<MealChart> fetchMealChart(int Year,int Month) async {
+    final Parameters = {'year': Year, 'month': Month}.map((key, value) =>
         MapEntry(key, value.toString())); // int 허용 안되서 string으로 바꿔줌.
 
     var url = Uri.parse('http://52.78.205.224:8000/record/time/1/');
@@ -34,11 +32,11 @@ class MealProvider with ChangeNotifier {
 }
 
 class MealChart {
-  final int? breakfast;
-  final int? lunch;
-  final int? dinner;
-  final int? snack;
-  final int? total_count;
+  int breakfast=0;
+  int lunch=0;
+  int dinner=0;
+  int snack=0;
+  int total_count=0;
 
   MealChart({required this.breakfast,
     required this.lunch,
@@ -47,12 +45,24 @@ class MealChart {
     required this.total_count});
 
   factory MealChart.fromJson(Map<String, dynamic> json) {
-    return MealChart(
-        breakfast: json["record_byTime"]["아침"],
-        lunch: json["record_byTime"]["점심"],
-        dinner: json["record_byTime"]["저녁"],
-        snack: json["record_byTime"]["간식"],
-        total_count: json["total_count"]
-    );
+    if (json["record_byTime"]==null){
+      print("해당 기록 없음");
+      return MealChart(
+          breakfast: 0,
+          lunch: 0,
+          dinner: 0,
+          snack: 0,
+          total_count:0
+      );
+    }
+    else{
+      return MealChart(
+          breakfast: json["record_byTime"]["아침"]??0,
+          lunch: json["record_byTime"]["점심"]??0,
+          dinner: json["record_byTime"]["저녁"]??0,
+          snack: json["record_byTime"]["간식"]??0,
+          total_count: json["total_count"]??0
+      );
+    }
   }
 }

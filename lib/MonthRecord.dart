@@ -8,11 +8,11 @@ class MonthRecordProvider with ChangeNotifier {
   MonthRecord? _monthChart;
   MonthRecord? get monthRecord => _monthChart;
 
-  Future<MonthRecord> fetchMonthRecord(int currentYear, int currentMonth) async {
+  Future<MonthRecord> fetchMonthRecord(int Year, int Month) async {
     print("함수 들어옴");
-    int currentYear = DateTime.now().year;
-    int currentMonth = DateTime.now().month;
-    final Parameters = {'year': currentYear, 'month': currentMonth}.map((key, value) =>
+    //int currentYear = DateTime.now().year;
+    //int currentMonth = DateTime.now().month;
+    final Parameters = {'year': Year, 'month': Month}.map((key, value) =>
        MapEntry(key, value.toString())); // int 허용 안되서 string으로 바꿔줌.
 
 

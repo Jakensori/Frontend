@@ -60,12 +60,11 @@ class _CalendarState extends State<Calendar> {
   Future<MonthRecord>? monthRecord;
   final int currentYear = DateTime.now().year;
   final int currentMonth = DateTime.now().month;
-  int? selectedMonth;
+  int? selectedMonth = DateTime.now().month;
 
   @override
   void initState() {
     super.initState();
-
     monthRecord = MonthRecordProvider().fetchMonthRecord(currentYear, currentMonth);
   }
 

@@ -20,6 +20,8 @@ class MealChartPage extends StatefulWidget {
 class _MealChartPageState extends State<MealChartPage> {
   final int currentYear = DateTime.now().year;
   final int currentMonth = DateTime.now().month;
+  int selectedYear = DateTime.now().year;
+  int selectedMonth = DateTime.now().month;
 
   Future<MealChart>? mealChart;
   double BreakfastCounts=0;
@@ -28,15 +30,8 @@ class _MealChartPageState extends State<MealChartPage> {
 
   @override
   void initState() {
-
     super.initState();
     mealChart = MealProvider().fetchMealChart(currentYear,currentMonth);
-    /*
-    setState(() {
-      _selectedYear = items_year[0];
-      _selectedMonth = items_month[0];
-    });
-     */
   }
 
   final Duration animDuration = const Duration(milliseconds: 250);
@@ -46,10 +41,7 @@ class _MealChartPageState extends State<MealChartPage> {
   String? _value1;
   String? _value2;
   List<String> items_year = ['2020', '2021', '2022', '2023'];
-  List<String> items_month = ['전체', '1', '2', '3', '4','5', '6','7', '8', '9', '10', '11', '12'];
-  //String? _selectedYear;
-  //String? _selectedMonth;
-
+  List<String> items_month = ['1', '2', '3', '4','5', '6','7', '8', '9', '10', '11', '12'];
 
   @override
   Widget build(BuildContext context) {
@@ -78,11 +70,6 @@ class _MealChartPageState extends State<MealChartPage> {
 
 
   Widget buildList(snapshot) {
-    final int currentYear = DateTime.now().year;
-    final int currentMonth = DateTime.now().month;
-    String selectedYear = currentYear.toString();
-    String selectedMonth = currentMonth.toString();
-
     double getBreakfastCounts(snapshot){
       BreakfastCounts = snapshot.breakfast.toDouble();
       return BreakfastCounts;
@@ -149,8 +136,13 @@ class _MealChartPageState extends State<MealChartPage> {
                           value: _value1,
                           onChanged: (value) {
                             setState(() {
+
                               _value1 = value as String;
+                              selectedYear = int.parse(value);
                             });
+                            //연도 변경시 get 재호출
+                            mealChart = MealProvider().fetchMealChart(selectedYear,selectedMonth);
+
                           },
                           icon: const Icon(
                             Icons.expand_more,
@@ -220,7 +212,10 @@ class _MealChartPageState extends State<MealChartPage> {
                           onChanged: (value) {
                             setState(() {
                               _value2 = value as String;
+                              selectedMonth = int.parse(value);
                             });
+                            //달 변경시 get재호출
+                            mealChart = MealProvider().fetchMealChart(selectedYear, selectedMonth);
                           },
                           icon: const Icon(
                             Icons.expand_more,
