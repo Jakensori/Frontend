@@ -4,94 +4,21 @@ import 'package:flutter/widgets.dart';
 import 'package:temp_project/const/colors.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'dart:async';
+import 'package:temp_project/ExpenseChart.dart';
 import 'package:intl/intl.dart';
-//pie chart 데이터1
-List<PieChartSectionData> _chartSections1 = [
-  PieChartSectionData(
-    value: 46,
-    color: PRIMARY_COLOR,
-    title: '외식(49회)',
-    radius: 60,
-    titleStyle: TextStyle(
-      fontSize: 10,
-      fontWeight: FontWeight.bold,
-      color: Colors.white,
-    ),
-  ),
-  PieChartSectionData(
-    value: 29,
-    color: Colors.orange,
-    title: '집밥(18회)',
-    radius: 60,
-    titleStyle: TextStyle(
-      fontSize: 10,
-      fontWeight: FontWeight.bold,
-      color: Colors.white,
-    ),
-  ),
-  PieChartSectionData(
-    value: 25,
-    color: Colors.yellow,
-    title: '배달(13회)',
-    radius: 60,
-    titleStyle: TextStyle(
-      fontSize: 10,
-      fontWeight: FontWeight.bold,
-      color: Colors.white,
-    ),
-  ),
-];
-
-//pie chart 데이터2
-List<PieChartSectionData> _chartSections2 = [
-  PieChartSectionData(
-    value: 528400,
-    color: PRIMARY_COLOR,
-    title: '외식(528,400원)',
-    radius: 60,
-    titleStyle: TextStyle(
-      fontSize: 10,
-      fontWeight: FontWeight.bold,
-      color: Colors.white,
-    ),
-  ),
-  PieChartSectionData(
-    value: 361000,
-    color: Colors.orange,
-    title: '배달(361,000원)',
-    radius: 60,
-    titleStyle: TextStyle(
-      fontSize: 10,
-      fontWeight: FontWeight.bold,
-      color: Colors.white,
-    ),
-  ),
-  PieChartSectionData(
-    value: 28900,
-    color: Colors.yellow,
-    title: '카페(28,900원)',
-    radius: 60,
-    titleStyle: TextStyle(
-      fontSize: 10,
-      fontWeight: FontWeight.bold,
-      color: Colors.white,
-    ),
-  ),
-];
 
 //bar chart 데이터 클래스
 class TimesDataItem {
   int x;
   double y1;
   double y2;
-
   TimesDataItem({required this.x, required this.y1, required this.y2});
 }
 class ExpenseDataItem {
   int x;
   double y1;
   double y2;
-
   ExpenseDataItem({required this.x, required this.y1, required this.y2});
 }
 
@@ -102,63 +29,154 @@ class ExpenseChartPage extends StatefulWidget {
   State<ExpenseChartPage> createState() => _ExpenseChartPageState();
 }
 
-class _ExpenseChartPageState extends State<ExpenseChartPage> {
-  final ScrollController _scrollController = ScrollController();
 
+class _ExpenseChartPageState extends State<ExpenseChartPage> {
+  Future<ExpenseChart>? expenseChart;
+
+  @override
+  void initState(){
+    super.initState();
+    expenseChart = ExpenseProvider().fetchExpenseChart();
+  }
+
+  final ScrollController _scrollController = ScrollController();
   //String _date = '${DateTime.now().year} - ${DateTime.now().month}';
   String? _value1;
   String? _value2;
-  List<String> items_year = ['2020', '2021', '2022', '2023'];
-
+  final List<String> items_year = ['2020', '2021', '2022', '2023'];
+  String? _selectedYear;
   /*
   for({int i=2000}; i<=DateTime.now().year; i++){
     String year = i.toString();
     items_year.add(year);
   }
   */
-  List<String> items_month = [
-    '전체',
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
-    '10',
-    '11',
-    '12',
+  final List<String> items_month = [
+    '전체', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
   ];
+  String? _selectedMonth;
 
-  //bar chart 데이터
-  final List<TimesDataItem> _myData1 = List.generate(
-      5,
-      (index) => TimesDataItem(
+  @override
+  Widget build(BuildContext context){
+    return Scaffold(
+        body: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: [
+                FutureBuilder<ExpenseChart>(
+                  //통신데이터 가져오기
+                  future: expenseChart,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return buildList(snapshot.data);
+                    } else if (snapshot.hasError) {
+                      return Text("${snapshot.error}에러!!");
+                    }
+                    return CircularProgressIndicator();
+                  },
+                ),
+              ],
+            ),
+          ),
+        ));
+  }
+
+  Widget buildList(snapshot) {
+
+//pie chart 데이터1 (식사 종류(횟수))
+    List<PieChartSectionData> _chartSections1 = [
+      PieChartSectionData(
+        value: 46,
+        color: PRIMARY_COLOR,
+        title: '외식(49회)',
+        radius: 60,
+        titleStyle: TextStyle(
+          fontSize: 10,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
+      ),
+      PieChartSectionData(
+        value: 29,
+        color: Colors.orange,
+        title: '집밥(18회)',
+        radius: 60,
+        titleStyle: TextStyle(
+          fontSize: 10,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
+      ),
+      PieChartSectionData(
+        value: 25,
+        color: Colors.yellow,
+        title: '배달(13회)',
+        radius: 60,
+        titleStyle: TextStyle(
+          fontSize: 10,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
+      ),
+    ];
+
+//pie chart 데이터2
+    List<PieChartSectionData> _chartSections2 = [
+      PieChartSectionData(
+        value: 528400,
+        color: PRIMARY_COLOR,
+        title: '외식(528,400원)',
+        radius: 60,
+        titleStyle: TextStyle(
+          fontSize: 10,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
+      ),
+      PieChartSectionData(
+        value: 361000,
+        color: Colors.orange,
+        title: '배달(361,000원)',
+        radius: 60,
+        titleStyle: TextStyle(
+          fontSize: 10,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
+      ),
+      PieChartSectionData(
+        value: 28900,
+        color: Colors.yellow,
+        title: '카페(28,900원)',
+        radius: 60,
+        titleStyle: TextStyle(
+          fontSize: 10,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
+      ),
+    ];
+
+    //bar chart 데이터
+    final List<TimesDataItem> _myData1 = List.generate(5,
+            (index) => TimesDataItem(
             x: 1,
             y1: 113,
             y2: 49
-          ));
+        ));
 
-  final List<ExpenseDataItem> _myData2 = List.generate(
-      5,
-          (index) => ExpenseDataItem(
-        x: 0,
-        y1: 1521100,
-        y2: 528400
-      ));
+    final List<ExpenseDataItem> _myData2 = List.generate(5,
+            (index) => ExpenseDataItem(
+            x: 0,
+            y1: 1521100,
+            y2: 528400
+        ));
 
-  @override
-  Widget build(BuildContext context) {
     return Scrollbar(
         controller: _scrollController,
-        thickness: 4.0,
-        // 스크롤 너비
-        radius: Radius.circular(8.0),
-        // 스크롤 라운딩
-        isAlwaysShown: true,
-        // 항상 보이기 여부
+        thickness: 4.0, // 스크롤 너비
+        radius: Radius.circular(8.0), // 스크롤 라운딩
+        isAlwaysShown: true, // 항상 보이기 여부
         child: ListView(
           controller: _scrollController,
           children: [
@@ -242,7 +260,7 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
                         Text(
-                          '3',
+                          '5',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,

@@ -5,7 +5,6 @@ import 'dart:async';
 import 'dart:math';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:temp_project/MealChart.dart';
-//git 테스트
 
 class MealChartPage extends StatefulWidget {
   MealChartPage({Key? key}) : super(key: key);
@@ -19,6 +18,11 @@ class MealChartPage extends StatefulWidget {
 }
 
 class _MealChartPageState extends State<MealChartPage> {
+  final int currentYear = DateTime.now().year;
+  final int currentMonth = DateTime.now().month;
+  int selectedYear = DateTime.now().year;
+  int selectedMonth = DateTime.now().month;
+
   Future<MealChart>? mealChart;
   double BreakfastCounts=0;
   double LunchCounts =0;
@@ -27,7 +31,7 @@ class _MealChartPageState extends State<MealChartPage> {
   @override
   void initState() {
     super.initState();
-    mealChart = MealProvider().fetchMealChart();
+    mealChart = MealProvider().fetchMealChart(currentYear,currentMonth);
   }
 
   final Duration animDuration = const Duration(milliseconds: 250);
@@ -37,9 +41,7 @@ class _MealChartPageState extends State<MealChartPage> {
   String? _value1;
   String? _value2;
   List<String> items_year = ['2020', '2021', '2022', '2023'];
-  List<String> items_month = ['전체', '1', '2', '3', '4','5', '6','7', '8', '9', '10', '11', '12'];
-
-
+  List<String> items_month = ['1', '2', '3', '4','5', '6','7', '8', '9', '10', '11', '12'];
 
   @override
   Widget build(BuildContext context) {
@@ -68,34 +70,20 @@ class _MealChartPageState extends State<MealChartPage> {
 
 
   Widget buildList(snapshot) {
-
     double getBreakfastCounts(snapshot){
-      for (int i=0;i<snapshot.record_byTime.length;i++){
-        if(snapshot.record_byTime[i]=='아침'){
-          BreakfastCounts++;
-        }
-      }
+      BreakfastCounts = snapshot.breakfast.toDouble();
       return BreakfastCounts;
     }
 
     double getLunchCounts(snapshot){
-      for (int i=0;i<snapshot.record_byTime.length;i++){
-        if(snapshot.record_byTime[i]=='점심'){
-          LunchCounts++;
-        }
-      }
+      LunchCounts = snapshot.lunch.toDouble();
       return LunchCounts;
     }
 
     double getDinnerCounts(snapshot){
-      for (int i=0;i<snapshot.record_byTime.length;i++){
-        if(snapshot.record_byTime[i]=='저녁'){
-          DinnerCounts++;
-        }
-      }
+      DinnerCounts = snapshot.dinner.toDouble();
       return DinnerCounts;
     }
-
     getBreakfastCounts(snapshot);
     getLunchCounts(snapshot);
     getDinnerCounts(snapshot);
@@ -119,9 +107,9 @@ class _MealChartPageState extends State<MealChartPage> {
                           isExpanded: true,
                           hint: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children:  [
                               Text(
-                                '2023',
+                                currentYear.toString(),
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -148,8 +136,13 @@ class _MealChartPageState extends State<MealChartPage> {
                           value: _value1,
                           onChanged: (value) {
                             setState(() {
+
                               _value1 = value as String;
+                              selectedYear = int.parse(value);
                             });
+                            //연도 변경시 get 재호출
+                            mealChart = MealProvider().fetchMealChart(selectedYear,selectedMonth);
+
                           },
                           icon: const Icon(
                             Icons.expand_more,
@@ -189,9 +182,9 @@ class _MealChartPageState extends State<MealChartPage> {
                           isExpanded: true,
                           hint: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               Text(
-                                '3',
+                                currentMonth.toString(),
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -219,7 +212,10 @@ class _MealChartPageState extends State<MealChartPage> {
                           onChanged: (value) {
                             setState(() {
                               _value2 = value as String;
+                              selectedMonth = int.parse(value);
                             });
+                            //달 변경시 get재호출
+                            mealChart = MealProvider().fetchMealChart(selectedYear, selectedMonth);
                           },
                           icon: const Icon(
                             Icons.expand_more,
@@ -257,8 +253,6 @@ class _MealChartPageState extends State<MealChartPage> {
                     ],
                   ),
                 ),
-
-
 
                 Expanded(
                   child: Padding(
