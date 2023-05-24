@@ -144,7 +144,7 @@ class _CalendarState extends State<Calendar> {
                 view: CalendarView.month,
                 controller: _calendarController,
                 onViewChanged:(ViewChangedDetails details){
-                  final DateTime visibleDate = details.visibleDates[0];
+                  final DateTime visibleDate = details.visibleDates[15];
                   selectedMonth= visibleDate.month;
                   selectedYear = visibleDate.year;
                   print('get재호출');
