@@ -8,19 +8,6 @@ import 'dart:async';
 import 'package:temp_project/ExpenseChart.dart';
 import 'package:intl/intl.dart';
 
-//bar chart 데이터 클래스
-class TimesDataItem {
-  int x;
-  double y1;
-  double y2;
-  TimesDataItem({required this.x, required this.y1, required this.y2});
-}
-class ExpenseDataItem {
-  int x;
-  double y1;
-  double y2;
-  ExpenseDataItem({required this.x, required this.y1, required this.y2});
-}
 
 class ExpenseChartPage extends StatefulWidget {
   const ExpenseChartPage({Key? key}) : super(key: key);
@@ -31,12 +18,17 @@ class ExpenseChartPage extends StatefulWidget {
 
 
 class _ExpenseChartPageState extends State<ExpenseChartPage> {
+  final int currentYear = DateTime.now().year;
+  final int currentMonth = DateTime.now().month;
+  int selectedYear = DateTime.now().year;
+  int selectedMonth = DateTime.now().month;
+
   Future<ExpenseChart>? expenseChart;
 
   @override
   void initState(){
     super.initState();
-    expenseChart = ExpenseProvider().fetchExpenseChart();
+    expenseChart = ExpenseProvider().fetchExpenseChart(currentYear,currentMonth);
   }
 
   final ScrollController _scrollController = ScrollController();
@@ -45,14 +37,7 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
   String? _value2;
   final List<String> items_year = ['2020', '2021', '2022', '2023'];
   String? _selectedYear;
-  /*
-  for({int i=2000}; i<=DateTime.now().year; i++){
-    String year = i.toString();
-    items_year.add(year);
-  }
-  */
-  final List<String> items_month = [
-    '전체', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
+  final List<String> items_month = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
   ];
   String? _selectedMonth;
 
@@ -82,6 +67,14 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
   }
 
   Widget buildList(snapshot) {
+    /*
+    print(snapshot.homemade);
+    print(snapshot.eating_out);
+    print(snapshot.delivery);
+    print(snapshot.cafe);
+    print(snapshot.etc);
+    print(snapshot.total_count);
+     */
 
 //pie chart 데이터1 (식사 종류(횟수))
     List<PieChartSectionData> _chartSections1 = [
@@ -157,28 +150,16 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
       ),
     ];
 
-    //bar chart 데이터
-    final List<TimesDataItem> _myData1 = List.generate(5,
-            (index) => TimesDataItem(
-            x: 1,
-            y1: 113,
-            y2: 49
-        ));
-
-    final List<ExpenseDataItem> _myData2 = List.generate(5,
-            (index) => ExpenseDataItem(
-            x: 0,
-            y1: 1521100,
-            y2: 528400
-        ));
-
     return Scrollbar(
         controller: _scrollController,
         thickness: 4.0, // 스크롤 너비
         radius: Radius.circular(8.0), // 스크롤 라운딩
         isAlwaysShown: true, // 항상 보이기 여부
         child: ListView(
+          shrinkWrap:true,
           controller: _scrollController,
+          physics: const NeverScrollableScrollPhysics(),
+
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -188,9 +169,9 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
                     isExpanded: true,
                     hint: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Text(
-                          '2023',
+                          currentYear.toString(),
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -218,7 +199,10 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
                     onChanged: (value) {
                       setState(() {
                         _value1 = value as String;
+                        selectedYear = int.parse(value);
                       });
+                      //연도 변경시 get 재호출
+                      expenseChart = ExpenseProvider().fetchExpenseChart(selectedYear,selectedMonth);
                     },
                     icon: const Icon(
                       Icons.expand_more,
@@ -258,9 +242,9 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
                     isExpanded: true,
                     hint: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children:[
                         Text(
-                          '5',
+                          currentMonth.toString(),
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -288,7 +272,10 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
                     onChanged: (value) {
                       setState(() {
                         _value2 = value as String;
+                        selectedMonth = int.parse(value);
                       });
+                      //달 변경시 get재호출
+                      expenseChart = ExpenseProvider().fetchExpenseChart(selectedYear, selectedMonth);
                     },
                     icon: const Icon(
                       Icons.expand_more,
@@ -326,7 +313,7 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
               ],
             ),
 
-            //차트 4개 column
+            //차트 2개 column
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -345,8 +332,8 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
                         children: [
                           Flexible(
                               child: Text(
-                                '식사 종류 (횟수)',
-                                style: TextStyle(fontSize: 15),
+                                '< 식사 종류 (횟수) >',
+                                style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800),
                               ),
                               flex: 1),
                           Flexible(
@@ -381,8 +368,8 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
                         children: [
                           Flexible(
                               child: Text(
-                                '식사 종류 (비용)',
-                                style: TextStyle(fontSize: 15),
+                                '< 식사 종류 (비용) >',
+                                style: TextStyle(fontSize: 15, fontWeight:FontWeight.w800),
                               ),
                               flex: 1),
                           Flexible(
@@ -402,107 +389,6 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
                     ),
                   ),
                 ),
-
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    height: 270.0,
-                    width: 350.0,
-                    decoration: BoxDecoration(
-                      color: PRIMARY_COLOR.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          Flexible(
-                              child: Text(
-                                '식사 종류 (횟수)',
-                                style: TextStyle(fontSize: 15),
-                              ),
-                              flex: 1),
-                          Flexible(
-                              child: BarChart(BarChartData(
-                                  borderData: FlBorderData(
-                                      border: const Border(
-                                    top: BorderSide.none,
-                                    right: BorderSide.none,
-                                    left: BorderSide(width: 1),
-                                    bottom: BorderSide(width: 1),
-                                  )),
-                                  groupsSpace: 10,
-                                  barGroups: _myData1
-                                      .map((dataItem) => BarChartGroupData(
-                                              x: dataItem.x,
-                                              barRods: [
-                                                BarChartRodData(
-                                                    toY: dataItem.y1,
-                                                    width: 5,
-                                                    color: PRIMARY_COLOR),
-                                                BarChartRodData(
-                                                    toY: dataItem.y2,
-                                                    width: 5,
-                                                    color: Colors.orange),
-                                              ]))
-                                      .toList())),
-                              flex: 9),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    height: 270.0,
-                    width: 350.0,
-                    decoration: BoxDecoration(
-                      color: PRIMARY_COLOR.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          Flexible(
-                              child: Text(
-                                '식사 종류 (비용)',
-                                style: TextStyle(fontSize: 15),
-                              ),
-                              flex: 1),
-                          Flexible(
-                              child: BarChart(BarChartData(
-                                  borderData: FlBorderData(
-                                      border: const Border(
-                                        top: BorderSide.none,
-                                        right: BorderSide.none,
-                                        left: BorderSide(width: 1),
-                                        bottom: BorderSide(width: 1),
-                                      )),
-                                  groupsSpace: 10,
-                                  barGroups: _myData2
-                                      .map((dataItem) => BarChartGroupData(
-                                      x: dataItem.x,
-                                      barRods: [
-                                        BarChartRodData(
-                                            toY: dataItem.y1,
-                                            width: 5,
-                                            color: PRIMARY_COLOR),
-                                        BarChartRodData(
-                                            toY: dataItem.y2,
-                                            width: 5,
-                                            color: Colors.orange),
-                                      ]))
-                                      .toList())),
-                              flex: 9),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-
               ],
             ),
           ],

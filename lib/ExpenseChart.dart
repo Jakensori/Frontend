@@ -5,9 +5,9 @@ import 'dart:convert';
 import 'package:provider/provider.dart';
 
 class ExpenseProvider with ChangeNotifier {
-  Future<ExpenseChart> fetchExpenseChart() async {
+  Future<ExpenseChart> fetchExpenseChart(int year,int month) async {
     //print("함수 들어옴");
-    final Parameters = {'year': 2023, 'month': 5}.map((key, value) =>
+    final Parameters = {'year': year, 'month': month}.map((key, value) =>
         MapEntry(key, value.toString())); // int 허용 안되서 string으로 바꿔줌.
 
     var url = Uri.parse('http://52.78.205.224:8000/record/category/1/');
@@ -25,6 +25,7 @@ class ExpenseProvider with ChangeNotifier {
       print(json.decode(utf8.decode(response.bodyBytes))); // 한글 깨짐 해결 !
       notifyListeners();
       return ExpenseChart.fromJson(json.decode(utf8.decode(response.bodyBytes)));
+
     } else {
       //만약 응답이 ok가 아니면 에러를 던집니다.
       throw Exception('계좌정보를 불러오는데 실패했습니다');
@@ -33,12 +34,12 @@ class ExpenseProvider with ChangeNotifier {
 }
 
 class ExpenseChart {
-  final int? homemade;
-  final int? eating_out;
-  final int? delivery;
-  final int? cafe;
-  final int? etc;
-  final int? total_count;
+  int homemade;
+  int eating_out;
+  int delivery;
+  int cafe;
+  int etc;
+  int total_count;
 
   ExpenseChart({required this.homemade,
     required this.eating_out,
@@ -48,17 +49,16 @@ class ExpenseChart {
     required this.total_count});
 
   factory ExpenseChart.fromJson(Map<String, dynamic> json) {
-    return ExpenseChart(
-        homemade: json["record_byCategory"]["집밥"],
-        eating_out: json["record_byCategory"]["외식"],
-        delivery: json["record_byCategory"]["배달"],
-        cafe: json["record_byCategory"]["카페"],
-        etc: json["record_byCategory"]["기타"],
-        total_count: json["total_count"]
-    );
+    final recordByCategory = json["record_byCategory"] as Map<String, dynamic>?;
+
+      return ExpenseChart(
+        homemade: recordByCategory?["집밥"]?[0] as int? ?? 0,
+        eating_out: recordByCategory?["외식"]?[0] as int? ?? 0,
+        delivery: recordByCategory?["배달"]?[0] as int? ?? 0,
+        cafe: recordByCategory?["카페"]?[0] as int? ?? 0,
+        etc: recordByCategory?["기타"]?[0] as int? ?? 0,
+        total_count: json["total_count"] as int? ?? 0,
+      );
+
   }
-}
-void main() {
-  print("main 함수 실행");
-  ExpenseProvider().fetchExpenseChart();
 }
