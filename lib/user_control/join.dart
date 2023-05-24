@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:temp_project/const/colors.dart';
 import 'package:temp_project/main.dart';
+import 'package:temp_project/user_control/user_controller.dart';
 
 class Join extends StatefulWidget {
   const Join({Key? key}) : super(key: key);
@@ -10,6 +11,21 @@ class Join extends StatefulWidget {
 }
 
 class _Join extends State<Join> {
+  TextEditingController idController = TextEditingController();
+  TextEditingController pwController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+
+  @override
+  void dispose() {
+    idController.dispose();
+    pwController.dispose();
+    nameController.dispose();
+    emailController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
@@ -34,6 +50,7 @@ class _Join extends State<Join> {
             child: Column(
               children: [
                 TextField(
+                  controller: idController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: '아이디',
@@ -41,6 +58,7 @@ class _Join extends State<Join> {
                 ),
                 SizedBox(height: 20.0),
                 TextField(
+                  controller: pwController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: '비밀번호',
@@ -55,6 +73,7 @@ class _Join extends State<Join> {
                 ),
                 SizedBox(height: 20.0),
                 TextField(
+                  controller: nameController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: '이름',
@@ -62,7 +81,7 @@ class _Join extends State<Join> {
                 ),
                 SizedBox(height: 20.0),
                 TextField(
-                  //cursorHeight: 20,
+                  controller: emailController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: '이메일',
@@ -74,11 +93,14 @@ class _Join extends State<Join> {
                   height: 40.0,
                   margin: const EdgeInsets.only(top: 30),
                   child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => HomePage()),
-                      );
+                    onPressed: () async {
+                      await UserProvider().postNewUserInfo(
+                          idController.text,
+                          pwController.text,
+                          nameController.text,
+                          emailController.text);
+
+                      Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
                       primary: PRIMARY_COLOR,

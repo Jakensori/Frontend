@@ -1,11 +1,12 @@
 //import 'dart:html';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import 'package:temp_project/record.dart';
+import 'package:temp_project/record_pages/record.dart';
 import 'package:temp_project/chart.dart';
-import 'package:temp_project/donate.dart';
-import 'package:temp_project/collection.dart';
+
+import 'package:temp_project/collection_pages/collection.dart';
 import 'package:temp_project/my_page.dart';
 
 import 'package:temp_project/start.dart';
@@ -14,6 +15,8 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:cupertino_icons/cupertino_icons.dart';
 
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+
+import 'donate_pages/donate.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +34,6 @@ class MyApp extends StatelessWidget {
 
       home: HomePage(),
       //home: StartPage(),
-
     );
   }
 }
@@ -49,7 +51,9 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _widgetOptions = [
     Record(),
     Chart(),
-    Donate(),
+    DonatingPage(
+      title: '',
+    ),
     Collection(),
     MyPage(
         //myDonations: '',

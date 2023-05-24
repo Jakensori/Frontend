@@ -47,8 +47,7 @@ class CampaignRecord {
 
 Future<List<CampaignRecord>> fetchCampaign() async {
   final response =
-
-      await http.get(Uri.parse('http://192.168.187.21:8000/campaign/posts/all'));
+      await http.get(Uri.parse('http://52.78.205.224:8000/custom/mydonation'));
 
   if (response.statusCode == 200) {
     final List<dynamic> jsonData = json.decode(utf8.decode(response.bodyBytes));
@@ -60,51 +59,63 @@ Future<List<CampaignRecord>> fetchCampaign() async {
   }
 }
 
-void main() {
-  runApp(MyApp());
+class CampaignRecordWidget extends StatelessWidget {
+  final CampaignRecord campaign;
+
+  CampaignRecordWidget(this.campaign);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 10, // 이미지 사이즈 조정
+      height: 10,
+      child: Image.network(
+        campaign.image ?? '',
+        fit: BoxFit.cover,
+      ),
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {
+  Future<List<CampaignRecord>> fetchAndStyleCampaign() async {
+    final List<CampaignRecord> campaigns = await fetchCampaign();
+    return campaigns;
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      home: MultiProvider(
-        providers: [
-          FutureProvider<List<CampaignRecord>>(
-            create: (_) => fetchCampaign(),
-            initialData: [],
-          ),
-        ],
-        child: CampaignPage(),
+      title: 'My App',
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Campaigns'),
+        ),
+        body: FutureBuilder<List<CampaignRecord>>(
+          future: fetchAndStyleCampaign(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              List<CampaignRecord> campaigns = snapshot.data!;
+              return ListView.builder(
+                itemCount: campaigns.length,
+                itemBuilder: (context, index) {
+                  CampaignRecord campaign = campaigns[index];
+                  return ListTile(
+                    title: Text(
+                      campaign.title ?? '',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    subtitle: CampaignRecordWidget(campaign),
+                  );
+                },
+              );
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            }
+            return CircularProgressIndicator();
+          },
+        ),
       ),
     );
   }
 }
-
-class CampaignPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final campaigns = context.watch<List<CampaignRecord>>();
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Campaign List'),
-      ),
-      body: ListView.builder(
-        itemCount: campaigns.length,
-        itemBuilder: (context, index) {
-          final campaign = campaigns[index];
-          return ListTile(
-            title: Text(campaign.title ?? ''),
-            subtitle: Text(campaign.summary ?? ''),
-            leading: Image.network(campaign.image ?? ''),
-            trailing: Text(
-                '${campaign.currentAmount ?? 0}원 / ${campaign.goalAmount ?? 0}원'),
-          );
-        },
-      ),
-    );
-  }
-}
-//원래 코드가 이건데..
