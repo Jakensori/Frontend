@@ -213,16 +213,29 @@ class BudgetScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 25.0, horizontal: 30),
         child: Column(
           children: [
-            Text(
-              '한 달 식비를 입력하세요',
-              style: TextStyle(fontSize: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('한 달 식비  ', style: TextStyle(fontSize: 20)),
+                Text('400000원', style: TextStyle(fontSize: 20)),
+              ],
             ),
+            SizedBox(height: 20.0),
+            Container(height: 1.0, width: 500.0, color: GREY_COLOR),
+            SizedBox(height: 30.0),
+            /* Container(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                '한 달 식비를 입력하세요',
+                style: TextStyle(fontSize: 20),
+              ),
+            ),*/
             SizedBox(height: 15.0),
             TextField(
               controller: budgetControl,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                labelText: '식비',
+                labelText: '한 달 식비를 입력하세요',
               ),
               onChanged: (text) {
                 int? budget = int.parse(text);
@@ -289,7 +302,7 @@ class BudgetScreen extends StatelessWidget {
                       fixedSize: Size(50, 20),
                       alignment: Alignment.center),
                   child: Text(
-                    '확인',
+                    '수정하기',
                     style: TextStyle(
                         color: BLACK_COLOR,
                         fontSize: 17,

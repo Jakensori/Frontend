@@ -107,9 +107,7 @@ class _Record extends State<Record> {
             }
             return CircularProgressIndicator();
           } else {
-            return const Center(
-              child: Text('No data found'),
-            );
+            return CircularProgressIndicator();
           }
         });
   }
