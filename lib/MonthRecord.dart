@@ -35,35 +35,43 @@ class MonthRecordProvider with ChangeNotifier {
       //만약 응답이 ok가 아니면 에러를 던집니다.
       throw Exception('계좌정보를 불러오는데 실패했습니다');
     }
+    /*
+    int? updating_saving(){
+      return _monthChart.month_saving;
+    }
+    int? updating_donation(){
+      return _monthChart.total_donate;
+    }
+     */
   }
 }
 
 class DailyRecord {
-  final String? today_date;
-  final int? donation;
-  final int? differ;
+  String today_date='';
+  int donation=0;
+  int differ=0;
   DailyRecord({ required this.today_date,required this.donation, required this.differ});
 
   factory DailyRecord.fromJson(Map<String,dynamic> json){
     return DailyRecord(
-      today_date: json["today_date"],
-      donation: json["donation"],
-      differ : json["differ"],
+      today_date: json["today_date"]??'',
+      donation: json["donation"]??0,
+      differ : json["differ"]??0,
     );
   }
 }
 
 class MonthRecord {
   final List<DailyRecord>? daily_record;
-  final int? total_consume;
-  final int? total_donate;
-  final int? month_budget;
-  final int? month_saving;
+  int month_consume=0;
+  int month_donation=0;
+  int month_budget=0;
+  int month_saving=0;
 
   MonthRecord({
     required this.daily_record,
-    required this.total_consume,
-    required this.total_donate,
+    required this.month_consume,
+    required this.month_donation,
     required this.month_budget,
     required this.month_saving,
   });
@@ -74,10 +82,11 @@ class MonthRecord {
 
     return MonthRecord(
         daily_record: daily_record_list,
-        total_consume: json["총 소비금"],
-        total_donate: json["총 기부금"],
-        month_budget: json["한 달 예산"],
-        month_saving:json["남은 금액"]);
+        month_consume: json["총 소비금"]??0,
+        month_donation: json["총 기부금"]??0,
+        month_budget: json["한 달 예산"]??0,
+        month_saving:json["남은 금액"]??0,
+    );
   }
 
 }

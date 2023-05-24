@@ -60,7 +60,11 @@ class _CalendarState extends State<Calendar> {
   Future<MonthRecord>? monthRecord;
   final int currentYear = DateTime.now().year;
   final int currentMonth = DateTime.now().month;
-  int? selectedMonth = DateTime.now().month;
+  int selectedYear = DateTime.now().year;
+  int selectedMonth = DateTime.now().month;
+  int selectedSaving = 0;
+  int selectedDonation = 0;
+  final CalendarController _calendarController = CalendarController();
 
   @override
   void initState() {
@@ -106,10 +110,13 @@ class _CalendarState extends State<Calendar> {
   Widget buildList(snapshot) {
     meetings1 = [];
     meetings2 = [];
+    selectedSaving=snapshot.month_saving;
+    selectedDonation=snapshot.month_donation;
+    String? showing_month_saving = selectedSaving.toString();
+    String? showing_month_donation=selectedDonation.toString();
 
-    String? showing_month_donation =snapshot.total_donate.toString();
-    String? showing_total_saving = snapshot.month_saving.toString();
-    //int? selectedMonth;
+    //String? showing_month_donation =snapshot.total_donate.toString();
+    //String? showing_total_saving = snapshot.month_saving.toString();
 
     for(int i=0;i<snapshot.daily_record.length;i++){
       String temp_day = snapshot.daily_record[i].today_date;
@@ -126,7 +133,6 @@ class _CalendarState extends State<Calendar> {
     }
 
 
-
     //Widget build(BuildContext context){
     return SingleChildScrollView(
       child: Column(
@@ -136,6 +142,20 @@ class _CalendarState extends State<Calendar> {
             width: MediaQuery.of(context).size.width*0.95,
               child: SfCalendar(
                 view: CalendarView.month,
+                controller: _calendarController,
+                onViewChanged:(ViewChangedDetails details){
+                  final DateTime visibleDate = details.visibleDates[0];
+                  selectedMonth= visibleDate.month;
+                  selectedYear = visibleDate.year;
+                  print('get재호출');
+                  monthRecord = MonthRecordProvider().fetchMonthRecord(selectedYear,selectedMonth);
+
+                  // selectedSaving=monthRecord.month_saving;
+                  // print(selectedSaving);
+                  //
+                  print(showing_month_saving);
+                  print(showing_month_donation);
+                },
                 showNavigationArrow: true,
                 dataSource: MeetingDataSource(_getDataSource()),
                 monthViewSettings: MonthViewSettings(
@@ -154,7 +174,7 @@ class _CalendarState extends State<Calendar> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text('한 달 예산 대비    \n'+'한 달 기부 저금    \n'),
-                  Text('$showing_total_saving 원\n' + '$showing_month_donation 원\n')
+                  Text('$showing_month_saving 원\n' + '$showing_month_donation 원\n')
                 ],
               )
             ),
