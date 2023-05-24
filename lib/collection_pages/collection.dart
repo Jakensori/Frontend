@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:temp_project/collection_pages/level.dart';
+import 'package:temp_project/collection_pages/new_character.dart';
 
 import 'api_mealpoint.dart';
 
@@ -65,13 +66,13 @@ class CollectionPage extends State<Collection> {
                           final level = moneyBoxData?['level'] ?? 0;
 
                           return Container(
-                            width: 150,
+                            width: 100,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
                                   child: Text(
-                                    '현재 보유중인 mealpoint: $mealPoint',
+                                    '현재 보유중인 포인트:  $mealPoint',
                                   ),
                                 ),
                                 Container(
@@ -672,14 +673,41 @@ class NotYet extends StatelessWidget {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0)),
               title: const Text('잠겨있는 캐릭터'),
-              content: const Text('목표 달성 후 확인 가능합니다.'),
+              content: const Text('밀포인트를 이용해서 캐릭터를 잠금해제하시겠습니까?'),
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'Cancel'),
                   child: const Text('Cancel'),
                 ),
+                /*TextButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('팝업 제목'),
+                          content: const Text('팝업 내용'),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context); // 팝업 창 닫기
+                              },
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  child: const Text('OK'),
+                ),*/
                 TextButton(
-                  onPressed: () => Navigator.pop(context, 'OK'),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Collection()),
+                    );
+                  },
                   child: const Text('OK'),
                 ),
               ],
