@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:temp_project/const/colors.dart';
 
 import 'package:temp_project/main.dart';
+import 'package:temp_project/user_control/user.dart';
+import 'package:temp_project/user_control/user_controller.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -11,6 +14,23 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  UserInfo? userResponse;
+
+  TextEditingController idController = TextEditingController();
+  TextEditingController pwController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    idController.dispose();
+    pwController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -19,13 +39,8 @@ class _LoginState extends State<Login> {
         appBar: AppBar(
           backgroundColor: Color(0xffFFFFFF),
           title: Text(
-            '로그인',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w500,
-              letterSpacing: 1.5,
-              color: BLACK_COLOR,
-            ),
+            '',
+            style: TextStyle(),
           ),
           centerTitle: true,
           elevation: 0.0,
@@ -49,13 +64,15 @@ class _LoginState extends State<Login> {
                 ),
                 SizedBox(height: 20.0),
                 TextField(
+                  controller: idController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: '이메일',
+                    labelText: '아이디',
                   ),
                 ),
                 SizedBox(height: 14.0),
                 TextField(
+                  controller: pwController,
                   obscureText: true,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -67,7 +84,12 @@ class _LoginState extends State<Login> {
                   height: 40.0,
                   margin: const EdgeInsets.only(top: 30),
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
+                      userResponse = await UserProvider()
+                          .postUserInfo(idController.text, pwController.text);
+                      print(userResponse!.token);
+                      //print(token);
+
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => HomePage()),
