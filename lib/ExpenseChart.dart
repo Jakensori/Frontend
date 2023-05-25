@@ -41,12 +41,25 @@ class ExpenseChart {
   int etc;
   int total_count;
 
+  int amt_homemade;
+  int amt_eating_out;
+  int amt_delivery;
+  int amt_cafe;
+  int amt_etc;
+
+
   ExpenseChart({required this.homemade,
     required this.eating_out,
     required this.delivery,
     required this.cafe,
     required this.etc,
-    required this.total_count});
+    required this.total_count,
+    required this.amt_homemade,
+    required this.amt_eating_out,
+    required this.amt_delivery,
+    required this.amt_cafe,
+    required this.amt_etc
+  });
 
   factory ExpenseChart.fromJson(Map<String, dynamic> json) {
     final recordByCategory = json["record_byCategory"] as Map<String, dynamic>?;
@@ -58,6 +71,11 @@ class ExpenseChart {
         cafe: recordByCategory?["카페"]?[0] as int? ?? 0,
         etc: recordByCategory?["기타"]?[0] as int? ?? 0,
         total_count: json["total_count"] as int? ?? 0,
+        amt_homemade: recordByCategory?["집밥"]?[1] as int? ?? 0,
+        amt_eating_out: recordByCategory?["외식"]?[1] as int? ?? 0,
+        amt_delivery: recordByCategory?["배달"]?[1] as int? ?? 0,
+        amt_cafe: recordByCategory?["카페"]?[1] as int? ?? 0,
+        amt_etc: recordByCategory?["기타"]?[1] as int? ?? 0,
       );
 
   }
