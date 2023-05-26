@@ -23,14 +23,26 @@ class _MyPageState extends State<MyPage> {
         preferredSize: Size.fromHeight(60),
         child: AppBar(
           backgroundColor: PRIMARY_COLOR,
-          title: Text(
-            '마이페이지',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w700,
-              letterSpacing: 1.2,
-              color: BLACK_COLOR,
-            ),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                '마이페이지',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 1.2,
+                  color: BLACK_COLOR,
+                ),
+              ),
+              IconButton(
+                icon: Icon(CupertinoIcons.bell_fill, color: BLACK_COLOR),
+                iconSize: 24.0,
+                onPressed: () {
+                  showAlarm(context);
+                },
+              ),
+            ],
           ),
           centerTitle: true,
           elevation: 0.0,
@@ -148,6 +160,79 @@ class _MyPageState extends State<MyPage> {
           ),
         ),
       ),
+    );
+  }
+
+  dynamic showAlarm(BuildContext context) {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+          title: Icon(CupertinoIcons.bell_fill, color: BLACK_COLOR),
+          content: SizedBox(
+            width: 500,
+            child: SingleChildScrollView(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '*** 보육원 아이들이 생필품을 지급받았어요',
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    color: BLACK_COLOR,
+                  ),
+                ),
+                SizedBox(height: 13),
+                Container(height: 1.0, width: 400, color: GREY_COLOR),
+                SizedBox(height: 13),
+                Text(
+                  '초록 우산 어린이 재단에 기부금 전달 완료',
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    color: BLACK_COLOR,
+                  ),
+                ),
+                SizedBox(height: 13),
+                Container(height: 1.0, width: 400, color: GREY_COLOR),
+                SizedBox(height: 13),
+                Text(
+                  '굿네이버스',
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    color: BLACK_COLOR,
+                  ),
+                ),
+                SizedBox(height: 13),
+                Container(height: 1.0, width: 400, color: GREY_COLOR),
+                SizedBox(height: 13),
+                Text(
+                  '@@@ 어린이집 ',
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    color: BLACK_COLOR,
+                  ),
+                ),
+                SizedBox(height: 13),
+                Container(height: 1.0, width: 400, color: GREY_COLOR),
+              ],
+            )),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                '확인',
+                style: TextStyle(color: GREY_COLOR),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

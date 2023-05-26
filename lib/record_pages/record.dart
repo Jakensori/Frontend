@@ -50,7 +50,7 @@ class _Record extends State<Record> {
     return MaterialApp(
         home: Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(37.0),
+        preferredSize: Size.fromHeight(60.0),
         child: AppBar(
           backgroundColor: PRIMARY_COLOR,
           title: Text(
@@ -161,7 +161,6 @@ class _Record extends State<Record> {
                 formatYear = int.parse(DateFormat('yyyy').format(value));
                 formatMonth = int.parse(DateFormat('M').format(value));
                 formatDay = int.parse(DateFormat('d').format(value));
-                onRefresh:
                 mealRecord = MealProvider()
                     .getMealRecord(formatYear, formatMonth, formatDay);
               }),
@@ -493,7 +492,7 @@ class _Record extends State<Record> {
                           horizontal: 50.0, vertical: 30.0),
                       child: Column(
                         children: [
-                          Text('하루 정산',
+                          Text('하 루  정 산',
                               style: TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight.w600,
@@ -737,9 +736,10 @@ class _Record extends State<Record> {
                     onPressed: () async {
                       await MealProvider().postMealRecord(mealInfo);
                       Navigator.pop(context);
-                      onRefresh:
-                      mealRecord = MealProvider()
-                          .getMealRecord(formatYear, formatMonth, formatDay);
+                      setState(() {
+                        mealRecord = MealProvider()
+                            .getMealRecord(formatYear, formatMonth, formatDay);
+                      });
                     },
                     style: ElevatedButton.styleFrom(
                         primary: PRIMARY_COLOR,
