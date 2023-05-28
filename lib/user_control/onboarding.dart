@@ -27,15 +27,15 @@ class _OnboardingState extends State<Onboarding> {
     return IntroductionScreen(
       pages:[
         PageViewModel(
-          title: 'Pass the Meal',
-          body: '\nThank you for sign up!\nPASS THE MEAL\ncomes from \'pass the hat\'\nwhich means donation\n',
+          title: '권은정 님, 환영해요',
+          body: '\nPass the Meal은 \'기부금을 모으다\' 의 표현, \'pass the hat\'에서 유래했어요',
           image:Image.asset(
             'assets/logo2.png'),
           decoration: getPageDecoration1()
         ),
         PageViewModel(
-            title: 'Pass the Meal',
-            body: '\nYou can donate as much as\n you save for food for famine\n\n'
+            title: '',
+            body: '은정님이 아낀 식비만큼\n 배고픈 사람들에게 기부할 수 있어요\n\n'
                 'LET\'S PASS THE MEAL TOGETHER!\n',
             image:Image.asset(
                 'assets/logo2.png'),
@@ -43,7 +43,7 @@ class _OnboardingState extends State<Onboarding> {
         ),
         PageViewModel(
             title: '',
-            body: '\nHow many meals\ndo you eat a day?',
+            body: '\n하루에 몇 끼 드시나요?',
             footer:SliderTheme(
                 data: SliderTheme.of(context).copyWith(
                   trackHeight: 20.0,
@@ -84,7 +84,7 @@ class _OnboardingState extends State<Onboarding> {
         ),
         PageViewModel(
             title: '',
-            body: '\nWhen is the average meal time for each meal?',
+            body: '\n보통 어느 시간에 드시나요?',
             footer:Container(
               width:100,
               height:200,
@@ -96,7 +96,7 @@ class _OnboardingState extends State<Onboarding> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     buildTimePickerRow(
-                     label: '       Breakfast   :',
+                     label: '         아침       :   ',
                      selectedHour: _selectedHour1,
                      onHourSelected: (value) {
                      setState(() {
@@ -105,7 +105,7 @@ class _OnboardingState extends State<Onboarding> {
                      },
                     ),
                     buildTimePickerRow(
-                      label: '         Lunch       :',
+                      label: '         점심       :   ',
                       selectedHour: _selectedHour2,
                       onHourSelected: (value) {
                         setState(() {
@@ -114,7 +114,7 @@ class _OnboardingState extends State<Onboarding> {
                       },
                     ),
                     buildTimePickerRow(
-                      label: '         Dinner      :',
+                      label: '         저녁       :   ',
                       selectedHour: _selectedHour3,
                       onHourSelected: (value) {
                         setState(() {
@@ -129,7 +129,7 @@ class _OnboardingState extends State<Onboarding> {
         ),
         PageViewModel(
             title: '',
-            body: '\nTell me your goal monthly food budget',
+            body: '\n이번 달 목표 식비는\n얼마인가요? (￦)',
             footer:SliderTheme(
                 data: SliderTheme.of(context).copyWith(
                   showValueIndicator: ShowValueIndicator.always,
@@ -196,20 +196,20 @@ class _OnboardingState extends State<Onboarding> {
   PageDecoration getPageDecoration1(){
     return PageDecoration(
       titleTextStyle: TextStyle(
-        fontSize:28,
-        fontWeight: FontWeight.bold,
+        fontSize:25,
+        fontWeight: FontWeight.w600,
           color: BLACK_COLOR,
       ),
       bodyTextStyle: TextStyle(
-        fontSize:20,
+        fontSize:18,
         color: BLACK_COLOR,
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.w700,
         height:2
       ),
       imagePadding:EdgeInsets.only(top:80),
       boxDecoration: BoxDecoration(
         color:PRIMARY_COLOR,
-        borderRadius: BorderRadius.circular(100),
+        borderRadius: BorderRadius.circular(80),
         border: Border(
           top: BorderSide(width: 10, color: Colors.transparent),
             bottom: BorderSide(width: 10, color: Colors.transparent),
@@ -229,13 +229,13 @@ class _OnboardingState extends State<Onboarding> {
         bodyTextStyle: TextStyle(
             fontSize:28,
             color: BLACK_COLOR,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w800,
             height:2
         ),
         imagePadding:EdgeInsets.only(top:80),
         boxDecoration: BoxDecoration(
           color:PRIMARY_COLOR,
-          borderRadius: BorderRadius.circular(100),
+          borderRadius: BorderRadius.circular(80),
           border: Border(
               top: BorderSide(width: 10, color: Colors.transparent),
               bottom: BorderSide(width: 10, color: Colors.transparent),
@@ -259,7 +259,7 @@ class _OnboardingState extends State<Onboarding> {
         style:TextStyle(
           color: BLACK_COLOR,
           fontSize: 20,
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.w500,
         )),
         SizedBox(width: 10),
         Expanded(
@@ -308,7 +308,7 @@ class _OnboardingState extends State<Onboarding> {
                     style: TextStyle(
                       fontSize: 20,
                       color: BLACK_COLOR,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                   Icon(Icons.access_time),
