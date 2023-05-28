@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class MoneyBox {
-  final int? mealPoint;
+  final String? mealPoint;
   final String? level;
 
   MoneyBox({
@@ -15,7 +15,7 @@ class MoneyBox {
 
   factory MoneyBox.fromJson(Map<String, dynamic> json) {
     return MoneyBox(
-      mealPoint: json['meal_point'] as int?,
+      mealPoint: json['meal_point'] as String?,
       level: json['level'] as String?,
     );
   }

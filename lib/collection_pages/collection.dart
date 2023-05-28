@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:temp_project/collection_pages/level.dart';
-import 'package:temp_project/collection_pages/new_character.dart';
+//import 'package:temp_project/collection_pages/new_character.dart';
 
 import 'api_mealpoint.dart';
 
@@ -71,13 +71,75 @@ class CollectionPage extends State<Collection> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
-                                  child: Text(
-                                    '현재 보유중인 포인트:  $mealPoint',
-                                  ),
-                                ),
-                                Container(
-                                  child: Text(
-                                    '현재 레벨: $level',
+                                  margin: EdgeInsets.symmetric(
+                                      horizontal: 8.0, vertical: 20.0),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Container(
+                                              child: Text(
+                                                '보유 포인트',
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(width: 15),
+                                          Expanded(
+                                            child: Container(
+                                              child: Center(
+                                                child: Text(
+                                                  '캐릭터 레벨',
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 18),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Container(
+                                              child: Center(
+                                                child: Text(
+                                                  '$mealPoint p',
+                                                  style: TextStyle(
+                                                    fontSize: 25,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Container(
+                                              child: Center(
+                                                child: Text(
+                                                  '  lv. $level',
+                                                  style: TextStyle(
+                                                    fontSize: 25,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
@@ -89,7 +151,7 @@ class CollectionPage extends State<Collection> {
                   ),
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8.0),
+                      padding: EdgeInsets.only(right: 12.0),
                       child: Image.asset(
                         'assets/rice.png',
                         fit: BoxFit.contain, // 이미지가 자리를 차지하도록 설정
@@ -142,7 +204,7 @@ class CollectionPage extends State<Collection> {
                         return Container(
                           //color: Colors.grey[300],
                           decoration: BoxDecoration(
-                            color: Colors.grey[300],
+                            color: Colors.amber[100],
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: NotYet(),
@@ -165,7 +227,7 @@ class CollectionPage extends State<Collection> {
                         return Container(
                           //color: Colors.grey[300],
                           decoration: BoxDecoration(
-                            color: Colors.grey[300],
+                            color: Colors.amber[100],
                             borderRadius: BorderRadius.circular(30),
                           ),
                           child: NotYet(),
@@ -188,7 +250,7 @@ class CollectionPage extends State<Collection> {
                         return Container(
                           //color: Colors.grey[300],
                           decoration: BoxDecoration(
-                            color: Colors.grey[300],
+                            color: Colors.amber[100],
                             borderRadius: BorderRadius.circular(30),
                           ),
                           child: NotYet(),
@@ -206,7 +268,7 @@ class CollectionPage extends State<Collection> {
                         return Container(
                           //color: Colors.grey[300],
                           decoration: BoxDecoration(
-                            color: Colors.grey[300],
+                            color: Colors.amber[100],
                             borderRadius: BorderRadius.circular(30),
                           ),
                           child: NotYet(),
@@ -229,7 +291,7 @@ class CollectionPage extends State<Collection> {
                         return Container(
                           //color: Colors.grey[300],
                           decoration: BoxDecoration(
-                            color: Colors.grey[300],
+                            color: Colors.amber[100],
                             borderRadius: BorderRadius.circular(30),
                           ),
                           child: NotYet(),
@@ -252,7 +314,7 @@ class CollectionPage extends State<Collection> {
                         return Container(
                           //color: Colors.grey[300],
                           decoration: BoxDecoration(
-                            color: Colors.grey[300],
+                            color: Colors.amber[100],
                             borderRadius: BorderRadius.circular(30),
                           ),
                           child: NotYet(),
@@ -275,7 +337,7 @@ class CollectionPage extends State<Collection> {
                         return Container(
                           //color: Colors.grey[300],
                           decoration: BoxDecoration(
-                            color: Colors.grey[300],
+                            color: Colors.amber[100],
                             borderRadius: BorderRadius.circular(30),
                           ),
                           child: NotYet(),

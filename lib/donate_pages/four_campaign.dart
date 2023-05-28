@@ -94,6 +94,7 @@ class _SavingPageState extends State<SavingPage> {
                             child: Row(
                               children: [
                                 Container(
+                                  color: Colors.amber[100],
                                   width: 200,
                                   child: Column(
                                     crossAxisAlignment:
@@ -119,8 +120,15 @@ class _SavingPageState extends State<SavingPage> {
                                         ),
                                       ),
                                       SizedBox(height: 50),
-                                      Text(
-                                        campaign.summary ?? '',
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.amber[100],
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: Text(
+                                          campaign.summary ?? '',
+                                        ),
                                       ),
                                       SizedBox(width: 10),
                                       Text(
