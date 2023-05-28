@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:temp_project/budget_controller.dart';
 import 'package:temp_project/user_control/user_controller.dart';
+import 'package:http/http.dart' as http;
 
 import 'const/colors.dart';
 
@@ -178,20 +180,23 @@ class _MyPageState extends State<MyPage> {
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  '*** 보육원 아이들이 생필품을 지급받았어요',
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    color: BLACK_COLOR,
+                Container(
+                  color: Color.fromARGB(255, 255, 235, 188),
+                  child: Text(
+                    '*** 보육원 아이들이 생필품을 지급받았어요',
+                    style: TextStyle(
+                      fontSize: 17.0,
+                      color: BLACK_COLOR,
+                    ),
                   ),
                 ),
-                SizedBox(height: 13),
+                // SizedBox(height: 13),
                 Container(height: 1.0, width: 400, color: GREY_COLOR),
                 SizedBox(height: 13),
                 Text(
                   '초록 우산 어린이 재단에 기부금 전달 완료',
                   style: TextStyle(
-                    fontSize: 18.0,
+                    fontSize: 17.0,
                     color: BLACK_COLOR,
                   ),
                 ),
@@ -201,7 +206,7 @@ class _MyPageState extends State<MyPage> {
                 Text(
                   '굿네이버스',
                   style: TextStyle(
-                    fontSize: 18.0,
+                    fontSize: 17.0,
                     color: BLACK_COLOR,
                   ),
                 ),
@@ -211,7 +216,7 @@ class _MyPageState extends State<MyPage> {
                 Text(
                   '@@@ 어린이집 ',
                   style: TextStyle(
-                    fontSize: 18.0,
+                    fontSize: 17.0,
                     color: BLACK_COLOR,
                   ),
                 ),

@@ -2,7 +2,8 @@
     package="com.example.temp_project">
    <application
         android:label="temp_project"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -40,5 +41,7 @@
 
         
     </application>
+
+   
 </manifest>
 
