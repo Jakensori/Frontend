@@ -53,7 +53,7 @@ dependencies:
   flutter_native_splash:
   flutter_secure_storage: ^8.0.0
   toss_payment: ^0.2.6
-
+  introduction_screen: ^3.0.0
 
 
 dev_dependencies:
@@ -86,6 +86,7 @@ flutter:
   assets:
       - assets/rice.jpg
       - assets/logo.png
+      - assets/logo2.png
       - assets/bread.png
       - assets/carrot.png
       - assets/eggplant.png
