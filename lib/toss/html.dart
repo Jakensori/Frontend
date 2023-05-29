@@ -40,14 +40,14 @@ class PaymentHtml {
    </head>
    <body>
    <script>
-   var tossPayments = TossPayments('test_ck_OEP59LybZ8Bdv6A1JxkV6GYo7pRe')
+   var tossPayments = TossPayments('test_ck_jkYG57Eba3GqKKZbqX5rpWDOxmA1')
    tossPayments.requestPayment('카드', {
    amount: ${request.amount},
    orderId: '${request.orderId}',
    orderName: '${request.orderName}',
    customerName: '${request.customerName}',
-   successUrl: 'http://52.78.205.224:8000/donation/approve',
-   failUrl: 'http://52.78.205.224:8000/donation/fail/',
+   successUrl: 'https://52.78.205.224:8000/donation/approve',
+   failUrl: 'https://52.78.205.224:8000/donation/fail/',
    })
    </script>
    </body>

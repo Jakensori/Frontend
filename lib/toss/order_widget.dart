@@ -44,72 +44,72 @@ class OrderWidget extends StatelessWidget {
       case '카드':
         ret = PaymentRequest.card(
           amount: product.price,
-          orderId: _generateOrderId(),
+          //orderId: _generateOrderId(),
           orderName: product.name,
           customerName: _customerName,
         );
         break;
-      case '카드자동결제':
-        ret = PaymentRequest.billingAuth(
-          customerKey: _generateCustomerKey(),
-        );
-        break;
-      case '카드앱바로열기':
-        ret = PaymentRequest.cardDirect(
-          amount: product.price,
-          orderId: _generateOrderId(),
-          orderName: product.name,
-          customerName: _customerName,
-          cardCompany: '현대',
-        );
-        break;
-      case '가상계좌':
-        ret = PaymentRequest.virtualAccount(
-          amount: product.price,
-          orderId: _generateOrderId(),
-          orderName: product.name,
-          customerName: _customerName,
-          // validHours: 24,
-          // cashReceipt: {
-          //   'type': '소득공제',
-          // },
-        );
-        break;
-      case '계좌이체':
-        ret = PaymentRequest.accountTransfer(
-          amount: product.price,
-          orderId: _generateOrderId(),
-          orderName: product.name,
-          customerName: _customerName,
-          bank: '우리',
-        );
-        break;
-      case '휴대폰':
-        ret = PaymentRequest.phone(
-          amount: product.price,
-          orderId: _generateOrderId(),
-          orderName: product.name,
-          customerName: _customerName,
-        );
-        break;
-      case '도서문화상품권':
-        ret = PaymentRequest.giftCard(
-          amount: product.price,
-          orderId: _generateOrderId(),
-          orderName: product.name,
-          customerName: _customerName,
-        );
-        break;
-      case '토스결제':
-        ret = PaymentRequest.tossPay(
-          amount: product.price,
-          orderId: _generateOrderId(),
-          orderName: product.name,
-          customerName: _customerName,
-        );
-        break;
-      default:
-        break;
+      // case '카드자동결제':
+      //   ret = PaymentRequest.billingAuth(
+      //     customerKey: _generateCustomerKey(),
+      //   );
+      //   break;
+      // case '카드앱바로열기':
+      //   ret = PaymentRequest.cardDirect(
+      //     amount: product.price,
+      //     orderId: _generateOrderId(),
+      //     orderName: product.name,
+      //     customerName: _customerName,
+      //     cardCompany: '현대',
+      //   );
+      //   break;
+      // case '가상계좌':
+      //   ret = PaymentRequest.virtualAccount(
+      //     amount: product.price,
+      //     orderId: _generateOrderId(),
+      //     orderName: product.name,
+      //     customerName: _customerName,
+      //     // validHours: 24,
+      //     // cashReceipt: {
+      //     //   'type': '소득공제',
+      //     // },
+      //   );
+      //   break;
+      // case '계좌이체':
+      //   ret = PaymentRequest.accountTransfer(
+      //     amount: product.price,
+      //     orderId: _generateOrderId(),
+      //     orderName: product.name,
+      //     customerName: _customerName,
+      //     bank: '우리',
+      //   );
+      //   break;
+      // case '휴대폰':
+      //   ret = PaymentRequest.phone(
+      //     amount: product.price,
+      //     orderId: _generateOrderId(),
+      //     orderName: product.name,
+      //     customerName: _customerName,
+      //   );
+      //   break;
+      // case '도서문화상품권':
+      //   ret = PaymentRequest.giftCard(
+      //     amount: product.price,
+      //     orderId: _generateOrderId(),
+      //     orderName: product.name,
+      //     customerName: _customerName,
+      //   );
+      //   break;
+      // case '토스결제':
+      //   ret = PaymentRequest.tossPay(
+      //     amount: product.price,
+      //     orderId: _generateOrderId(),
+      //     orderName: product.name,
+      //     customerName: _customerName,
+      //   );
+      //   break;
+      // default:
+      //   break;
     }
     return ret!;
   }

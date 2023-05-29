@@ -2,7 +2,7 @@ import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
 import 'package:temp_project/const/colors.dart';
-import 'package:temp_project/toss/mockserver.dart';
+//import 'package:temp_project/toss/mockserver.dart';
 import 'package:temp_project/toss/order_widget.dart';
 import 'package:temp_project/toss/product.dart';
 import 'package:temp_project/toss/product_request.dart';
@@ -203,7 +203,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPageFinished: (url) {
                 dev.log('onPageFinished.url = $url', name: "PaymentWebView");
                 // TODO something to decide the payment is successful or not.
-                success = url.contains('success');
+                //success = url.contains('success');
               },
               onDisposed: () {},
               onTapCloseButton: () {
@@ -221,6 +221,7 @@ extension PaymentRequestExtension on PaymentRequest {
     // TODO 토스페이를 위해 만든 Web 주소를 넣어주세요. 아래는 예시입니다.
     print(json);
     //return Uri.http("localhost:8080", "payment", json);
+
     return Uri.http("52.78.205.224:8000", "donation/request/", json);
   }
 }
