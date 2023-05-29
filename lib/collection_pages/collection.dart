@@ -3,6 +3,7 @@ import 'package:temp_project/collection_pages/level.dart';
 //import 'package:temp_project/collection_pages/new_character.dart';
 
 import 'api_mealpoint.dart';
+import 'api_substract_mealpoint.dart';
 
 class Collection extends StatefulWidget {
   const Collection({Key? key}) : super(key: key);
@@ -13,17 +14,39 @@ class Collection extends StatefulWidget {
 
 class CollectionPage extends State<Collection> {
   Level _level = Level(1, 10);
-
+  MealPoint? mealPoint;
+  late Future<MealPoint> _futureMealPoint;
   late Future<Map<String, dynamic>> _futureMoneyBox;
+
+  void increaseMealPoint() {
+    sendRequest(10).then((_) {
+      setState(() {
+        if (mealPoint != null) {
+          mealPoint = MealPoint(
+            meal_point: mealPoint!.meal_point! - 20,
+            level: mealPoint!.level,
+          );
+        }
+      });
+    }).catchError((error) {
+      print('Request failed: $error');
+    });
+  }
+
+  //int mealPoint = 20;
 
   @override
   void initState() {
     super.initState();
-
-    _futureMoneyBox = fetchMoneyBox();
+    _futureMealPoint = getInfo();
+    _futureMoneyBox = _futureMealPoint.then((mealPoint) {
+      final moneyBoxData = {
+        'mealPoint': mealPoint.meal_point,
+        'level': mealPoint.level,
+      };
+      return Future.delayed(Duration.zero, () => moneyBoxData);
+    });
   }
-
-  get width => null;
 
   @override
   Widget build(BuildContext context) {
@@ -66,84 +89,25 @@ class CollectionPage extends State<Collection> {
                           final level = moneyBoxData?['level'] ?? 0;
 
                           return Container(
-                            width: 100,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.symmetric(
-                                      horizontal: 8.0, vertical: 20.0),
-                                  child: Column(
+                            alignment: Alignment.center,
+                            child: mealPoint != null && level != null
+                                ? Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Row(
-                                        children: [
-                                          Expanded(
-                                            child: Container(
-                                              child: Text(
-                                                '보유 포인트',
-                                                style: TextStyle(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(width: 15),
-                                          Expanded(
-                                            child: Container(
-                                              child: Center(
-                                                child: Text(
-                                                  '캐릭터 레벨',
-                                                  style: TextStyle(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.black,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
+                                      Text(
+                                        '보유 포인트: $mealPoint p',
+                                        style: TextStyle(fontSize: 16),
                                       ),
-                                      SizedBox(height: 18),
-                                      Row(
-                                        children: [
-                                          Expanded(
-                                            child: Container(
-                                              child: Center(
-                                                child: Text(
-                                                  '$mealPoint p',
-                                                  style: TextStyle(
-                                                    fontSize: 25,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.black,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Container(
-                                              child: Center(
-                                                child: Text(
-                                                  '  lv. $level',
-                                                  style: TextStyle(
-                                                    fontSize: 25,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.black,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
+                                      Text(
+                                        '캐릭터 레벨: Lv. $level',
+                                        style: TextStyle(fontSize: 16),
                                       ),
+                                      if (_level.currentLevel == 1 &&
+                                          mealPoint < 10)
+                                        NotYet(onOKPressed: increaseMealPoint),
                                     ],
-                                  ),
-                                ),
-                              ],
-                            ),
+                                  )
+                                : CircularProgressIndicator(),
                           );
                         }
                       },
@@ -189,7 +153,7 @@ class CollectionPage extends State<Collection> {
                       } else {
                         return Container(
                           color: Colors.amber,
-                          child: NotYet(),
+                          child: NotYet(onOKPressed: increaseMealPoint),
                         );
                       }
                     } else if (index == 1) {
@@ -212,7 +176,7 @@ class CollectionPage extends State<Collection> {
                       } else {
                         return Container(
                           color: Colors.amber,
-                          child: NotYet(),
+                          child: NotYet(onOKPressed: increaseMealPoint),
                         );
                       }
                     } else if (index == 2) {
@@ -230,12 +194,12 @@ class CollectionPage extends State<Collection> {
                             color: Colors.amber[100],
                             borderRadius: BorderRadius.circular(30),
                           ),
-                          child: NotYet(),
+                          child: NotYet(onOKPressed: increaseMealPoint),
                         );
                       } else {
                         return Container(
                           color: Colors.amber,
-                          child: NotYet(),
+                          child: NotYet(onOKPressed: increaseMealPoint),
                         );
                       }
                     } else if (index == 3) {
@@ -253,7 +217,7 @@ class CollectionPage extends State<Collection> {
                             color: Colors.amber[100],
                             borderRadius: BorderRadius.circular(30),
                           ),
-                          child: NotYet(),
+                          child: NotYet(onOKPressed: increaseMealPoint),
                         );
                       }
                     } else if (index == 4) {
@@ -271,12 +235,12 @@ class CollectionPage extends State<Collection> {
                             color: Colors.amber[100],
                             borderRadius: BorderRadius.circular(30),
                           ),
-                          child: NotYet(),
+                          child: NotYet(onOKPressed: increaseMealPoint),
                         );
                       } else {
                         return Container(
                           color: Colors.amber,
-                          child: NotYet(),
+                          child: NotYet(onOKPressed: increaseMealPoint),
                         );
                       }
                     } else if (index == 5) {
@@ -294,12 +258,12 @@ class CollectionPage extends State<Collection> {
                             color: Colors.amber[100],
                             borderRadius: BorderRadius.circular(30),
                           ),
-                          child: NotYet(),
+                          child: NotYet(onOKPressed: increaseMealPoint),
                         );
                       } else {
                         return Container(
                           color: Colors.amber,
-                          child: NotYet(),
+                          child: NotYet(onOKPressed: increaseMealPoint),
                         );
                       }
                     } else if (index == 6) {
@@ -317,12 +281,12 @@ class CollectionPage extends State<Collection> {
                             color: Colors.amber[100],
                             borderRadius: BorderRadius.circular(30),
                           ),
-                          child: NotYet(),
+                          child: NotYet(onOKPressed: increaseMealPoint),
                         );
                       } else {
                         return Container(
                           color: Colors.amber,
-                          child: NotYet(),
+                          child: NotYet(onOKPressed: increaseMealPoint),
                         );
                       }
                     } else {
@@ -340,12 +304,12 @@ class CollectionPage extends State<Collection> {
                             color: Colors.amber[100],
                             borderRadius: BorderRadius.circular(30),
                           ),
-                          child: NotYet(),
+                          child: NotYet(onOKPressed: increaseMealPoint),
                         );
                       } else {
                         return Container(
                           color: Colors.amber,
-                          child: NotYet(),
+                          child: NotYet(onOKPressed: increaseMealPoint),
                         );
                       }
                     }
@@ -722,60 +686,32 @@ class FlutterDialog8 extends StatelessWidget {
 }
 
 class NotYet extends StatelessWidget {
-// level 매개변수 선언
+  final VoidCallback? onOKPressed;
+
+  NotYet({this.onOKPressed});
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () {
-        {
-          showDialog<String>(
-            context: context,
-            builder: (BuildContext context) => AlertDialog(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0)),
-              title: const Text('잠겨있는 캐릭터'),
-              content: const Text('밀포인트를 이용해서 캐릭터를 잠금해제하시겠습니까?'),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () => Navigator.pop(context, 'Cancel'),
-                  child: const Text('Cancel'),
-                ),
-                /*TextButton(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text('팝업 제목'),
-                          content: const Text('팝업 내용'),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pop(context); // 팝업 창 닫기
-                              },
-                              child: const Text('OK'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                  child: const Text('OK'),
-                ),*/
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Collection()),
-                    );
-                  },
-                  child: const Text('OK'),
-                ),
-              ],
-            ),
-          );
-        }
+        showDialog<String>(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+            title: const Text('잠겨있는 캐릭터'),
+            content: const Text('밀포인트를 이용해서 캐릭터를 잠금해제하시겠습니까?'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context); // 팝업 창 닫기
+                  if (onOKPressed != null) {
+                    onOKPressed!(); // 콜백 함수 호출
+                  }
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+        );
       },
       child: Image.asset(
         'assets/lock.png',

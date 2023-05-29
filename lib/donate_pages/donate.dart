@@ -82,7 +82,7 @@ class _DonatingPageState extends State<DonatingPage> {
             ),
           ),
           Container(
-              margin: EdgeInsets.fromLTRB(220, 85, 10, 5),
+              margin: EdgeInsets.fromLTRB(180, 85, 10, 5),
               child: FutureBuilder<Map<String, dynamic>>(
                 future: _futureMoneyBox,
                 builder: (context, snapshot) {
