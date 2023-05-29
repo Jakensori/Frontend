@@ -41,6 +41,27 @@ class MeetingDataSource extends CalendarDataSource {
   }
 }
 
+class CustomCalendarHeader extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      // 헤더의 컨테이너를 커스텀하여 원하는 스타일과 레이아웃을 적용할 수 있습니다.
+      height: 100,
+      color: Colors.blue,
+      child: Center(
+        child: Text(
+          'Custom Header',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 
 List<Meeting> meetings1 = <Meeting>[]; //지출 +-가 담긴 리스트
 List<Meeting> meetings2 = <Meeting>[]; //donation이 담긴 리스트
@@ -74,6 +95,7 @@ class _CalendarState extends State<Calendar> {
 
   @override
   Widget build(BuildContext context){
+
     return MaterialApp(
       locale: const Locale('ko'),
       supportedLocales: const [
@@ -82,6 +104,7 @@ class _CalendarState extends State<Calendar> {
       localizationsDelegates: [
         SfGlobalLocalizations.delegate,
       ],
+      //debugShowCheckedModeBanner: false,
       home: Scaffold(
           body: SingleChildScrollView(
             child: Center(
@@ -144,7 +167,7 @@ class _CalendarState extends State<Calendar> {
                 view: CalendarView.month,
                 controller: _calendarController,
                 onViewChanged:(ViewChangedDetails details){
-                  final DateTime visibleDate = details.visibleDates[0];
+                  final DateTime visibleDate = details.visibleDates[15];
                   selectedMonth= visibleDate.month;
                   selectedYear = visibleDate.year;
                   print('get재호출');
@@ -156,7 +179,7 @@ class _CalendarState extends State<Calendar> {
                   print(showing_month_saving);
                   print(showing_month_donation);
                 },
-                showNavigationArrow: true,
+                showNavigationArrow: false,
                 dataSource: MeetingDataSource(_getDataSource()),
                 monthViewSettings: MonthViewSettings(
                   appointmentDisplayCount: 2,
@@ -173,8 +196,8 @@ class _CalendarState extends State<Calendar> {
               child:Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text('한 달 예산 대비    \n'+'한 달 기부 저금    \n'),
-                  Text('$showing_month_saving 원\n' + '$showing_month_donation 원\n')
+                  Text('\n\n한 달 예산 대비    \n'+'한 달 기부 저금    \n'),
+                  Text('\n\n$showing_month_saving 원\n' + '$showing_month_donation 원\n')
                 ],
               )
             ),

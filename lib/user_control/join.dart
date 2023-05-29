@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:temp_project/const/colors.dart';
 import 'package:temp_project/main.dart';
 import 'package:temp_project/user_control/user_controller.dart';
+import 'onboarding.dart';
+import 'package:introduction_screen/introduction_screen.dart';
 
 class Join extends StatefulWidget {
   const Join({Key? key}) : super(key: key);
@@ -94,13 +96,18 @@ class _Join extends State<Join> {
                   margin: const EdgeInsets.only(top: 30),
                   child: ElevatedButton(
                     onPressed: () async {
+                      /*
                       await UserProvider().postNewUserInfo(
                           idController.text,
                           pwController.text,
                           nameController.text,
                           emailController.text);
+                       */
 
-                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Onboarding()),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       primary: PRIMARY_COLOR,
