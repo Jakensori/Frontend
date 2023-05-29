@@ -16,7 +16,6 @@ class NewCharacterPage extends StatelessWidget {
   }
 }
 */
-/*
 import 'dart:html';
 
 import 'package:flutter/material.dart';
@@ -90,16 +89,15 @@ class PointBoxState with ChangeNotifier {
 
   Future<void> fetchAndSetMealPoint() async {
     try {
-      final jsonData = await fetchPointBox();
-      final PointBox = PointBox.fromJson(jsonData);
-      _mealPoint = PointBox.mealPoint;
+      final jsonData = await fetchMoneyBox();
+      final pointBox = PointBox.fromJson(jsonData);
+      _mealPoint = pointBox.mealPoint;
       notifyListeners();
     } catch (error) {
       print('Error fetching meal point: $error');
     }
   }
 }
-
 
 class MyHomePage extends StatelessWidget {
   @override
@@ -133,4 +131,3 @@ class MyHomePage extends StatelessWidget {
     );
   }
 }
-*/

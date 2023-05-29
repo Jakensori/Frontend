@@ -53,8 +53,16 @@ dependencies:
   flutter_native_splash:
   flutter_secure_storage: ^8.0.0
   toss_payment: ^0.2.6
+
   introduction_screen: ^3.0.0
   flutter_local_notifications: ^10.0.0
+  tosspayments_sdk_flutter: ^0.1.2
+
+  url_launcher: ^6.1.5
+  webview_flutter: ^3.0.4
+
+  uuid: ^3.0.4
+
 
 
 dev_dependencies:
