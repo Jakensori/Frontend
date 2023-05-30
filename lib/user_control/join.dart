@@ -60,6 +60,7 @@ class _Join extends State<Join> {
                 ),
                 SizedBox(height: 20.0),
                 TextField(
+                  obscureText: true,
                   controller: pwController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -68,6 +69,7 @@ class _Join extends State<Join> {
                 ),
                 SizedBox(height: 20.0),
                 TextField(
+                  obscureText: true,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: '비밀번호 확인',

@@ -5,6 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:temp_project/budget_controller.dart';
+import 'package:temp_project/notification.dart';
+import 'package:temp_project/notification_controller.dart';
 import 'package:temp_project/user_control/user_controller.dart';
 import 'package:http/http.dart' as http;
 
@@ -41,7 +43,12 @@ class _MyPageState extends State<MyPage> {
                 icon: Icon(CupertinoIcons.bell_fill, color: BLACK_COLOR),
                 iconSize: 24.0,
                 onPressed: () {
-                  showAlarm(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Notifications(),
+                    ),
+                  );
                 },
               ),
             ],
@@ -164,84 +171,187 @@ class _MyPageState extends State<MyPage> {
       ),
     );
   }
+}
 
-  dynamic showAlarm(BuildContext context) {
-    return showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-          title: Icon(CupertinoIcons.bell_fill, color: BLACK_COLOR),
-          content: SizedBox(
-            width: 500,
-            child: SingleChildScrollView(
-                child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  color: Color.fromARGB(255, 255, 235, 188),
-                  child: Text(
-                    '*** 보육원 아이들이 생필품을 지급받았어요',
-                    style: TextStyle(
-                      fontSize: 17.0,
-                      color: BLACK_COLOR,
-                    ),
-                  ),
-                ),
-                // SizedBox(height: 13),
-                Container(height: 1.0, width: 400, color: GREY_COLOR),
-                SizedBox(height: 13),
-                Text(
-                  '초록 우산 어린이 재단에 기부금 전달 완료',
-                  style: TextStyle(
-                    fontSize: 17.0,
-                    color: BLACK_COLOR,
-                  ),
-                ),
-                SizedBox(height: 13),
-                Container(height: 1.0, width: 400, color: GREY_COLOR),
-                SizedBox(height: 13),
-                Text(
-                  '굿네이버스',
-                  style: TextStyle(
-                    fontSize: 17.0,
-                    color: BLACK_COLOR,
-                  ),
-                ),
-                SizedBox(height: 13),
-                Container(height: 1.0, width: 400, color: GREY_COLOR),
-                SizedBox(height: 13),
-                Text(
-                  '@@@ 어린이집 ',
-                  style: TextStyle(
-                    fontSize: 17.0,
-                    color: BLACK_COLOR,
-                  ),
-                ),
-                SizedBox(height: 13),
-                Container(height: 1.0, width: 400, color: GREY_COLOR),
-              ],
-            )),
-          ),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text(
-                '확인',
-                style: TextStyle(color: GREY_COLOR),
+class Notifications extends StatefulWidget {
+  const Notifications({Key? key}) : super(key: key);
+
+  @override
+  State<Notifications> createState() => _Notifications();
+}
+
+class _Notifications extends State<Notifications> {
+  late final Future<List<Noti>>? alarmList;
+  bool _selected = false;
+
+  @override
+  void initState() {
+    super.initState();
+    alarmList = NotiProvider().getNotification();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        home: Scaffold(
+            appBar: AppBar(
+              backgroundColor: PRIMARY_COLOR,
+              title: Icon(
+                CupertinoIcons.bell_fill,
+                color: BLACK_COLOR,
+                size: 40,
               ),
+              centerTitle: true,
+              elevation: 0.0,
             ),
-          ],
-        );
-      },
+            body: Column(
+              children: [SizedBox(height: 20), _Fetch(context)],
+            )));
+  }
+
+  Widget _Fetch(context) {
+    return FutureBuilder(
+        future: alarmList,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasError) {
+              print(snapshot.error.toString());
+              return Center(
+                child: Text(snapshot.error.toString()),
+              );
+            } else if (snapshot.hasData && snapshot.data != null) {
+              return buildList(snapshot.data);
+            }
+            return CircularProgressIndicator();
+          } else {
+            return CircularProgressIndicator();
+          }
+        });
+  }
+
+  Widget buildList(snapshot) {
+    return Expanded(
+      child: SingleChildScrollView(
+          child: Column(
+        children: [
+          ListView.separated(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: snapshot.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 3.0),
+                child: ListTile(
+                  dense: false,
+                  selected: _selected,
+                  onTap: () {
+                    setState(() {
+                      _selected = true;
+                    });
+                  },
+                  tileColor: MaterialStateColor.resolveWith(
+                      (Set<MaterialState> states) {
+                    if (!states.contains(MaterialState.selected)) {
+                      return Color.fromARGB(255, 255, 246, 203);
+                    }
+                    return Colors.white;
+                  }),
+                  //leading: Image.network(snapshot[index].image.toString()),
+                  title: Text('${snapshot[index].title.toString()}',
+                      style: TextStyle(fontSize: 19, color: BLACK_COLOR)),
+                  subtitle: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('${snapshot[index].foundation.toString()}',
+                          style: TextStyle(fontSize: 16, color: GREY_COLOR)),
+                      Text(snapshot[index].createdAt.toString()),
+                      Text('', style: TextStyle(fontSize: 2))
+                    ],
+                  ),
+                  visualDensity: VisualDensity(horizontal: 0, vertical: -1),
+                ),
+              );
+            },
+            separatorBuilder: (BuildContext ctx, int idx) {
+              return Divider();
+            },
+          ),
+        ],
+      )
+
+          // actions: <Widget>[
+          //   TextButton(
+          //     onPressed: () {
+          //       Navigator.of(context).pop();
+          //     },
+          //     child: Text(
+          //       '확인',
+          //       style: TextStyle(color: GREY_COLOR),
+          //     ),
+          //   ),
+          // ],
+          ),
     );
   }
 }
 
+/*
+Widget showList(context, alarmlist) {
+  return AlertDialog(
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+    title: Icon(CupertinoIcons.bell_fill, color: BLACK_COLOR),
+    content: SizedBox(
+      width: 500,
+      child: SingleChildScrollView(
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: alarmlist.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Card(
+                  color: Color(0xffF9F9F9),
+                  elevation: 2,
+                  margin: EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
+                  child: ListTile(
+                    // leading: Text(
+                    //   breakfast.category.toString(),
+                    //   style: TextStyle(color: GREY_COLOR),
+                    // ),
+                    title: Text(alarmlist[index].title.toString(),
+                        style: TextStyle(fontSize: 20)),
+                    // trailing: Text(
+                    //   breakfast.price.toString(),
+                    //   style: TextStyle(fontSize: 18, color: GREY_COLOR),
+                    // ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+      )),
+    ),
+    actions: <Widget>[
+      TextButton(
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        child: Text(
+          '확인',
+          style: TextStyle(color: GREY_COLOR),
+        ),
+      ),
+    ],
+  );
+}
+*/
 class DonationHistoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
