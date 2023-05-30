@@ -171,8 +171,13 @@ class _CalendarState extends State<Calendar> {
                   selectedMonth= visibleDate.month;
                   selectedYear = visibleDate.year;
                   print('get재호출');
-                  monthRecord = MonthRecordProvider().fetchMonthRecord(selectedYear,selectedMonth);
 
+                  Future.delayed(Duration.zero, () {
+                    setState(() {
+                      monthRecord =
+                          MonthRecordProvider().fetchMonthRecord(selectedYear, selectedMonth);
+                    });
+                  });
                   // selectedSaving=monthRecord.month_saving;
                   // print(selectedSaving);
                   //
