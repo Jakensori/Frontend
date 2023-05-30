@@ -90,7 +90,7 @@ class _HomePageState extends State<HomePage> {
               icon: Icon(CupertinoIcons.heart, color: Colors.black),
               label: 'collection'),
           BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.person_solid, color: Colors.black),
+              icon: Icon(CupertinoIcons.person, color: Colors.black),
               label: 'my page'),
         ],
         onTap: _onItemTapped,
