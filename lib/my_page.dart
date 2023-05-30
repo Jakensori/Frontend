@@ -40,7 +40,7 @@ class _MyPageState extends State<MyPage> {
                 ),
               ),
               IconButton(
-                icon: Icon(CupertinoIcons.bell_fill, color: BLACK_COLOR),
+                icon: Icon(CupertinoIcons.mail, color: BLACK_COLOR),
                 iconSize: 24.0,
                 onPressed: () {
                   Navigator.push(
@@ -193,20 +193,34 @@ class _Notifications extends State<Notifications> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: Scaffold(
-            appBar: AppBar(
-              backgroundColor: PRIMARY_COLOR,
-              title: Icon(
-                CupertinoIcons.bell_fill,
-                color: BLACK_COLOR,
-                size: 40,
-              ),
-              centerTitle: true,
-              elevation: 0.0,
+      home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: PRIMARY_COLOR,
+          title: Icon(
+            CupertinoIcons.mail,
+            color: BLACK_COLOR,
+            size: 40,
+          ),
+          centerTitle: true,
+          elevation: 0.0,
+          actions: [
+            IconButton(
+              icon: Icon(Icons.close),
+              color: BLACK_COLOR,
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
             ),
-            body: Column(
-              children: [SizedBox(height: 20), _Fetch(context)],
-            )));
+          ],
+        ),
+        body: Column(
+          children: [
+            SizedBox(height: 20),
+            _Fetch(context),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _Fetch(context) {
