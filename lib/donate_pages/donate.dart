@@ -22,7 +22,6 @@ class Donating extends StatelessWidget {
 
 class DonatingPage extends StatefulWidget {
   final String title;
-
   DonatingPage({Key? key, required this.title}) : super(key: key);
 
   @override
