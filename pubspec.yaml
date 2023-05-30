@@ -61,7 +61,7 @@ dependencies:
   url_launcher: ^6.1.5
   webview_flutter: ^3.0.4
 
-  uuid: ^3.0.4
+  web3dart: ^2.3.3
 
 
 
@@ -102,6 +102,7 @@ flutter:
       - assets/lock.png
       - assets/rice.png
       - assets/skewer.png
+      - assets/abi.json
       
       
 
