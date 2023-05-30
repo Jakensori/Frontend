@@ -1,36 +1,30 @@
-import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'dart:async';
 import 'dart:convert';
-import 'collection.dart';
-import 'api_mealpoint.dart';
+import 'package:http/http.dart' as http;
 
-/*
-Future<void> sendRequest() async {
-  Map<String, dynamic> requestData = {
-    "used_point": 20,
-  };*/
-Future<void> sendRequest(int usedPoint) async {
+Future<int?> sendRequest(int usedPoint) async {
   Map<String, dynamic> requestData = {
     "used_point": usedPoint,
   };
-
+  var token =
+      'da7a36994cf38f8394214b7a7803d25ee066274398ae903580e9afe4275d614e';
   final response = await http.post(
     Uri.parse('http://52.78.205.224:8000/donation/redeem/'),
     body: json.encode(requestData),
-    headers: {'Content-Type': 'application/json'},
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'token $token',
+    },
   );
 
   if (response.statusCode == 200) {
-    Map<String, dynamic> responseData = json.decode(response.body);
-    bool result = responseData['result'];
-    String code = responseData['code'];
-    Map<String, dynamic> data = responseData['data'];
-
-    String pointHistoryId = data['pointHistoryId'];
-    String orderIdentifier = data['orderIdentifier'];
-
-    int mealPointValue = data['meal_point'];
-    int levelValue = data['level'];
+    Map<String, dynamic> responseBody = json.decode(response.body);
+    int mealPointNow = responseBody['mealpoint_now'];
+    return mealPointNow;
   } else {
     print('Request failed with status: ${response.statusCode}');
+    return null;
   }
 }

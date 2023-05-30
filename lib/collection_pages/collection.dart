@@ -19,12 +19,14 @@ class CollectionPage extends State<Collection> {
   late Future<Map<String, dynamic>> _futureMoneyBox;
 
   void increaseMealPoint() {
-    sendRequest(10).then((_) {
+    sendRequest(1).then((data) {
       setState(() {
-        if (mealPoint != null) {
+        if (data != null) {
+          final int mealPointNow = data - 1;
+          print('meal_point: $mealPointNow');
           mealPoint = MealPoint(
-            meal_point: mealPoint!.meal_point! - 20,
-            level: mealPoint!.level,
+            meal_point: mealPointNow,
+            level: null,
           );
         }
       });
@@ -32,8 +34,6 @@ class CollectionPage extends State<Collection> {
       print('Request failed: $error');
     });
   }
-
-  //int mealPoint = 20;
 
   @override
   void initState() {
@@ -87,15 +87,18 @@ class CollectionPage extends State<Collection> {
                           final moneyBoxData = snapshot.data;
                           final mealPoint = moneyBoxData?['mealPoint'] ?? 0;
                           final level = moneyBoxData?['level'] ?? 0;
+                          final mealpointNow = moneyBoxData?['mealPoint'] ?? 0;
 
                           return Container(
                             alignment: Alignment.center,
-                            child: mealPoint != null && level != null
+                            child: mealPoint != null &&
+                                    level != null &&
+                                    mealpointNow != null
                                 ? Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        '보유 포인트: $mealPoint p',
+                                        '보유 포인트: $mealpointNow p',
                                         style: TextStyle(fontSize: 16),
                                       ),
                                       Text(
@@ -144,7 +147,7 @@ class CollectionPage extends State<Collection> {
                           //color: Colors.amber[400],
                           decoration: BoxDecoration(
                             color: Colors.amber,
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(0),
                           ),
                           child: FlutterDialog1(
                             level: _level,
@@ -169,7 +172,7 @@ class CollectionPage extends State<Collection> {
                           //color: Colors.grey[300],
                           decoration: BoxDecoration(
                             color: Colors.amber[100],
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(0),
                           ),
                           child: NotYet(),
                         );
@@ -383,6 +386,46 @@ class FlutterDialog1 extends StatelessWidget {
   }
 }
 
+class NotYet extends StatelessWidget {
+  final VoidCallback? onOKPressed;
+
+  NotYet({this.onOKPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () {
+        showDialog<String>(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+            title: const Text('잠겨있는 캐릭터'),
+            content: const Text('밀포인트를 이용해서 캐릭터를 잠금해제하시겠습니까?'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  if (onOKPressed != null) {
+                    onOKPressed!();
+                  }
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+        );
+      },
+      child: Image.asset(
+        'assets/lock.png',
+        fit: BoxFit.contain,
+        height: 100,
+        width: 100,
+      ),
+    );
+  }
+}
+
+
+/*
 class FlutterDialog2 extends StatelessWidget {
   final Level level; // level 매개변수 선언
 
@@ -684,41 +727,4 @@ class FlutterDialog8 extends StatelessWidget {
     );
   }
 }
-
-class NotYet extends StatelessWidget {
-  final VoidCallback? onOKPressed;
-
-  NotYet({this.onOKPressed});
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () {
-        showDialog<String>(
-          context: context,
-          builder: (BuildContext context) => AlertDialog(
-            title: const Text('잠겨있는 캐릭터'),
-            content: const Text('밀포인트를 이용해서 캐릭터를 잠금해제하시겠습니까?'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context); // 팝업 창 닫기
-                  if (onOKPressed != null) {
-                    onOKPressed!(); // 콜백 함수 호출
-                  }
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          ),
-        );
-      },
-      child: Image.asset(
-        'assets/lock.png',
-        fit: BoxFit.contain,
-        height: 100,
-        width: 100,
-      ),
-    );
-  }
-}
+*/
