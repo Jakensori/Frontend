@@ -17,9 +17,6 @@ class UserProvider with ChangeNotifier {
     };
     var response = await http.get(url, headers: headers);
 
-    //print('response Code : ${response.statusCode}');
-    //print(response);
-
     if (response.statusCode == 200) {
       print('LOGIN 성공');
       notifyListeners();
@@ -29,7 +26,7 @@ class UserProvider with ChangeNotifier {
     }
   }
 
-  //POST
+  //로그인 POST
   Future<UserInfo> postUserInfo(String username, String password) async {
     print("<<<로그인 POST 실행>>>");
 
@@ -61,7 +58,7 @@ class UserProvider with ChangeNotifier {
     }
   }
 
-  //POST
+  //회원가입 POST
   Future<UserInfo> postNewUserInfo(
       String id, String pw, String name, String email) async {
     print("<<<회원가입 POST 실행>>>");

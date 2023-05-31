@@ -1,5 +1,19 @@
 [
 	{
+		"inputs": [],
+		"name": "abort",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "donate",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "address payable",
@@ -36,9 +50,9 @@
 	},
 	{
 		"inputs": [],
-		"name": "abort",
+		"name": "transferEtherToContract",
 		"outputs": [],
-		"stateMutability": "nonpayable",
+		"stateMutability": "payable",
 		"type": "function"
 	},
 	{
@@ -56,14 +70,20 @@
 	},
 	{
 		"inputs": [],
-		"name": "donate",
-		"outputs": [],
-		"stateMutability": "payable",
+		"name": "donationAmount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
 		"inputs": [],
-		"name": "donationAmount",
+		"name": "goal",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -85,13 +105,6 @@
 			}
 		],
 		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "transferEtherToContract",
-		"outputs": [],
-		"stateMutability": "payable",
 		"type": "function"
 	}
 ]

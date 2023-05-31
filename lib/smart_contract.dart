@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:http/http.dart';
+import 'package:temp_project/sc_controller.dart';
 import 'package:web3dart/web3dart.dart';
 
 void main() {
@@ -37,21 +38,21 @@ class _SmartContranct extends State<SmartContranct> {
   final Web3Client _client = Web3Client(apiUrl, Client());
 
   //지갑키
-  static const privateKey = '0x8C219DfD7eAEDC50fC5A1fA5EeD20c2F51C195F3';
+  static const privateKey =
+      '1d7d0686cfe9d41badc4d6b676de0f9ed2ada49137c9048339f13874df9f882e';
   final EthPrivateKey _credentials = EthPrivateKey.fromHex(privateKey);
 
   //스마트 컨트랙트의 주소 값
   static final EthereumAddress contractAddr =
-      EthereumAddress.fromHex('0x2CAeC7ac505a4ECAaD6Dbb3706662612813F27b9');
+      EthereumAddress.fromHex('0xB6Ebd7f29D5BbF9C3Dc6245450dAd49fEba2C25b');
   DeployedContract? _contract;
 
   // 스마트 컨트랙트 내의 함수 정의
-  ContractFunction? _initializeFunction;
   ContractFunction? _incrementFunction;
   ContractFunction? _decrementFunction;
-  ContractFunction? _getFunction;
+  ContractFunction? _checkFunction;
 
-  int _counter = 0;
+  BigInt _check = BigInt.from(0);
 
   @override
   void initState() {
@@ -60,27 +61,28 @@ class _SmartContranct extends State<SmartContranct> {
     readAbi().then((String value) {
       // ABI를 이용해서 함수 정의
       _contract = DeployedContract(
-          ContractAbi.fromJson(value, 'Counter'), contractAddr);
-      _initializeFunction = _contract?.function('initialize');
-      _incrementFunction = _contract?.function('increment');
-      _decrementFunction = _contract?.function('decrement');
-      _getFunction = _contract?.function('get');
+          ContractAbi.fromJson(value, 'NaeggiDonation'), contractAddr);
+      //print('확인: ${_contract!.address}');
+      //_incrementFunction = _contract?.;
+      _checkFunction = _contract?.function('check');
       // 값 현재값 가져오기
-      _getCounter();
+      _getCheck();
     });
   }
 
   Future<String> readAbi() async {
-    return await rootBundle.loadString('abi.json');
+    return await rootBundle.loadString('assets/abi.json');
   }
 
-  Future<void> _getCounter() async {
+  Future<void> _getCheck() async {
     await _client.call(
         contract: _contract!,
-        function: _getFunction!,
-        params: []).then((List result) {
+        function: _checkFunction!,
+        params: []).then((result) {
       setState(() {
-        _counter = result.first.toInt();
+        print(result);
+        _check = BigInt.from(result.first);
+        print(_check);
       });
     });
   }
@@ -103,7 +105,7 @@ class _SmartContranct extends State<SmartContranct> {
       Transaction.callContract(
         contract: _contract!,
         function: _incrementFunction!,
-        parameters: [BigInt.from(1)],
+        parameters: [BigInt.from(0.00079)],
       ),
       chainId: 3,
     );
@@ -119,30 +121,30 @@ class _SmartContranct extends State<SmartContranct> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Row(
+              Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  // 값을 내리는 함수
-                  IconButton(
-                    icon: const Icon(Icons.remove),
-                    onPressed: _decrementCounter, // null disables the button
-                  ),
-                  // Expanded expands its child to fill the available space.
-                  Text(
-                    '$_counter',
-                    //style: Theme.of(context).textTheme.headline4,
-                  ),
+                  Text('0.002 ETH가', style: TextStyle(fontSize: 20.0)),
+                  SizedBox(height: 15.0),
+
+                  Text('기부단체에 전달됩니다', style: TextStyle(fontSize: 20.0)),
                   // 값을 추가하는 함수
-                  IconButton(
-                    icon: const Icon(Icons.add),
-                    onPressed: _incrementCounter,
-                  ),
+                  // IconButton(
+                  //   icon: const Icon(Icons.add),
+                  //   onPressed: _incrementCounter,
+                  // ),
+                  Text('$_check'),
                 ],
               ),
               // 현재 값을 확인하는 버튼
-              IconButton(
-                icon: const Icon(Icons.check),
-                onPressed: _getCounter,
+              SizedBox(height: 20),
+              ElevatedButton(
+                child: Text('기부금 전달', style: TextStyle(fontSize: 17.0)),
+                onPressed: () {
+                  //Future<double?> ether = EtherProvider().getEther(15000);
+                  _incrementCounter();
+                  _getCheck();
+                },
               )
             ],
           ),
