@@ -182,7 +182,6 @@ class Notifications extends StatefulWidget {
 
 class _Notifications extends State<Notifications> {
   late final Future<List<Noti>>? alarmList;
-  bool _selected = false;
 
   @override
   void initState() {
@@ -243,129 +242,148 @@ class _Notifications extends State<Notifications> {
         });
   }
 
+
+  bool _isLoading = false;
+  String _dialogData = '';
+  void _showDialog(BuildContext context, int selectedIndex) async {
+    // NotiProvider 인스턴스 생성
+    NotiProvider notiProvider = NotiProvider();
+
+    // getNotification 함수 호출 및 결과 사용
+    try {
+      List<Noti> notificationList = await notiProvider.getNotification();
+
+      // 선택한 인덱스에 해당하는 데이터 가져오기
+      Noti selectedNoti = notificationList.elementAt(selectedIndex);
+
+      // 다이얼로그 창에 데이터 표시
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(selectedNoti.title ?? '',style: TextStyle(fontSize:18, fontWeight: FontWeight.bold),),
+            //title: Text(''),
+            content: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(height: 20.0),
+                Image.network(selectedNoti.image ?? ''),
+                SizedBox(height: 20.0),
+                Text('${selectedNoti.content ?? ''}'),
+                SizedBox(height: 40.0),
+                Text('${selectedNoti.createdAt ?? ''}'),
+                SizedBox(height: 10.0),
+                Text('${selectedNoti.foundation ?? ''} 드림',textAlign: TextAlign.end),
+              ],
+            ),
+            contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0), // 컨텐츠 주위의 여백 설정
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('닫기',
+                  style: TextStyle(
+                  fontSize: 18, // 텍스트 크기 조절
+                ),),
+                style: TextButton.styleFrom(
+                  primary: PRIMARY_COLOR, // 버튼 텍스트 색상
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    } catch (e) {
+      // 요청에 문제가 발생한 경우의 예외 처리
+      setState(() {
+        _isLoading = false;
+      });
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('An error occurred: $e'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('Close'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
+  bool _selected = false;
+  //List<bool> _selectedList = []; // 선택 상태를 저장할 리스트
+  List<bool> _selectedList = List<bool>.filled(10, false);
   Widget buildList(snapshot) {
+    //_selectedList = List.generate(snapshot.length, (_) => false);
+
     return Expanded(
       child: SingleChildScrollView(
-          child: Column(
-        children: [
-          ListView.separated(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: snapshot.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 3.0),
-                child: ListTile(
-                  dense: false,
-                  selected: _selected,
-                  onTap: () {
-                    setState(() {
-                      _selected = true;
-                    });
-                  },
-                  tileColor: MaterialStateColor.resolveWith(
-                      (Set<MaterialState> states) {
-                    if (!states.contains(MaterialState.selected)) {
-                      return Color.fromARGB(255, 255, 246, 203);
-                    }
-                    return Colors.white;
-                  }),
-                  //leading: Image.network(snapshot[index].image.toString()),
-                  title: Text('${snapshot[index].title.toString()}',
-                      style: TextStyle(fontSize: 19, color: BLACK_COLOR)),
-                  subtitle: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('${snapshot[index].foundation.toString()}',
-                          style: TextStyle(fontSize: 16, color: GREY_COLOR)),
-                      Text(snapshot[index].createdAt.toString()),
-                      Text('', style: TextStyle(fontSize: 2))
-                    ],
+        child: Column(
+          children: [
+            ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: snapshot.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 3.0),
+                  child: ListTile(
+                    dense: false,
+                    selected: _selectedList[index],
+                    onTap: () {
+                      print(_selectedList);
+                      _showDialog(context, snapshot[index].id-1);
+                      setState(() {
+                        _selectedList = List<bool>.filled(snapshot.length, false); // 모든 타일의 선택 상태를 초기화
+                        _selected=true;
+                        _selectedList[index] = true; // 해당 인덱스의 선택 상태를 반전시킴
+                        //print(_selectedList);
+                        //print(_selected);
+                      });
+                      //print(_selectedList);
+                      //print(_selected);
+                    },
+                    tileColor: _selectedList[index] ? Colors.white : Color.fromARGB(255, 255, 246, 203),
+                    title: Text(
+                      '${snapshot[index].title.toString()}',
+                      style: TextStyle(fontSize: 19, color: BLACK_COLOR),
+                    ),
+                    subtitle: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '${snapshot[index].foundation.toString()}',
+                          style: TextStyle(fontSize: 16, color: GREY_COLOR),
+                        ),
+                        Text(snapshot[index].createdAt.toString()),
+                        //Text('', style: TextStyle(fontSize: 2)),
+                      ],
+                    ),
+                    visualDensity: VisualDensity(horizontal: 0, vertical: -1),
                   ),
-                  visualDensity: VisualDensity(horizontal: 0, vertical: -1),
-                ),
-              );
-            },
-            separatorBuilder: (BuildContext ctx, int idx) {
-              return Divider();
-            },
-          ),
-        ],
-      )
-
-          // actions: <Widget>[
-          //   TextButton(
-          //     onPressed: () {
-          //       Navigator.of(context).pop();
-          //     },
-          //     child: Text(
-          //       '확인',
-          //       style: TextStyle(color: GREY_COLOR),
-          //     ),
-          //   ),
-          // ],
-          ),
+                );
+              },
+              separatorBuilder: (BuildContext ctx, int idx) {
+                return Divider();
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
 
-/*
-Widget showList(context, alarmlist) {
-  return AlertDialog(
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-    title: Icon(CupertinoIcons.bell_fill, color: BLACK_COLOR),
-    content: SizedBox(
-      width: 500,
-      child: SingleChildScrollView(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: alarmlist.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Card(
-                  color: Color(0xffF9F9F9),
-                  elevation: 2,
-                  margin: EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12)),
-                  child: ListTile(
-                    // leading: Text(
-                    //   breakfast.category.toString(),
-                    //   style: TextStyle(color: GREY_COLOR),
-                    // ),
-                    title: Text(alarmlist[index].title.toString(),
-                        style: TextStyle(fontSize: 20)),
-                    // trailing: Text(
-                    //   breakfast.price.toString(),
-                    //   style: TextStyle(fontSize: 18, color: GREY_COLOR),
-                    // ),
-                  ),
-                ),
-              );
-            },
-          ),
-        ],
-      )),
-    ),
-    actions: <Widget>[
-      TextButton(
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-        child: Text(
-          '확인',
-          style: TextStyle(color: GREY_COLOR),
-        ),
-      ),
-    ],
-  );
-}
-*/
 class DonationHistoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
