@@ -5,8 +5,7 @@ import 'package:temp_project/const/colors.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'dart:async';
-import 'package:temp_project/ExpenseChart.dart';
-import 'package:intl/intl.dart';
+import 'package:temp_project/chart_pages/ExpenseChart.dart';
 
 
 class ExpenseChartPage extends StatefulWidget {
@@ -83,9 +82,9 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
         value: 100,
         color: PRIMARY_COLOR,
         title: 'no data',
-        radius: 60,
+        radius: 80,
         titleStyle: TextStyle(
-          fontSize: 15,
+          fontSize: 13,
           fontWeight: FontWeight.bold,
           color: WHITE_COLOR,
         ),
@@ -98,55 +97,55 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
         value: snapshot.homemade.toDouble(),
         color: PRIMARY_COLOR,
         title: '집밥 ($str_homemade회)',
-        radius: 60,
+        radius: 80,
         titleStyle: TextStyle(
-          fontSize: 10,
+          fontSize: 13,
           fontWeight: FontWeight.bold,
-          color: WHITE_COLOR,
+          color: BLACK_COLOR,
         ),
       ),
       PieChartSectionData(
         value: snapshot.eating_out.toDouble(),
         color: PRIMARY_COLOR.withOpacity(0.5),
         title: '외식 ($str_eating_out회)',
-        radius: 60,
+        radius: 80,
         titleStyle: TextStyle(
-          fontSize: 10,
+          fontSize: 13,
           fontWeight: FontWeight.bold,
-          color: WHITE_COLOR,
+          color: BLACK_COLOR,
         ),
       ),
       PieChartSectionData(
         value: snapshot.delivery.toDouble(),
         color: Colors.yellow,
         title: '배달 ($str_delivery회)',
-        radius: 60,
+        radius: 80,
         titleStyle: TextStyle(
-          fontSize: 10,
+          fontSize: 13,
           fontWeight: FontWeight.bold,
-          color: WHITE_COLOR,
+          color: BLACK_COLOR,
         ),
       ),
       PieChartSectionData(
         value: snapshot.cafe.toDouble(),
         color: Colors.orange,
         title: '카페 ($str_cafe회)',
-        radius: 60,
+        radius: 80,
         titleStyle: TextStyle(
-          fontSize: 10,
+          fontSize: 13,
           fontWeight: FontWeight.bold,
-          color: WHITE_COLOR,
+          color: BLACK_COLOR,
         ),
       ),
       PieChartSectionData(
         value: snapshot.etc.toDouble(),
         color: Colors.orange.withOpacity(0.5),
         title: '기타 ($str_etc회)',
-        radius: 60,
+        radius: 80,
         titleStyle: TextStyle(
-          fontSize: 10,
+          fontSize: 13,
           fontWeight: FontWeight.bold,
-          color: WHITE_COLOR,
+          color: BLACK_COLOR,
         ),
       ),
     ];
@@ -157,55 +156,55 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
         value: snapshot.amt_homemade.toDouble(),
         color: PRIMARY_COLOR,
         title: '집밥 ($str_amt_homemade원)',
-        radius: 60,
+        radius: 80,
         titleStyle: TextStyle(
-          fontSize: 10,
+          fontSize: 13,
           fontWeight: FontWeight.bold,
-          color: WHITE_COLOR,
+          color: BLACK_COLOR,
         ),
       ),
       PieChartSectionData(
         value: snapshot.amt_eating_out.toDouble(),
         color: PRIMARY_COLOR.withOpacity(0.5),
         title: '외식 ($str_amt_eating_out원)',
-        radius: 60,
+        radius: 80,
         titleStyle: TextStyle(
-          fontSize: 10,
+          fontSize: 13,
           fontWeight: FontWeight.bold,
-          color: WHITE_COLOR,
+          color: BLACK_COLOR,
         ),
       ),
       PieChartSectionData(
         value: snapshot.amt_delivery.toDouble(),
         color: Colors.yellow,
         title: '배달 ($str_amt_delivery원)',
-        radius: 60,
+        radius: 80,
         titleStyle: TextStyle(
-          fontSize: 10,
+          fontSize: 13,
           fontWeight: FontWeight.bold,
-          color: WHITE_COLOR,
+          color: BLACK_COLOR,
         ),
       ),
       PieChartSectionData(
         value: snapshot.amt_cafe.toDouble(),
         color: Colors.orange,
         title: '카페 ($str_amt_cafe원)',
-        radius: 60,
+        radius: 80,
         titleStyle: TextStyle(
-          fontSize: 10,
+          fontSize: 13,
           fontWeight: FontWeight.bold,
-          color: WHITE_COLOR,
+          color: BLACK_COLOR,
         ),
       ),
       PieChartSectionData(
         value: snapshot.amt_etc.toDouble(),
         color: Colors.orange.withOpacity(0.5),
         title: '기타 ($str_amt_etc원)',
-        radius: 60,
+        radius: 80,
         titleStyle: TextStyle(
-          fontSize: 10,
+          fontSize: 13,
           fontWeight: FontWeight.bold,
-          color: WHITE_COLOR,
+          color: BLACK_COLOR,
         ),
       ),
     ];
@@ -222,18 +221,18 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
 
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 DropdownButtonHideUnderline(
                   child: DropdownButton2(
                     isExpanded: true,
                     hint: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           currentYear.toString(),
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 20,
                             fontWeight: FontWeight.bold,
                             color: BLACK_COLOR,
                           ),
@@ -247,7 +246,7 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
                               child: Text(
                                 item,
                                 style: const TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   color: BLACK_COLOR,
                                 ),
@@ -263,12 +262,12 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
                       });
                       //연도 변경시 get 재호출
                       expenseChart = ExpenseProvider().fetchExpenseChart(selectedYear,selectedMonth);
-                      print('연도 변경으로 재호출됨');
+                      //print('연도 변경으로 재호출됨');
                     },
                     icon: const Icon(
                       Icons.expand_more,
                     ),
-                    iconSize: 16,
+                    iconSize: 20,
                     iconEnabledColor: BLACK_COLOR,
                     iconDisabledColor: BLACK_COLOR,
                     buttonHeight: 70,
@@ -302,12 +301,12 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
                   child: DropdownButton2(
                     isExpanded: true,
                     hint: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children:[
                         Text(
-                          currentMonth.toString(),
+                          '     '+currentMonth.toString(),
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 20,
                             fontWeight: FontWeight.bold,
                             color: BLACK_COLOR,
                           ),
@@ -320,8 +319,9 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
                               value: item2,
                               child: Text(
                                 item2,
+                                textAlign: TextAlign.end,
                                 style: const TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 19,
                                   fontWeight: FontWeight.bold,
                                   color: BLACK_COLOR,
                                 ),
@@ -337,12 +337,12 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
                       });
                       //달 변경시 get재호출
                       expenseChart = ExpenseProvider().fetchExpenseChart(selectedYear, selectedMonth);
-                      print('달 변경으로 재호출됨');
+                      //print('달 변경으로 재호출됨');
                     },
                     icon: const Icon(
                       Icons.expand_more,
                     ),
-                    iconSize: 16,
+                    iconSize: 20,
                     iconEnabledColor: BLACK_COLOR,
                     iconDisabledColor: BLACK_COLOR,
                     buttonHeight: 70,
@@ -382,7 +382,7 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
-                    height: 270.0,
+                    height: 350.0,
                     width: 350.0,
                     decoration: BoxDecoration(
                       color: PRIMARY_COLOR.withOpacity(0.1),
@@ -394,8 +394,8 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
                         children: [
                           Flexible(
                               child: Text(
-                                '< 식사 종류 (횟수) >',
-                                style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800),
+                                '-  식사 종류 (횟수)  -',
+                                style: TextStyle(fontSize: 18,fontWeight: FontWeight.w700,color: BLACK_COLOR),
                               ),
                               flex: 1),
                           Flexible(
@@ -405,8 +405,9 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
                                   borderData: FlBorderData(
                                     show: false,
                                   ),
-                                  centerSpaceRadius: 40,
-                                  sectionsSpace: 0,
+                                  centerSpaceRadius: 50,
+                                  sectionsSpace: 5,
+                                  //sectionsSpaceRadius:0.2,
                                 ),
                               ),
                               flex: 9),
@@ -418,7 +419,7 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
-                    height: 270.0,
+                    height: 350.0,
                     width: 350.0,
                     decoration: BoxDecoration(
                       color: PRIMARY_COLOR.withOpacity(0.1),
@@ -430,8 +431,8 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
                         children: [
                           Flexible(
                               child: Text(
-                                '< 식사 종류 (비용) >',
-                                style: TextStyle(fontSize: 15, fontWeight:FontWeight.w800),
+                                '-  식사 종류 (비용)  -',
+                                style: TextStyle(fontSize: 18, fontWeight:FontWeight.w700,color: BLACK_COLOR),
                               ),
                               flex: 1),
                           Flexible(
@@ -441,8 +442,8 @@ class _ExpenseChartPageState extends State<ExpenseChartPage> {
                                   borderData: FlBorderData(
                                     show: false,
                                   ),
-                                  centerSpaceRadius: 40,
-                                  sectionsSpace: 0,
+                                  centerSpaceRadius: 50,
+                                  sectionsSpace: 5,
                                 ),
                               ),
                               flex: 9),

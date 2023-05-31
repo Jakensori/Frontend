@@ -2,9 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:temp_project/chart_pages/monthly_calendar.dart';
 import 'package:temp_project/chart_pages/expense_chart.dart';
-import 'package:temp_project/chart_pages/meal_chart.dart';
 import 'package:temp_project/const/colors.dart';
-import 'MealChart.dart';
 
 class Chart extends StatefulWidget {
   const Chart({Key? key}) : super(key: key);
@@ -12,7 +10,6 @@ class Chart extends StatefulWidget {
   static List<Widget> _views = [
     Center(child: Calendar()),
     Center(child: ExpenseChartPage()),
-    Center(child: MealChartPage()),
   ];
 
   @override
@@ -29,22 +26,32 @@ class _ChartState extends State<Chart> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         appBar: AppBar(
-          //title: Text('chart탭 상단바'),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(11.0),
+              child: IconButton(
+                icon: Icon(CupertinoIcons.mail, color: BLACK_COLOR),
+                iconSize: 35.0,
+                onPressed: () {
+                  // 아이콘을 클릭했을 때 수행할 동작을 정의합니다.
+                },
+              ),
+            ),
+          ],
           backgroundColor: WHITE_COLOR,
           bottom: TabBar(
-            labelColor: Color(0xff444444),
-            unselectedLabelColor: Color(0xff999999),
-            indicatorWeight: 3,
-            indicatorColor: Color(0xff444444),
+            labelColor: BLACK_COLOR,
+            unselectedLabelColor: GREY_COLOR,
+            indicatorWeight: 2,
+            indicatorColor: BLACK_COLOR,
             tabs: const [
               Tab(
                 text: '가계부',
               ),
               Tab(text: '식비 분석'),
-              Tab(text: '식사 분석'),
             ],
           ),
         ),
