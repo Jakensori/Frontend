@@ -98,7 +98,12 @@ class _SavingPageState extends State<SavingPage> {
                               child: Row(
                                 children: [
                                   Container(
+                                    margin: EdgeInsets.symmetric(vertical: 30),
                                     width: 330,
+                                    decoration: BoxDecoration(
+                                      color: Colors.amber[100],
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
                                     child: Stack(
                                       alignment: Alignment.center,
                                       children: [
@@ -106,47 +111,145 @@ class _SavingPageState extends State<SavingPage> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           children: [
+                                            Container(
+                                              width: 260,
+                                              color: Colors.white,
+                                              padding: EdgeInsets.all(10),
+                                              child: Text(
+                                                campaign.title ?? '',
+                                                style: TextStyle(
+                                                  fontSize: 17,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,
+                                                ),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
                                             SizedBox(height: 15),
                                             Container(
-                                              width: 230,
+                                              width: 260,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
                                               child: Align(
                                                 alignment: Alignment.center,
-                                                child: Image.network(
-                                                  campaign.image ?? '',
-                                                  fit: BoxFit.scaleDown,
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  child: Image.network(
+                                                    campaign.image ?? '',
+                                                    fit: BoxFit.scaleDown,
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                            SizedBox(height: 10),
+                                            SizedBox(height: 10), // 여백 추가
                                             Container(
-                                              width: 230,
+                                              width: 260,
+                                              padding: EdgeInsets.all(10),
+                                              color: Colors.amber[100],
                                               child: Text(
                                                 campaign.summary ?? '',
-                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,
+                                                ),
+                                                textAlign: TextAlign.left,
                                               ),
                                             ),
-                                            SizedBox(height: 10),
+                                            SizedBox(height: 5), // 여백 추가
                                             Container(
-                                              width: 230,
+                                              width: 260,
+                                              padding: EdgeInsets.all(10),
+                                              color: Colors.amber[100],
                                               child: Text(
                                                 '${campaign.currentAmount ?? 0}원 / ${campaign.goalAmount ?? 0}원',
-                                                textAlign: TextAlign.center,
+                                                textAlign: TextAlign.left,
                                               ),
                                             ),
-                                            SizedBox(height: 30),
-                                          ],
-                                        ),
-                                        Container(
-                                          width: 230,
-                                          child: Text(
-                                            campaign.title ?? '',
-                                            style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black,
+                                            SizedBox(height: 20),
+                                            Container(
+                                              child: Align(
+                                                  alignment: Alignment.topRight,
+                                                  child: FractionalTranslation(
+                                                    translation:
+                                                        Offset(-0.45, -0.3),
+                                                    child: ElevatedButton(
+                                                      onPressed: () {
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (context) {
+                                                            return AlertDialog(
+                                                              title: Text(campaign
+                                                                      .title ??
+                                                                  ''),
+                                                              content: Column(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  SizedBox(
+                                                                      height:
+                                                                          10),
+                                                                  Image.network(
+                                                                      campaign.image ??
+                                                                          ''),
+                                                                  SizedBox(
+                                                                      height:
+                                                                          10),
+                                                                  Text(
+                                                                      '요약: ${campaign.summary ?? ''}'),
+                                                                  SizedBox(
+                                                                      height:
+                                                                          30),
+                                                                  Text(
+                                                                      'Start Date: ${DateFormat('yyyy-MM-dd').format(DateTime.parse(campaign.startYmd.toString()))}'),
+                                                                  SizedBox(
+                                                                      height:
+                                                                          10),
+                                                                  Text(
+                                                                      'End Date: ${DateFormat('yyyy-MM-dd ').format(DateTime.parse(campaign.endYmd.toString()))}'),
+                                                                ],
+                                                              ),
+                                                              actions: [
+                                                                TextButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    Navigator.push(
+                                                                        context,
+                                                                        MaterialPageRoute(
+                                                                            builder: (context) =>
+                                                                                OneCampaignPage()));
+                                                                  },
+                                                                  child: Text(
+                                                                      '기부하러가기'),
+                                                                ),
+                                                              ],
+                                                            );
+                                                          },
+                                                        );
+                                                      },
+                                                      child: Text(
+                                                        '기부하기',
+                                                        style: TextStyle(
+                                                          fontSize: 12,
+                                                          color:
+                                                              Color(0xff444444),
+                                                        ),
+                                                      ),
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                        backgroundColor:
+                                                            Colors.amber,
+                                                        minimumSize:
+                                                            Size(100, 30),
+                                                      ),
+                                                    ),
+                                                  )),
                                             ),
-                                            textAlign: TextAlign.center,
-                                          ),
+                                          ],
                                         ),
                                       ],
                                     ),

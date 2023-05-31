@@ -99,59 +99,89 @@ class _SavingPageState extends State<MydonationPage> {
                                 children: [
                                   Container(
                                     width: 330,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                    margin: EdgeInsets.symmetric(vertical: 30),
+                                    decoration: BoxDecoration(
+                                      color: Colors.amber[100],
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Stack(
+                                      alignment: Alignment.center,
                                       children: [
-                                        SizedBox(height: 15),
-                                        Container(
-                                          width: 230,
-                                          child: Text(
-                                            campaign.title ?? '',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black,
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            SizedBox(height: 15),
+                                            Container(
+                                              width: 260,
+                                              color: Colors.white,
+                                              padding: EdgeInsets.all(10),
+                                              child: Text(
+                                                campaign.title ?? '',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  fontSize: 17,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
                                             ),
-                                          ),
-                                        ),
-                                        SizedBox(height: 15),
-                                        Container(
-                                          width: 230,
-                                          child: Align(
-                                            alignment: Alignment.center,
-                                            child: Image.network(
-                                              campaign.image ?? '',
-                                              fit: BoxFit.scaleDown,
+                                            SizedBox(height: 15),
+                                            Container(
+                                              width: 260,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                child: Image.network(
+                                                  campaign.image ?? '',
+                                                  fit: BoxFit.scaleDown,
+                                                ),
+                                              ),
                                             ),
-                                          ),
-                                        ),
-                                        SizedBox(height: 10),
-                                        Container(
-                                          width: 230,
-                                          child: Text(
-                                            campaign.summary ?? '',
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                        SizedBox(height: 10),
-                                        Container(
-                                          width: 230,
-                                          child: Text(
-                                            '${campaign.currentAmount ?? 0}원 / ${campaign.goalAmount ?? 0}원',
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                        SizedBox(height: 10),
-                                        Container(
-                                          width: 230,
-                                          child: Text(
-                                            '${campaign.mydonation_amount ?? 0}원 기부했어요:) ',
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                        SizedBox(height: 20),
+                                            SizedBox(height: 10),
+                                            Container(
+                                              width: 260,
+                                              padding: EdgeInsets.all(10),
+                                              color: Colors.amber[100],
+                                              child: Text(
+                                                campaign.summary ?? '',
+                                                style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,
+                                                ),
+                                                textAlign: TextAlign.left,
+                                              ),
+                                            ),
+                                            SizedBox(height: 10),
+                                            Container(
+                                              width: 260,
+                                              padding: EdgeInsets.all(10),
+                                              child: Text(
+                                                '${campaign.currentAmount ?? 0}원 / ${campaign.goalAmount ?? 0}원',
+                                                textAlign: TextAlign.left,
+                                              ),
+                                            ),
+                                            SizedBox(height: 10),
+                                            Container(
+                                              width: 260,
+                                              child: Text(
+                                                '❤${campaign.mydonation_amount ?? 0}원 기부했어요❤ ',
+                                                style: TextStyle(
+                                                  fontSize: 17,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,
+                                                ),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                            SizedBox(height: 20),
+                                          ],
+                                        )
                                       ],
                                     ),
                                   ),

@@ -28,10 +28,19 @@ class CollectionPage extends State<Collection> {
             meal_point: mealPointNow,
             level: null,
           );
+          updateMealpointNow(mealPointNow);
         }
       });
     }).catchError((error) {
       print('Request failed: $error');
+    });
+  }
+
+  int mealpointNow = 0;
+
+  void updateMealpointNow(int newMealpoint) {
+    setState(() {
+      mealpointNow = newMealpoint;
     });
   }
 
@@ -105,9 +114,6 @@ class CollectionPage extends State<Collection> {
                                         '캐릭터 레벨: Lv. $level',
                                         style: TextStyle(fontSize: 16),
                                       ),
-                                      if (_level.currentLevel == 1 &&
-                                          mealPoint < 10)
-                                        NotYet(onOKPressed: increaseMealPoint),
                                     ],
                                   )
                                 : CircularProgressIndicator(),
@@ -147,7 +153,7 @@ class CollectionPage extends State<Collection> {
                           //color: Colors.amber[400],
                           decoration: BoxDecoration(
                             color: Colors.amber,
-                            borderRadius: BorderRadius.circular(0),
+                            borderRadius: BorderRadius.circular(30),
                           ),
                           child: FlutterDialog1(
                             level: _level,
@@ -172,7 +178,7 @@ class CollectionPage extends State<Collection> {
                           //color: Colors.grey[300],
                           decoration: BoxDecoration(
                             color: Colors.amber[100],
-                            borderRadius: BorderRadius.circular(0),
+                            borderRadius: BorderRadius.circular(30),
                           ),
                           child: NotYet(),
                         );

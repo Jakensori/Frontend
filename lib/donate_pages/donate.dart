@@ -52,7 +52,7 @@ class _DonatingPageState extends State<DonatingPage> {
           style: TextStyle(
             fontSize: 25, // 폰트 크기
             fontWeight: FontWeight.bold, // 폰트 두께
-            color: Colors.black, // 폰트 색상
+            color: Color(0xff444444), // 폰트 색상
           ),
         ),
         centerTitle: true,
@@ -74,14 +74,14 @@ class _DonatingPageState extends State<DonatingPage> {
             child: Text(
               '나의 기부 저금통',
               style: TextStyle(
-                fontSize: 18, // 폰트 크기
+                fontSize: 15, // 폰트 크기
                 fontWeight: FontWeight.w600, // 폰트 두께
-                color: Colors.black, // 폰트 색상
+                color: Color(0xff444444), // 폰트 색상
               ),
             ),
           ),
           Container(
-              margin: EdgeInsets.fromLTRB(180, 85, 10, 5),
+              margin: EdgeInsets.fromLTRB(70, 70, 10, 5),
               child: FutureBuilder<Map<String, dynamic>>(
                 future: _futureMoneyBox,
                 builder: (context, snapshot) {
@@ -102,9 +102,9 @@ class _DonatingPageState extends State<DonatingPage> {
                             child: Text(
                               '$savings 원',
                               style: TextStyle(
-                                fontSize: 33,
+                                fontSize: 25,
                                 fontWeight: FontWeight.w600, // 폰트 두께
-                                color: Colors.black,
+                                color: Color(0xff444444),
                               ),
                             ),
                           ),
@@ -115,37 +115,60 @@ class _DonatingPageState extends State<DonatingPage> {
                 },
               )),
           Container(
-            margin: EdgeInsets.fromLTRB(70, 130, 180, 5),
+            margin: EdgeInsets.fromLTRB(200, 100, 20, 5),
+            width: 130,
+            height: 30,
             child: TextButton(
+              style: ButtonStyle(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15), // 테두리를 더 둥글게 설정
+                  ),
+                ),
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.amber.shade100),
+              ),
               child: Text(
                 '기부 가능 리스트 보기',
                 style: TextStyle(
-                  fontSize: 12, // 폰트 크기
-                  fontWeight: FontWeight.w600, // 폰트 두께
-                  color: Colors.black, // 폰트 색상
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xff444444),
                 ),
               ),
               onPressed: () {
-                // 페이지 이동
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => SavingPage(
-                            title: '',
-                          )),
+                    builder: (context) => SavingPage(
+                      title: '',
+                    ),
+                  ),
                 );
               },
             ),
           ),
           Container(
-            margin: EdgeInsets.fromLTRB(210, 130, 50, 5),
+            margin: EdgeInsets.fromLTRB(200, 140, 20, 5),
+            width: 130,
+            height: 30,
             child: TextButton(
+              style: ButtonStyle(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.amber.shade100),
+              ),
               child: Text(
                 '나의 기부 목록 보기',
+                textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 12, // 폰트 크기
-                  fontWeight: FontWeight.w600, // 폰트 두께
-                  color: Colors.black, // 폰트 색상
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xff444444),
                 ),
               ),
               onPressed: () {
@@ -153,15 +176,16 @@ class _DonatingPageState extends State<DonatingPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => MydonationPage(
-                            title: '',
-                          )),
+                    builder: (context) => MydonationPage(
+                      title: '',
+                    ),
+                  ),
                 );
               },
             ),
           ),
           Container(
-              margin: EdgeInsets.fromLTRB(10, 220, 10, 0),
+              margin: EdgeInsets.fromLTRB(10, 220, 20, 5),
               child: FutureBuilder<List<CampaignRecord>>(
                   future: _futureCampaign,
                   builder: (context, snapshot) {
@@ -338,7 +362,7 @@ class _DonatingPageState extends State<DonatingPage> {
                                                   '기부하기',
                                                   style: TextStyle(
                                                     fontSize: 12,
-                                                    color: Colors.white,
+                                                    color: Color(0xff444444),
                                                   ),
                                                 ),
                                                 style: ElevatedButton.styleFrom(
