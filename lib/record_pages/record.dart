@@ -30,6 +30,7 @@ class _Record extends State<Record> {
   late Future<MealRecord> mealRecord;
   late final Future<SettlementInfo>? settleInfo;
   int today_donation = 0;
+  int differ = 0;
 
   int formatYear = int.parse(DateFormat('yyyy').format(DateTime.now()));
   int formatMonth = int.parse(DateFormat('M').format(DateTime.now()));
@@ -68,26 +69,59 @@ class _Record extends State<Record> {
       ),
       backgroundColor: Color(0xffFFFFFF),
       body: _Fetch(context),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          showModalBottomSheet<void>(
-              context: context,
-              isScrollControlled: true,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100.0),
+      floatingActionButton: Stack(
+        children: [
+          // settlement button
+          Align(
+            alignment: Alignment(
+                Alignment.bottomRight.x, Alignment.bottomRight.y - 0.2),
+            child: FloatingActionButton.extended(
+              onPressed: () async {
+                var info = await MealProvider()
+                    .getMealRecord(formatYear, formatMonth, formatDay);
+                if (info.day_budget! - info.consumption! > 0) {
+                  differ = info.day_budget! - info.consumption!;
+                }
+                settlementSheet(differ);
+              },
+              label: const Text(
+                '하루정산',
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold
+                    //color: BLACK_COLOR,
+                    ),
               ),
-              builder: (BuildContext context) {
-                return add_record(context);
-              });
-        },
-        label: const Text(
-          '추가하기',
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold
-              //color: BLACK_COLOR,
+              icon: const Icon(Icons.attach_money),
+              backgroundColor: PRIMARY_COLOR,
+            ),
+          ),
+
+          //add record button
+          Align(
+            alignment:
+                Alignment(Alignment.bottomRight.x, Alignment.bottomRight.y),
+            child: FloatingActionButton.extended(
+              onPressed: () {
+                showModalBottomSheet<void>(
+                    context: context,
+                    isScrollControlled: true,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(100.0),
+                    ),
+                    builder: (BuildContext context) {
+                      return add_record(context);
+                    });
+              },
+              label: const Text(
+                '추가하기',
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold
+                    //color: BLACK_COLOR,
+                    ),
               ),
-        ),
-        icon: const Icon(Icons.add),
-        backgroundColor: PRIMARY_COLOR,
+              icon: const Icon(Icons.add),
+              backgroundColor: PRIMARY_COLOR,
+            ),
+          ),
+        ],
       ),
     ));
   }
@@ -205,7 +239,7 @@ class _Record extends State<Record> {
                                 ),
                               ),
                               Text(
-                                differ.toString(),
+                                '${differ.toString()} 원',
                                 style: TextStyle(
                                     fontSize: 25,
                                     fontWeight: FontWeight.w500,
@@ -224,7 +258,7 @@ class _Record extends State<Record> {
                                 Text('예산',
                                     style: TextStyle(
                                         fontSize: 15, color: GREY_COLOR)),
-                                Text(snapshot.day_budget.toString(),
+                                Text('${snapshot.day_budget.toString()} 원',
                                     style: TextStyle(
                                         fontSize: 21, color: BLACK_COLOR)),
                               ],
@@ -237,7 +271,7 @@ class _Record extends State<Record> {
                                 Text('소비',
                                     style: TextStyle(
                                         fontSize: 15, color: GREY_COLOR)),
-                                Text(snapshot.consumption.toString(),
+                                Text('${snapshot.consumption.toString()} 원',
                                     style: TextStyle(
                                         fontSize: 21, color: BLACK_COLOR))
                               ],
@@ -276,13 +310,14 @@ class _Record extends State<Record> {
                         child: ListTile(
                           leading: Text(
                             breakfast.category.toString(),
-                            style: TextStyle(color: GREY_COLOR),
+                            style: TextStyle(fontSize: 15, color: GREY_COLOR),
                           ),
                           title: Text(breakfast.memo.toString(),
-                              style: TextStyle(fontSize: 20)),
+                              style:
+                                  TextStyle(fontSize: 18, color: GREY_COLOR)),
                           trailing: Text(
-                            breakfast.price.toString(),
-                            style: TextStyle(fontSize: 18, color: GREY_COLOR),
+                            '${breakfast.price.toString()} 원',
+                            style: TextStyle(fontSize: 20, color: BLACK_COLOR),
                           ),
                         ),
                       ),
@@ -315,14 +350,15 @@ class _Record extends State<Record> {
                             borderRadius: BorderRadius.circular(12)),
                         child: ListTile(
                           leading: Text(launch.category.toString(),
-                              style: TextStyle(color: GREY_COLOR)),
+                              style:
+                                  TextStyle(fontSize: 15, color: GREY_COLOR)),
                           title: Text(
                             launch.memo.toString(),
-                            style: TextStyle(fontSize: 20),
+                            style: TextStyle(fontSize: 18, color: GREY_COLOR),
                           ),
                           trailing: Text(
-                            launch.price.toString(),
-                            style: TextStyle(fontSize: 18, color: GREY_COLOR),
+                            '${launch.price.toString()} 원',
+                            style: TextStyle(fontSize: 20, color: BLACK_COLOR),
                           ),
                         ),
                       ),
@@ -355,12 +391,14 @@ class _Record extends State<Record> {
                             borderRadius: BorderRadius.circular(12)),
                         child: ListTile(
                           leading: Text(dinner.category.toString(),
-                              style: TextStyle(color: GREY_COLOR)),
+                              style:
+                                  TextStyle(fontSize: 15, color: GREY_COLOR)),
                           title: Text(dinner.memo.toString(),
-                              style: TextStyle(fontSize: 20)),
+                              style:
+                                  TextStyle(fontSize: 18, color: GREY_COLOR)),
                           trailing: Text(
-                            dinner.price.toString(),
-                            style: TextStyle(fontSize: 18, color: GREY_COLOR),
+                            '${dinner.price.toString()} 원',
+                            style: TextStyle(fontSize: 20, color: BLACK_COLOR),
                           ),
                         ),
                       ),
@@ -393,14 +431,15 @@ class _Record extends State<Record> {
                             borderRadius: BorderRadius.circular(12)),
                         child: ListTile(
                           leading: Text(snack.category.toString(),
-                              style: TextStyle(color: GREY_COLOR)),
+                              style:
+                                  TextStyle(fontSize: 15, color: GREY_COLOR)),
                           title: Text(
                             snack.memo.toString(),
-                            style: TextStyle(fontSize: 20),
+                            style: TextStyle(fontSize: 18, color: GREY_COLOR),
                           ),
                           trailing: Text(
-                            snack.price.toString(),
-                            style: TextStyle(fontSize: 18, color: GREY_COLOR),
+                            '${snack.price.toString()} 원',
+                            style: TextStyle(fontSize: 20, color: BLACK_COLOR),
                           ),
                         ),
                       ),
@@ -433,150 +472,132 @@ class _Record extends State<Record> {
                             borderRadius: BorderRadius.circular(12)),
                         child: ListTile(
                           leading: Text(others.category.toString(),
-                              style: TextStyle(color: GREY_COLOR)),
+                              style:
+                                  TextStyle(fontSize: 15, color: GREY_COLOR)),
                           title: Text(
                             others.memo.toString(),
-                            style: TextStyle(fontSize: 20),
+                            style: TextStyle(fontSize: 18, color: GREY_COLOR),
                           ),
                           trailing: Text(
-                            others.price.toString(),
-                            style: TextStyle(fontSize: 18, color: GREY_COLOR),
+                            '${others.price.toString()} 원',
+                            style: TextStyle(fontSize: 20, color: BLACK_COLOR),
                           ),
                         ),
                       ),
                     );
                   },
                 ),
-          SizedBox(height: 30.0),
-
-          //
-          // 하루 정산
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 25),
-            child: SettleButton(differ),
-          ),
-
-          SizedBox(height: 20.0),
+          SizedBox(height: 120.0),
         ],
       ),
     );
   }
 
-  ElevatedButton SettleButton(differ) {
-    return ElevatedButton(
-      child:
-          Text('하루 정산', style: TextStyle(color: BLACK_COLOR, fontSize: 16.0)),
-      style: ElevatedButton.styleFrom(
-          primary: PRIMARY_COLOR, // Background color
-          fixedSize: const Size(120, 40)),
-      onPressed: () {
-        showModalBottomSheet<void>(
-            context: context,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(100.0),
-            ),
-            builder: (BuildContext context) {
-              return SingleChildScrollView(
-                padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).viewInsets.bottom),
-                child: Container(
-                  height: 800,
-                  decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(25),
-                        topRight: Radius.circular(25),
-                      )),
-                  child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 50.0, vertical: 30.0),
-                      child: Column(
+  Future<void> settlementSheet(differ) {
+    return showModalBottomSheet<void>(
+        context: context,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(100.0),
+        ),
+        builder: (BuildContext context) {
+          return SingleChildScrollView(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Container(
+              height: 800,
+              decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(25),
+                    topRight: Radius.circular(25),
+                  )),
+              child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 50.0, vertical: 30.0),
+                  child: Column(
+                    children: [
+                      Text('하 루  정 산',
+                          style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.w600,
+                            color: BLACK_COLOR,
+                          )),
+                      SizedBox(height: 40),
+                      Row(
                         children: [
-                          Text('하 루  정 산',
+                          Text('기부 가능 금액',
                               style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.w600,
-                                color: BLACK_COLOR,
-                              )),
-                          SizedBox(height: 40),
-                          Row(
-                            children: [
-                              Text('기부 가능 금액',
+                                  fontSize: 20.0, color: BLACK_COLOR)),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20.0, vertical: 0.0),
+                              child: Text('${differ} 원',
                                   style: TextStyle(
                                       fontSize: 20.0, color: BLACK_COLOR)),
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20.0, vertical: 0.0),
-                                  child: Text('${differ} 원',
-                                      style: TextStyle(
-                                          fontSize: 20.0, color: BLACK_COLOR)),
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
-                          SizedBox(height: 20.0),
-                          differ != 0
-                              ? Row(
-                                  children: [
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 10.0, vertical: 0.0),
-                                        child: TextField(
-                                          onChanged: (text) {
-                                            setState(() {
-                                              today_donation = int.parse(text);
-                                            });
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                    Text('원 기부하기',
-                                        style: TextStyle(
-                                            fontSize: 20.0,
-                                            color: BLACK_COLOR)),
-                                  ],
-                                )
-                              : Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10.0, vertical: 0.0),
-                                  child: Text(
-                                    "오늘은 기부할 수 있는 금액이 없어요",
-                                    style: TextStyle(
-                                        color: BLACK_COLOR,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w500),
-                                  )),
-                          SizedBox(height: 80),
-                          Container(
-                            width: double.infinity,
-                            child: ElevatedButton(
-                                onPressed: () async {
-                                  print("오늘 기부 금액: $today_donation 원");
-                                  SettlementProvider()
-                                      .postSettlement(today_donation);
-                                  Navigator.pop(context);
-                                },
-                                style: ElevatedButton.styleFrom(
-                                    primary: PRIMARY_COLOR,
-                                    fixedSize: Size(250, 20),
-                                    alignment: Alignment.center),
-                                child: Text(
-                                  '기부금 정산하기',
-                                  style: TextStyle(
-                                      color: BLACK_COLOR,
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.w500),
-                                )),
-                          )
                         ],
-                      )),
-                ),
-              );
-            });
-      },
-    );
+                      ),
+                      SizedBox(height: 20.0),
+                      differ != 0
+                          ? Row(
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10.0, vertical: 0.0),
+                                    child: TextField(
+                                      onChanged: (text) {
+                                        setState(() {
+                                          today_donation = int.parse(text);
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                Text('원 기부하기',
+                                    style: TextStyle(
+                                        fontSize: 20.0, color: BLACK_COLOR)),
+                              ],
+                            )
+                          : Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10.0, vertical: 0.0),
+                              child: Text(
+                                "오늘은 기부할 수 있는 금액이 없어요",
+                                style: TextStyle(
+                                    color: BLACK_COLOR,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500),
+                              )),
+                      SizedBox(height: 80),
+                      Container(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                            onPressed: () async {
+                              print("오늘 기부 금액: $today_donation 원");
+                              SettlementProvider()
+                                  .postSettlement(today_donation);
+                              Navigator.pop(context);
+                            },
+                            style: ElevatedButton.styleFrom(
+                                primary: PRIMARY_COLOR,
+                                fixedSize: Size(250, 20),
+                                alignment: Alignment.center),
+                            child: Text(
+                              '기부금 정산하기',
+                              style: TextStyle(
+                                  color: BLACK_COLOR,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w500),
+                            )),
+                      )
+                    ],
+                  )),
+            ),
+          );
+        });
   }
 
   SingleChildScrollView add_record(BuildContext context) {
@@ -671,64 +692,68 @@ class _Record extends State<Record> {
                 padding: 5,
                 enableShape: true,
               ),
-              SizedBox(height: 13.0),
+              SizedBox(height: 15.0),
 
               // 가격 입력
-              Row(
-                children: [
-                  Text(
-                    '금액',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 19,
-                      color: GREY_COLOR,
-                    ),
+              Text(
+                '금액',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: 19,
+                  color: Color(0xff999999),
+                ),
+              ),
+              SizedBox(height: 10.0),
+
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 00.0, vertical: 0.0),
+                child: TextField(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    // labelText: '금액',
+                    // labelStyle:
+                    //     TextStyle(fontSize: 19, color: GREY_COLOR),
                   ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20.0, vertical: 0.0),
-                      child: TextField(
-                        onChanged: (text) {
-                          setState(() {
-                            mealInfo.price = int.parse(text);
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                ],
+                  onChanged: (text) {
+                    setState(() {
+                      mealInfo.price = int.parse(text);
+                    });
+                  },
+                ),
               ),
 
-              SizedBox(height: 13.0),
+              SizedBox(height: 15.0),
 
               // 내용 입력
-              Row(
-                children: [
-                  Text(
-                    '내용',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 19,
-                      color: GREY_COLOR,
-                    ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20.0, vertical: 0.0),
-                      child: TextField(
-                        onChanged: (text) {
-                          setState(() {
-                            mealInfo.memo = text;
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                ],
+              Text(
+                '내용',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: 19,
+                  color: Color(0xff999999),
+                ),
               ),
-              SizedBox(height: 13.0),
+              SizedBox(height: 10.0),
+
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 00.0, vertical: 0.0),
+                child: TextField(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    //labelText: '내용',
+                    labelStyle: TextStyle(fontSize: 19, color: GREY_COLOR),
+                  ),
+                  onChanged: (text) {
+                    setState(() {
+                      mealInfo.memo = text;
+                    });
+                  },
+                ),
+              ),
+
+              SizedBox(height: 15.0),
 
               Container(
                 width: double.infinity,
