@@ -431,18 +431,22 @@ class _DonatingPageState extends State<DonatingPage> {
                                                                             () {
                                                                           Navigator.pop(
                                                                               context);
-                                                                          Navigator
-                                                                              .push(
-                                                                            context,
-                                                                            MaterialPageRoute(
-                                                                              builder: (context) {
-                                                                                return Provider<CampaignRecord>.value(
-                                                                                  value: campaign,
-                                                                                  child: TossPaymentPage(title: campaign.title ?? ''),
-                                                                                );
-                                                                              },
-                                                                            ),
-                                                                          );
+                                                                          Navigator.push(
+                                                                              context,
+                                                                              MaterialPageRoute(
+                                                                            builder:
+                                                                                (context) {
+                                                                              return Provider<CampaignRecord>.value(
+                                                                                value: campaign,
+                                                                                child: Align(
+                                                                                  child: Text(
+                                                                                    campaign.hlogName ?? '',
+                                                                                    textAlign: TextAlign.center,
+                                                                                  ),
+                                                                                ),
+                                                                              );
+                                                                            },
+                                                                          ));
                                                                         },
                                                                         child: Text(
                                                                             '바로 기부하기'),
