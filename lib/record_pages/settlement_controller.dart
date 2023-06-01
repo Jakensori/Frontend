@@ -20,12 +20,9 @@ class SettlementProvider with ChangeNotifier {
     };
 
     var newURI = url.replace(queryParameters: Parameters);
-    print(newURI);
     var response = await http.get(newURI, headers: headers);
-    print('정산 GET 응답');
 
     if (response.statusCode == 200) {
-      print(json.decode(utf8.decode(response.bodyBytes)));
       notifyListeners();
       return SettlementInfo.fromJson(
           json.decode(utf8.decode(response.bodyBytes)));
@@ -47,8 +44,6 @@ class SettlementProvider with ChangeNotifier {
           //'Autorization': 'token $token',
         },
         body: body);
-
-    print("정산 Code: ${response.statusCode}");
 
     if (response.statusCode == 201 || response.statusCode == 200) {
       print("<<<정산 POST 성공>>>");

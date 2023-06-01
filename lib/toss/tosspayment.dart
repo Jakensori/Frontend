@@ -2,6 +2,7 @@ import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
 import 'package:temp_project/const/colors.dart';
+import 'package:temp_project/smart_contract.dart';
 //import 'package:temp_project/toss/mockserver.dart';
 import 'package:temp_project/toss/order_widget.dart';
 import 'package:temp_project/toss/product.dart';
@@ -205,9 +206,20 @@ class _MyHomePageState extends State<MyHomePage> {
                 // TODO something to decide the payment is successful or not.
                 success = url.contains('approve');
               },
-              onDisposed: () {},
+              onDisposed: () {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SmartContract(title: 'no')),
+                    (route) => false);
+              },
               onTapCloseButton: () {
-                Navigator.of(context).pop(success);
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SmartContract(title: 'no')),
+                    (route) => false);
+                //Navigator.of(context).pop(success);
               },
             ),
           );

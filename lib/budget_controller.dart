@@ -19,9 +19,6 @@ class budgetProvider with ChangeNotifier {
           //'Autorization': 'token $token',
         },
         body: body);
-
-    print("예산 Code: ${response.statusCode}");
-
     if (response.statusCode == 201 || response.statusCode == 200) {
       print("<<<예산 POST 성공>>>");
     } else {
@@ -44,8 +41,6 @@ class budgetProvider with ChangeNotifier {
           //'Autorization': 'token $token',
         },
         body: body);
-
-    print("예산 Code: ${response.statusCode}");
 
     if (response.statusCode == 201 || response.statusCode == 200) {
       print("<<<예산 PATCH 성공>>>");
