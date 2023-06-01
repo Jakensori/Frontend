@@ -19,8 +19,10 @@ class _MyPageState extends State<MyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        //elevation: 0,
+        elevation: 0,
+        backgroundColor: WHITE_COLOR,
         actions:[
           Padding(
             padding: const EdgeInsets.all(11.0),
@@ -38,7 +40,6 @@ class _MyPageState extends State<MyPage> {
             ),
           ),
         ],
-        backgroundColor: WHITE_COLOR,
       ),
 
       body: SingleChildScrollView(
@@ -140,15 +141,35 @@ class _MyPageState extends State<MyPage> {
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 10),
-              Text(
-                'FAQ',
-                style: TextStyle(fontSize: 16),
+              Row(
+                children: [
+                  TextButton(
+                    onPressed: (){},
+                    child: Text(
+                      'FAQ   ',
+                      style: TextStyle(fontSize: 16, color: BLACK_COLOR),
+                    ),
+                  ),
+                  //Container(width: 5),
+                  Icon(CupertinoIcons.arrow_right_circle,
+                      color: BLACK_COLOR, size: 23),
+                ],
               ),
-              SizedBox(height: 10),
-              Text(
-                '공지사항',
-                style: TextStyle(fontSize: 16),
+              Row(
+                children: [
+                  TextButton(
+                    onPressed: (){},
+                    child: Text(
+                      '공지사항',
+                      style: TextStyle(fontSize: 16,color: BLACK_COLOR),
+                    ),
+                  ),
+                  Container(width: 5),
+                  Icon(CupertinoIcons.arrow_right_circle,
+                      color: BLACK_COLOR, size: 23),
+                ],
               ),
+
             ],
           ),
         ),
