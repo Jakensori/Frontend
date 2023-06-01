@@ -1,15 +1,11 @@
-import 'dart:convert';
-import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:temp_project/budget_controller.dart';
 import 'package:temp_project/notification.dart';
 import 'package:temp_project/notification_controller.dart';
 import 'package:temp_project/user_control/user_controller.dart';
 import 'package:http/http.dart' as http;
-
 import 'const/colors.dart';
 
 class MyPage extends StatefulWidget {
@@ -23,40 +19,28 @@ class _MyPageState extends State<MyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(60),
-        child: AppBar(
-          backgroundColor: PRIMARY_COLOR,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                '마이페이지',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: 1.2,
-                  color: BLACK_COLOR,
-                ),
-              ),
-              IconButton(
-                icon: Icon(CupertinoIcons.mail, color: BLACK_COLOR),
-                iconSize: 24.0,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Notifications(),
-                    ),
-                  );
+      appBar: AppBar(
+        //elevation: 0,
+        actions:[
+          Padding(
+            padding: const EdgeInsets.all(11.0),
+            child: IconButton(
+              icon: Icon(CupertinoIcons.mail, color: BLACK_COLOR),
+              iconSize: 35.0,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Notifications(),
+                  ),
+                );
                 },
-              ),
-            ],
+            ),
           ),
-          centerTitle: true,
-          elevation: 0.0,
-        ),
+        ],
+        backgroundColor: WHITE_COLOR,
       ),
+
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 23),
@@ -67,7 +51,7 @@ class _MyPageState extends State<MyPage> {
                 child: Column(
                   children: [
                     Icon(CupertinoIcons.person_alt_circle,
-                        color: BLACK_COLOR, size: 90),
+                        color:BLACK_COLOR, size: 90),
                     Container(width: 20),
                     Text(
                       '권은정',
