@@ -9,12 +9,12 @@ import 'package:temp_project/toss/product_request.dart';
 import 'package:temp_project/toss/product_wiget.dart';
 import 'package:toss_payment/toss_payment.dart';
 
-void main() async {
+/*void main() async {
   /// 예시를 위해 만든 mock server 입니다.
   //await MockServer.startServer();
 
   runApp(const MyApp());
-}
+}*/
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -27,21 +27,21 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Color(0xffFFC646),
       ),
-      home: const MyHomePage(title: '기부금 결제하기'),
+      home: const TossPaymentPage(title: '기부금 결제하기'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+class TossPaymentPage extends StatefulWidget {
+  const TossPaymentPage({required this.title});
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<TossPaymentPage> createState() => _TossPaymentPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _TossPaymentPageState extends State<TossPaymentPage> {
   final Product _product = Product(price: 15000, name: '초록우산 어린이재단');
 
   @override

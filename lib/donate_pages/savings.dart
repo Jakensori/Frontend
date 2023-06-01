@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../toss/tosspayment.dart';
 import 'api_campaign.dart';
-
+import 'package:toss_payment/toss_payment.dart';
 import 'dart:async';
 import 'package:intl/intl.dart';
 
@@ -34,7 +36,7 @@ class _SavingPageState extends State<SavingPage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
+        /*appBar: AppBar(
           backgroundColor: Colors.amber,
           leading: IconButton(
             icon: Icon(Icons.arrow_back_rounded),
@@ -42,7 +44,7 @@ class _SavingPageState extends State<SavingPage> {
               Navigator.pop(context);
             },
           ),
-        ),
+        ),*/
         backgroundColor: Colors.white,
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 30.0),
@@ -63,32 +65,76 @@ class _SavingPageState extends State<SavingPage> {
                                   builder: (context) {
                                     return AlertDialog(
                                       title: Text(campaign.title ?? ''),
-                                      content: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          SizedBox(height: 10),
-                                          Image.network(campaign.image ?? ''),
-                                          SizedBox(height: 10),
-                                          Text('요약: ${campaign.summary ?? ''}'),
-                                          SizedBox(height: 30),
-                                          Text(
-                                              'Start Date: ${DateFormat('yyyy-MM-dd').format(DateTime.parse(campaign.startYmd.toString()))}'),
-                                          SizedBox(height: 10),
-                                          Text(
-                                              'End Date: ${DateFormat('yyyy-MM-dd ').format(DateTime.parse(campaign.endYmd.toString()))}'),
-                                        ],
+                                      content: SingleChildScrollView(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            SizedBox(height: 10),
+                                            Image.network(campaign.image ?? ''),
+                                            SizedBox(height: 10),
+                                            Text(
+                                                '요약: ${campaign.summary ?? ''}'),
+                                            SizedBox(height: 30),
+                                            Text(
+                                                'Start Date: ${DateFormat('yyyy-MM-dd').format(DateTime.parse(campaign.startYmd.toString()))}'),
+                                            SizedBox(height: 10),
+                                            Text(
+                                                'End Date: ${DateFormat('yyyy-MM-dd ').format(DateTime.parse(campaign.endYmd.toString()))}'),
+                                          ],
+                                        ),
                                       ),
                                       actions: [
                                         TextButton(
                                           onPressed: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        OneCampaignPage()));
+                                            showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return AlertDialog(
+                                                  title: Text('결제하기'),
+                                                  content: Text(
+                                                      '어떤 방식으로 결제를 진행하시겠습니까'),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                OneCampaignPage(),
+                                                          ),
+                                                        );
+                                                      },
+                                                      child: Text('포인트로 기부'),
+                                                    ),
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                            builder: (context) {
+                                                              return Provider<
+                                                                  CampaignRecord>.value(
+                                                                value: campaign,
+                                                                child: TossPaymentPage(
+                                                                    title: campaign
+                                                                            .title ??
+                                                                        ''),
+                                                              );
+                                                            },
+                                                          ),
+                                                        );
+                                                      },
+                                                      child: Text('바로 기부하기'),
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            );
                                           },
-                                          child: Text('기부하러가기'),
+                                          child: Text('기부창 열기'),
                                         ),
                                       ],
                                     );
@@ -242,7 +288,7 @@ class _SavingPageState extends State<SavingPage> {
                                                       style: ElevatedButton
                                                           .styleFrom(
                                                         backgroundColor:
-                                                            Colors.amber,
+                                                            Color(0xffFFC646),
                                                         minimumSize:
                                                             Size(100, 30),
                                                       ),
