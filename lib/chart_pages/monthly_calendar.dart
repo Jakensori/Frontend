@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:temp_project/const/colors.dart';
 import 'package:syncfusion_localizations/syncfusion_localizations.dart';
-import 'package:temp_project/MonthRecord.dart';
+import 'package:temp_project/chart_pages/MonthRecord.dart';
 
 class Meeting {
   Meeting(this.eventName, this.from, this.to, this.background, this.isAllDay);
@@ -103,8 +103,9 @@ class _CalendarState extends State<Calendar> {
       ],
       localizationsDelegates: [
         SfGlobalLocalizations.delegate,
+        SfGlobalLocalizations.delegate,
       ],
-      //debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
           body: SingleChildScrollView(
             child: Center(
@@ -138,8 +139,6 @@ class _CalendarState extends State<Calendar> {
     String? showing_month_saving = selectedSaving.toString();
     String? showing_month_donation=selectedDonation.toString();
 
-    //String? showing_month_donation =snapshot.total_donate.toString();
-    //String? showing_total_saving = snapshot.month_saving.toString();
 
     for(int i=0;i<snapshot.daily_record.length;i++){
       String temp_day = snapshot.daily_record[i].today_date;
@@ -170,7 +169,7 @@ class _CalendarState extends State<Calendar> {
                   final DateTime visibleDate = details.visibleDates[15];
                   selectedMonth= visibleDate.month;
                   selectedYear = visibleDate.year;
-                  print('get재호출');
+                  //print('get재호출');
 
                   Future.delayed(Duration.zero, () {
                     setState(() {
@@ -178,13 +177,8 @@ class _CalendarState extends State<Calendar> {
                           MonthRecordProvider().fetchMonthRecord(selectedYear, selectedMonth);
                     });
                   });
-                  // selectedSaving=monthRecord.month_saving;
-                  // print(selectedSaving);
-                  //
-                  print(showing_month_saving);
-                  print(showing_month_donation);
                 },
-                showNavigationArrow: false,
+                showNavigationArrow: true,
                 dataSource: MeetingDataSource(_getDataSource()),
                 monthViewSettings: MonthViewSettings(
                   appointmentDisplayCount: 2,
@@ -201,8 +195,12 @@ class _CalendarState extends State<Calendar> {
               child:Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text('\n\n한 달 예산 대비    \n'+'한 달 기부 저금    \n'),
-                  Text('\n\n$showing_month_saving 원\n' + '$showing_month_donation 원\n')
+                  Text('\n\n한 달 예산 대비    \n'+'한 달 기부 저금    \n',style: TextStyle(
+                    fontSize: 15,// 원하는 글씨 크기
+                  ),),
+                  Text('\n\n$showing_month_saving 원\n' + '     $showing_month_donation 원\n',style: TextStyle(
+                    fontSize: 15,// 원하는 글씨 크기
+                  ),)
                 ],
               )
             ),

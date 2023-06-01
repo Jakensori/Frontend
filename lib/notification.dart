@@ -43,21 +43,6 @@ class Noti {
     data['content'] = this.content;
     data['image'] = this.image;
     data['campaine'] = this.campaine;
-
     return data;
   }
 }
-
-/*
-class NotiList {
-  List<Noti>? notificationList;
-
-  factory NotiList.fromJson(List<dynamic> json) {
-    List<Noti> NotiList;
-    var list = json[""] as List;
-    NotiList = list.map((i) => Noti.fromJson(i)).toList();
-
-    return NotiList;
-  }
-}
-*/

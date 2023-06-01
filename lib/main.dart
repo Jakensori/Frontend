@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:temp_project/record_pages/record.dart';
-import 'package:temp_project/chart.dart';
+import 'package:temp_project/chart_pages/chart.dart';
 
 import 'package:temp_project/collection_pages/collection.dart';
 import 'package:temp_project/my_page.dart';
@@ -32,8 +32,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
 
-      //home: HomePage(),
-      home: StartPage(),
+      home: HomePage(),
+      //home: StartPage(),
     );
   }
 }

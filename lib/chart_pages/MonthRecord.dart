@@ -10,8 +10,6 @@ class MonthRecordProvider with ChangeNotifier {
 
   Future<MonthRecord> fetchMonthRecord(int Year, int Month) async {
     print("함수 들어옴");
-    //int currentYear = DateTime.now().year;
-    //int currentMonth = DateTime.now().month;
     final Parameters = {'year': Year, 'month': Month}.map((key, value) =>
        MapEntry(key, value.toString())); // int 허용 안되서 string으로 바꿔줌.
 
@@ -35,14 +33,7 @@ class MonthRecordProvider with ChangeNotifier {
       //만약 응답이 ok가 아니면 에러를 던집니다.
       throw Exception('계좌정보를 불러오는데 실패했습니다');
     }
-    /*
-    int? updating_saving(){
-      return _monthChart.month_saving;
-    }
-    int? updating_donation(){
-      return _monthChart.total_donate;
-    }
-     */
+
   }
 }
 
