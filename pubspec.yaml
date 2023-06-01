@@ -105,6 +105,8 @@ flutter:
       - assets/lock.png
       - assets/rice.png
       - assets/skewer.png
+      - assets/guesswhat1.png
+      - assets/guesswhat2.png
       - assets/abi.json
       - assets/ether.png
       
