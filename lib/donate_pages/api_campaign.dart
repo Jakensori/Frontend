@@ -107,7 +107,9 @@ class MyApp extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => TossPaymentPage(
-                            title: campaign.title ?? ''), // 여기서 값을 전달
+                          foundation: campaign.title ?? '',
+                          money: 17000,
+                        ), // 여기서 값을 전달
                       ),
                     );
                   },

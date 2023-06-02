@@ -17,33 +17,45 @@ import 'package:toss_payment/toss_payment.dart';
   runApp(const MyApp());
 }*/
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+// class MyApp extends StatelessWidget {
+//   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Toss Payment Demo',
-      theme: ThemeData(
-        primaryColor: Color(0xffFFC646),
-      ),
-      home: const TossPaymentPage(title: '기부금 결제하기'),
-    );
-  }
-}
+//   // This widget is the root of your application.
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Toss Payment Demo',
+//       theme: ThemeData(
+//         primaryColor: Color(0xffFFC646),
+//       ),
+//       home: const TossPaymentPage(title: '기부금 결제하기'),
+//     );
+//   }
+// }
 
 class TossPaymentPage extends StatefulWidget {
-  const TossPaymentPage({required this.title});
+  final String? foundation;
+  final int? money;
 
-  final String title;
+  const TossPaymentPage(
+      {required this.foundation, required this.money, Key? key})
+      : super(key: key);
 
   @override
   State<TossPaymentPage> createState() => _TossPaymentPageState();
 }
 
 class _TossPaymentPageState extends State<TossPaymentPage> {
-  final Product _product = Product(price: 15000, name: '초록우산 어린이재단');
+  String fnd = '';
+  int money = 0;
+
+  @override
+  void initState() {
+    fnd = widget.foundation!;
+    money = widget.money!;
+  }
+
+  late final Product _product = Product(price: money, name: fnd);
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +64,7 @@ class _TossPaymentPageState extends State<TossPaymentPage> {
         backgroundColor: PRIMARY_COLOR,
         title: Center(
           child: Text(
-            widget.title,
+            '결제하기',
             style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.w700,

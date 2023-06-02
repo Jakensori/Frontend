@@ -257,9 +257,10 @@ class _DonatingPageState extends State<DonatingPage> {
                                                                   CampaignRecord>.value(
                                                                 value: campaign,
                                                                 child: TossPaymentPage(
-                                                                    title: campaign
-                                                                            .hlogName ??
-                                                                        ''),
+                                                                    foundation:
+                                                                        campaign.hlogName ??
+                                                                            '',
+                                                                    money: 123),
                                                               );
                                                             },
                                                           ),
