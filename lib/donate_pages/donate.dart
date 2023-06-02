@@ -31,6 +31,7 @@ class _DonatingPageState extends State<DonatingPage> {
   late Future<List<CampaignRecord>> _futureCampaign;
   late Future<Map<String, dynamic>> _futureMoneyBox;
 
+  late final savings;
   @override
   void initState() {
     super.initState();
@@ -94,7 +95,7 @@ class _DonatingPageState extends State<DonatingPage> {
                         return Text("${snapshot.error}");
                       } else {
                         final moneyBoxData = snapshot.data;
-                        final savings = moneyBoxData?['savings'] ?? 0;
+                        savings = moneyBoxData?['savings'] ?? 0;
 
                         return Container(
                           //width: 150,
@@ -270,7 +271,7 @@ class _DonatingPageState extends State<DonatingPage> {
                                                                             campaign.hlogName ??
                                                                                 '',
                                                                         money:
-                                                                            123),
+                                                                            savings),
                                                                   );
                                                                 },
                                                               ),

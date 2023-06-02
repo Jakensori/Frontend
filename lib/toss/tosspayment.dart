@@ -10,29 +10,6 @@ import 'package:temp_project/toss/product_request.dart';
 import 'package:temp_project/toss/product_wiget.dart';
 import 'package:toss_payment/toss_payment.dart';
 
-/*void main() async {
-  /// 예시를 위해 만든 mock server 입니다.
-  //await MockServer.startServer();
-
-  runApp(const MyApp());
-}*/
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({Key? key}) : super(key: key);
-
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Toss Payment Demo',
-//       theme: ThemeData(
-//         primaryColor: Color(0xffFFC646),
-//       ),
-//       home: const TossPaymentPage(title: '기부금 결제하기'),
-//     );
-//   }
-// }
-
 class TossPaymentPage extends StatefulWidget {
   final String? foundation;
   final int? money;

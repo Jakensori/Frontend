@@ -108,7 +108,7 @@ class MyApp extends StatelessWidget {
                       MaterialPageRoute(
                         builder: (context) => TossPaymentPage(
                           foundation: campaign.title ?? '',
-                          money: 17000,
+                          money: 15000,
                         ), // 여기서 값을 전달
                       ),
                     );
@@ -125,77 +125,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
-/*
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      home: MultiProvider(
-        providers: [
-          FutureProvider<List<CampaignRecord>>(
-            create: (_) => fetchCampaign(),
-            initialData: [],
-          ),
-        ],
-        //child: CampaignPage(),
-      ),
-    );
-  }
-}
-
-class CampaignPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final campaigns = context.watch<List<CampaignRecord>>();
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Campaign List'),
-      ),
-      body: ListView.builder(
-        //scrollDirection: Axis.horizontal,
-        itemCount: campaigns.length,
-        itemBuilder: (context, index) {
-          final campaign = campaigns[index];
-          return Container(
-            //width: 500, // 각 항목의 너비 조정
-            child: Card(
-              child: Column(
-                children: [
-                  Image.network(
-                    campaign.image ?? '',
-                    width: 100,
-                    fit: BoxFit.fill,
-                  ),
-                  ListTile(
-                    title: Container(
-                      width: 200, // 제목의 폭 조정
-                      child: Text(campaign.title ?? ''),
-                    ),
-                    subtitle: Container(
-                      width: 200, // 부제목의 폭 조정
-                      child: Text(campaign.summary ?? ''),
-                    ),
-                    trailing: Container(
-                      width: 100, // 우측에 위치한 텍스트의 폭 조정
-                      child: Text(
-                          '${campaign.currentAmount ?? 0}원 / ${campaign.goalAmount ?? 0}원',
-                          style: TextStyle(fontSize: 10)),
-                    ),
-                  ),
-                ], //
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-}*/

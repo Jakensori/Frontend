@@ -36,15 +36,6 @@ class _SavingPageState extends State<SavingPage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-        /*appBar: AppBar(
-          backgroundColor: Colors.amber,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back_rounded),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ),*/
         backgroundColor: Colors.white,
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 30.0),
@@ -123,7 +114,7 @@ class _SavingPageState extends State<SavingPage> {
                                                                   foundation:
                                                                       campaign.hlogName ??
                                                                           '',
-                                                                  money: 17000,
+                                                                  money: 15000,
                                                                 ),
                                                               );
                                                             },

@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:temp_project/budget_controller.dart';
@@ -23,7 +22,7 @@ class _MyPageState extends State<MyPage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: WHITE_COLOR,
-        actions:[
+        actions: [
           Padding(
             padding: const EdgeInsets.all(11.0),
             child: IconButton(
@@ -36,12 +35,11 @@ class _MyPageState extends State<MyPage> {
                     builder: (context) => Notifications(),
                   ),
                 );
-                },
+              },
             ),
           ),
         ],
       ),
-
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 23),
@@ -52,7 +50,7 @@ class _MyPageState extends State<MyPage> {
                 child: Column(
                   children: [
                     Icon(CupertinoIcons.person_alt_circle,
-                        color:BLACK_COLOR, size: 90),
+                        color: BLACK_COLOR, size: 90),
                     Container(width: 20),
                     Text(
                       '권은정',
@@ -144,7 +142,7 @@ class _MyPageState extends State<MyPage> {
               Row(
                 children: [
                   TextButton(
-                    onPressed: (){},
+                    onPressed: () {},
                     child: Text(
                       'FAQ   ',
                       style: TextStyle(fontSize: 16, color: BLACK_COLOR),
@@ -158,10 +156,10 @@ class _MyPageState extends State<MyPage> {
               Row(
                 children: [
                   TextButton(
-                    onPressed: (){},
+                    onPressed: () {},
                     child: Text(
                       '공지사항',
-                      style: TextStyle(fontSize: 16,color: BLACK_COLOR),
+                      style: TextStyle(fontSize: 16, color: BLACK_COLOR),
                     ),
                   ),
                   Container(width: 5),
@@ -169,7 +167,6 @@ class _MyPageState extends State<MyPage> {
                       color: BLACK_COLOR, size: 23),
                 ],
               ),
-
             ],
           ),
         ),
@@ -197,6 +194,7 @@ class _Notifications extends State<Notifications> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: PRIMARY_COLOR,
@@ -247,7 +245,6 @@ class _Notifications extends State<Notifications> {
         });
   }
 
-
   bool _isLoading = false;
   String _dialogData = '';
   void _showDialog(BuildContext context, int selectedIndex) async {
@@ -266,7 +263,10 @@ class _Notifications extends State<Notifications> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text(selectedNoti.title ?? '',style: TextStyle(fontSize:18, fontWeight: FontWeight.bold),),
+            title: Text(
+              selectedNoti.title ?? '',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
             //title: Text(''),
             content: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -279,19 +279,23 @@ class _Notifications extends State<Notifications> {
                 SizedBox(height: 40.0),
                 Text('${selectedNoti.createdAt ?? ''}'),
                 SizedBox(height: 10.0),
-                Text('${selectedNoti.foundation ?? ''} 드림',textAlign: TextAlign.end),
+                Text('${selectedNoti.foundation ?? ''} 드림',
+                    textAlign: TextAlign.end),
               ],
             ),
-            contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0), // 컨텐츠 주위의 여백 설정
+            contentPadding: EdgeInsets.symmetric(
+                vertical: 10.0, horizontal: 25.0), // 컨텐츠 주위의 여백 설정
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('닫기',
+                child: Text(
+                  '닫기',
                   style: TextStyle(
-                  fontSize: 18, // 텍스트 크기 조절
-                ),),
+                    fontSize: 18, // 텍스트 크기 조절
+                  ),
+                ),
                 style: TextButton.styleFrom(
                   primary: PRIMARY_COLOR, // 버튼 텍스트 색상
                 ),
@@ -347,10 +351,11 @@ class _Notifications extends State<Notifications> {
                     selected: _selectedList[index],
                     onTap: () {
                       print(_selectedList);
-                      _showDialog(context, snapshot[index].id-1);
+                      _showDialog(context, snapshot[index].id - 1);
                       setState(() {
-                        _selectedList = List<bool>.filled(snapshot.length, false); // 모든 타일의 선택 상태를 초기화
-                        _selected=true;
+                        _selectedList = List<bool>.filled(
+                            snapshot.length, false); // 모든 타일의 선택 상태를 초기화
+                        _selected = true;
                         _selectedList[index] = true; // 해당 인덱스의 선택 상태를 반전시킴
                         //print(_selectedList);
                         //print(_selected);
@@ -358,7 +363,9 @@ class _Notifications extends State<Notifications> {
                       //print(_selectedList);
                       //print(_selected);
                     },
-                    tileColor: _selectedList[index] ? Colors.white : Color.fromARGB(255, 255, 246, 203),
+                    tileColor: _selectedList[index]
+                        ? Colors.white
+                        : Color.fromARGB(255, 255, 246, 203),
                     title: Text(
                       '${snapshot[index].title.toString()}',
                       style: TextStyle(fontSize: 19, color: BLACK_COLOR),

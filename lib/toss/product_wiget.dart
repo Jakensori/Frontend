@@ -29,14 +29,12 @@ class ProductWidget extends StatelessWidget {
             style: const TextStyle(fontSize: 20, color: BLACK_COLOR),
           ),
           SizedBox(height: 15),
-          //Container(height: 1.0, width: 320.0, color: GREY_COLOR),
           SizedBox(height: 15),
           Text(
             '${product.price} 원',
             style: const TextStyle(
                 fontSize: 30, color: BLACK_COLOR, fontWeight: FontWeight.w400),
           ),
-          //SizedBox(height: 15),
         ],
       ),
     );
