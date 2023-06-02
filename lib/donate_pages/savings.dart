@@ -120,7 +120,7 @@ class _SavingPageState extends State<SavingPage> {
                                                                 value: campaign,
                                                                 child: TossPaymentPage(
                                                                     title: campaign
-                                                                            .title ??
+                                                                            .hlogName ??
                                                                         ''),
                                                               );
                                                             },
