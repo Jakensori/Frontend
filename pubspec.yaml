@@ -98,12 +98,15 @@ flutter:
       - assets/rice.jpg
       - assets/logo.png
       - assets/logo2.png
+      - assets/logo3.png
       - assets/bread.png
       - assets/carrot.png
       - assets/eggplant.png
       - assets/lock.png
       - assets/rice.png
       - assets/skewer.png
+      - assets/guesswhat1.png
+      - assets/guesswhat2.png
       - assets/abi.json
       - assets/ether.png
       

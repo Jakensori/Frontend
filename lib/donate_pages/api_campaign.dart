@@ -3,6 +3,9 @@ import 'package:provider/provider.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:toss_payment/toss_payment.dart';
+
+import '../toss/tosspayment.dart';
 
 class CampaignRecord {
   final String? rdonaBoxNo;
@@ -87,34 +90,35 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'My App',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Campaigns'),
-        ),
-        body: FutureBuilder<List<CampaignRecord>>(
-          future: fetchAndStyleCampaign(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              List<CampaignRecord> campaigns = snapshot.data!;
-              return ListView.builder(
-                itemCount: campaigns.length,
-                itemBuilder: (context, index) {
-                  CampaignRecord campaign = campaigns[index];
-                  return ListTile(
-                    title: Text(
-                      campaign.title ?? '',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    subtitle: CampaignRecordWidget(campaign),
-                  );
-                },
-              );
-            } else if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            }
+      home: Consumer<List<CampaignRecord>>(
+        builder: (context, campaigns, _) {
+          if (campaigns != null) {
+            return ListView.builder(
+              itemCount: campaigns.length,
+              itemBuilder: (context, index) {
+                CampaignRecord campaign = campaigns[index];
+                return ListTile(
+                  title: Text(
+                    campaign.title ?? '',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TossPaymentPage(
+                            title: campaign.title ?? ''), // 여기서 값을 전달
+                      ),
+                    );
+                  },
+                  // ...
+                );
+              },
+            );
+          } else {
             return CircularProgressIndicator();
-          },
-        ),
+          }
+        },
       ),
     );
   }

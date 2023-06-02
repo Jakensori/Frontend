@@ -28,11 +28,25 @@ class CollectionPage extends State<Collection> {
             meal_point: mealPointNow,
             level: null,
           );
+          updateMealpointNow(mealPointNow);
         }
       });
     }).catchError((error) {
       print('Request failed: $error');
     });
+  }
+
+  int mealpointNow = 0;
+
+  void updateMealpointNow(int newMealpoint) {
+    setState(() {
+      mealpointNow = newMealpoint;
+    });
+  }
+
+  void onOKPressed(int newMealpoint) {
+    increaseMealPoint();
+    updateMealpointNow(newMealpoint);
   }
 
   @override
@@ -68,7 +82,7 @@ class CollectionPage extends State<Collection> {
                         EdgeInsets.symmetric(horizontal: 30.0, vertical: 50.0),
                     padding: EdgeInsets.symmetric(horizontal: 24.0),
                     decoration: BoxDecoration(
-                      color: Colors.amber,
+                      color: Color(0xffFFC646),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     width: 200,
@@ -105,9 +119,6 @@ class CollectionPage extends State<Collection> {
                                         '캐릭터 레벨: Lv. $level',
                                         style: TextStyle(fontSize: 16),
                                       ),
-                                      if (_level.currentLevel == 1 &&
-                                          mealPoint < 10)
-                                        NotYet(onOKPressed: increaseMealPoint),
                                     ],
                                   )
                                 : CircularProgressIndicator(),
@@ -146,8 +157,8 @@ class CollectionPage extends State<Collection> {
                         return Container(
                           //color: Colors.amber[400],
                           decoration: BoxDecoration(
-                            color: Colors.amber,
-                            borderRadius: BorderRadius.circular(0),
+                            color: Color(0xffFFC646),
+                            borderRadius: BorderRadius.circular(30),
                           ),
                           child: FlutterDialog1(
                             level: _level,
@@ -155,14 +166,19 @@ class CollectionPage extends State<Collection> {
                         );
                       } else {
                         return Container(
-                          color: Colors.amber,
-                          child: NotYet(onOKPressed: increaseMealPoint),
+                          color: Color(0xffFFC646),
+                          child: NotYet(
+                              index: index,
+                              onOKPressed: () {
+                                increaseMealPoint();
+                                updateMealpointNow(mealpointNow);
+                              }),
                         );
                       }
                     } else if (index == 1) {
                       if (_level.currentLevel == 2) {
                         return Container(
-                          color: Colors.amber,
+                          color: Color(0xffFFC646),
                           child: FlutterDialog1(
                             level: _level,
                           ),
@@ -172,20 +188,26 @@ class CollectionPage extends State<Collection> {
                           //color: Colors.grey[300],
                           decoration: BoxDecoration(
                             color: Colors.amber[100],
-                            borderRadius: BorderRadius.circular(0),
+                            borderRadius: BorderRadius.circular(30),
                           ),
-                          child: NotYet(),
+                          child: NotYet(
+                              index: index,
+                              onOKPressed: () {
+                                increaseMealPoint();
+                                updateMealpointNow(mealpointNow);
+                              }),
                         );
                       } else {
                         return Container(
-                          color: Colors.amber,
-                          child: NotYet(onOKPressed: increaseMealPoint),
+                          color: Color(0xffFFC646),
+                          child: NotYet(
+                              index: index, onOKPressed: increaseMealPoint),
                         );
                       }
                     } else if (index == 2) {
                       if (_level.currentLevel == 3) {
                         return Container(
-                          color: Colors.amber,
+                          color: Color(0xffFFC646),
                           child: FlutterDialog1(
                             level: _level,
                           ),
@@ -197,18 +219,28 @@ class CollectionPage extends State<Collection> {
                             color: Colors.amber[100],
                             borderRadius: BorderRadius.circular(30),
                           ),
-                          child: NotYet(onOKPressed: increaseMealPoint),
+                          child: NotYet(
+                              index: index,
+                              onOKPressed: () {
+                                increaseMealPoint();
+                                updateMealpointNow(mealpointNow);
+                              }),
                         );
                       } else {
                         return Container(
-                          color: Colors.amber,
-                          child: NotYet(onOKPressed: increaseMealPoint),
+                          color: Color(0xffFFC646),
+                          child: NotYet(
+                              index: index,
+                              onOKPressed: () {
+                                increaseMealPoint();
+                                updateMealpointNow(mealpointNow);
+                              }),
                         );
                       }
                     } else if (index == 3) {
                       if (_level.currentLevel == 4) {
                         return Container(
-                          color: Colors.amber,
+                          color: Color(0xffFFC646),
                           child: FlutterDialog1(
                             level: _level,
                           ),
@@ -220,13 +252,18 @@ class CollectionPage extends State<Collection> {
                             color: Colors.amber[100],
                             borderRadius: BorderRadius.circular(30),
                           ),
-                          child: NotYet(onOKPressed: increaseMealPoint),
+                          child: NotYet(
+                              index: index,
+                              onOKPressed: () {
+                                increaseMealPoint();
+                                updateMealpointNow(mealpointNow);
+                              }),
                         );
                       }
                     } else if (index == 4) {
                       if (_level.currentLevel == 5) {
                         return Container(
-                          color: Colors.amber,
+                          color: Colors.yellow,
                           child: FlutterDialog1(
                             level: _level,
                           ),
@@ -238,18 +275,28 @@ class CollectionPage extends State<Collection> {
                             color: Colors.amber[100],
                             borderRadius: BorderRadius.circular(30),
                           ),
-                          child: NotYet(onOKPressed: increaseMealPoint),
+                          child: NotYet(
+                              index: index,
+                              onOKPressed: () {
+                                increaseMealPoint();
+                                updateMealpointNow(mealpointNow);
+                              }),
                         );
                       } else {
                         return Container(
-                          color: Colors.amber,
-                          child: NotYet(onOKPressed: increaseMealPoint),
+                          color: Colors.yellow,
+                          child: NotYet(
+                              index: index,
+                              onOKPressed: () {
+                                increaseMealPoint();
+                                updateMealpointNow(mealpointNow);
+                              }),
                         );
                       }
                     } else if (index == 5) {
                       if (_level.currentLevel == 6) {
                         return Container(
-                          color: Colors.amber,
+                          color: Colors.yellow,
                           child: FlutterDialog1(
                             level: _level,
                           ),
@@ -261,18 +308,28 @@ class CollectionPage extends State<Collection> {
                             color: Colors.amber[100],
                             borderRadius: BorderRadius.circular(30),
                           ),
-                          child: NotYet(onOKPressed: increaseMealPoint),
+                          child: NotYet(
+                              index: index,
+                              onOKPressed: () {
+                                increaseMealPoint();
+                                updateMealpointNow(mealpointNow);
+                              }),
                         );
                       } else {
                         return Container(
-                          color: Colors.amber,
-                          child: NotYet(onOKPressed: increaseMealPoint),
+                          color: Colors.yellow,
+                          child: NotYet(
+                              index: index,
+                              onOKPressed: () {
+                                increaseMealPoint();
+                                updateMealpointNow(mealpointNow);
+                              }),
                         );
                       }
                     } else if (index == 6) {
                       if (_level.currentLevel == 7) {
                         return Container(
-                          color: Colors.amber,
+                          color: Colors.yellow,
                           child: FlutterDialog1(
                             level: _level,
                           ),
@@ -284,18 +341,28 @@ class CollectionPage extends State<Collection> {
                             color: Colors.amber[100],
                             borderRadius: BorderRadius.circular(30),
                           ),
-                          child: NotYet(onOKPressed: increaseMealPoint),
+                          child: NotYet(
+                              index: index,
+                              onOKPressed: () {
+                                increaseMealPoint();
+                                updateMealpointNow(mealpointNow);
+                              }),
                         );
                       } else {
                         return Container(
-                          color: Colors.amber,
-                          child: NotYet(onOKPressed: increaseMealPoint),
+                          color: Colors.yellow,
+                          child: NotYet(
+                              index: index,
+                              onOKPressed: () {
+                                increaseMealPoint();
+                                updateMealpointNow(mealpointNow);
+                              }),
                         );
                       }
                     } else {
                       if (_level.currentLevel == 8) {
                         return Container(
-                          color: Colors.amber,
+                          color: Colors.yellow,
                           child: FlutterDialog1(
                             level: _level,
                           ),
@@ -307,12 +374,22 @@ class CollectionPage extends State<Collection> {
                             color: Colors.amber[100],
                             borderRadius: BorderRadius.circular(30),
                           ),
-                          child: NotYet(onOKPressed: increaseMealPoint),
+                          child: NotYet(
+                              index: index,
+                              onOKPressed: () {
+                                increaseMealPoint();
+                                updateMealpointNow(mealpointNow);
+                              }),
                         );
                       } else {
                         return Container(
-                          color: Colors.amber,
-                          child: NotYet(onOKPressed: increaseMealPoint),
+                          color: Colors.yellow,
+                          child: NotYet(
+                              index: index,
+                              onOKPressed: () {
+                                increaseMealPoint();
+                                updateMealpointNow(mealpointNow);
+                              }),
                         );
                       }
                     }
@@ -343,7 +420,7 @@ class FlutterDialog1 extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8.0),
               ),
-              title: const Text('캐릭터 이름'),
+              title: const Text('주먹밥'),
               content: Row(
                 children: [
                   Expanded(
@@ -356,17 +433,13 @@ class FlutterDialog1 extends StatelessWidget {
                   ),
                   Expanded(
                     child: Text(
-                      '대충 캐릭터 설명글',
-                      textAlign: TextAlign.center,
+                      '이름: 주먹밥 \n 나이: 14 \n MBTI: ISTJ \n 취미: 키보드 치는 것을 좋아해요~ 같이 합주해요!!',
+                      textAlign: TextAlign.left,
                     ),
                   ),
                 ],
               ),
               actions: <Widget>[
-                TextButton(
-                  onPressed: () => Navigator.pop(context, 'Cancel'),
-                  child: const Text('Cancel'),
-                ),
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'OK'),
                   child: const Text('OK'),
@@ -388,11 +461,26 @@ class FlutterDialog1 extends StatelessWidget {
 
 class NotYet extends StatelessWidget {
   final VoidCallback? onOKPressed;
+  final int index;
 
-  NotYet({this.onOKPressed});
+  NotYet({this.onOKPressed, required this.index});
+
+  Map<int, String> imagePaths = {
+    0: 'assets/lock.png',
+    1: 'assets/guesswhat1.png',
+    2: 'assets/guesswhat2.png',
+    3: 'assets/lock.png',
+    4: 'assets/lock.png',
+    5: 'assets/lock.png',
+    6: 'assets/lock.png',
+    7: 'assets/lock.png',
+    8: 'assets/lock.png',
+  };
 
   @override
   Widget build(BuildContext context) {
+    String imagePath = imagePaths[index] ?? 'assets/lock.png';
+
     return TextButton(
       onPressed: () {
         showDialog<String>(
@@ -415,7 +503,7 @@ class NotYet extends StatelessWidget {
         );
       },
       child: Image.asset(
-        'assets/lock.png',
+        imagePath,
         fit: BoxFit.contain,
         height: 100,
         width: 100,
@@ -424,10 +512,8 @@ class NotYet extends StatelessWidget {
   }
 }
 
-
-/*
 class FlutterDialog2 extends StatelessWidget {
-  final Level level; // level 매개변수 선언
+  final Level level;
 
   const FlutterDialog2({Key? key, required this.level}) : super(key: key);
 
@@ -727,4 +813,3 @@ class FlutterDialog8 extends StatelessWidget {
     );
   }
 }
-*/
