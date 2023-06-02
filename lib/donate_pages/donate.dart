@@ -231,7 +231,7 @@ class _DonatingPageState extends State<DonatingPage> {
                                                 return AlertDialog(
                                                   title: Text('결제하기'),
                                                   content: Text(
-                                                      '어떤 방식으로 결제를 진행하시겠습니까?'),
+                                                      '어떤 방식으로 결제를 진행하시겠습니까'),
                                                   actions: [
                                                     TextButton(
                                                       onPressed: () {
@@ -253,16 +253,14 @@ class _DonatingPageState extends State<DonatingPage> {
                                                           context,
                                                           MaterialPageRoute(
                                                             builder: (context) {
-                                                              final campaign =
-                                                                  Provider.of<
-                                                                          CampaignRecord>(
-                                                                      context,
-                                                                      listen:
-                                                                          false);
-                                                              return TossPaymentPage(
-                                                                  title: campaign
-                                                                          .title ??
-                                                                      '');
+                                                              return Provider<
+                                                                  CampaignRecord>.value(
+                                                                value: campaign,
+                                                                child: TossPaymentPage(
+                                                                    title: campaign
+                                                                            .hlogName ??
+                                                                        ''),
+                                                              );
                                                             },
                                                           ),
                                                         );
