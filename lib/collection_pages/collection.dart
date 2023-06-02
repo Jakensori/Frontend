@@ -4,6 +4,8 @@ import 'package:temp_project/collection_pages/level.dart';
 
 import 'api_mealpoint.dart';
 import 'api_substract_mealpoint.dart';
+import 'package:temp_project/const/colors.dart';
+import 'package:flutter/cupertino.dart';
 
 class Collection extends StatefulWidget {
   const Collection({Key? key}) : super(key: key);
@@ -65,10 +67,21 @@ class CollectionPage extends State<Collection> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Color(0xffFFFFFF),
-        title: Text('도감 페이지'),
-        centerTitle: true,
+        elevation: 0,
+        backgroundColor: WHITE_COLOR,
+        actions:[
+          Padding(
+            padding: const EdgeInsets.all(11.0),
+            child: IconButton(
+              icon: Icon(CupertinoIcons.mail, color: BLACK_COLOR),
+              iconSize: 35.0,
+              onPressed: () {
+              },
+            ),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Container(

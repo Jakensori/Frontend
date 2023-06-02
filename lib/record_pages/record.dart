@@ -49,6 +49,7 @@ class _Record extends State<Record> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(60.0),
