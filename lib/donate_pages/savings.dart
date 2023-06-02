@@ -118,10 +118,13 @@ class _SavingPageState extends State<SavingPage> {
                                                               return Provider<
                                                                   CampaignRecord>.value(
                                                                 value: campaign,
-                                                                child: TossPaymentPage(
-                                                                    title: campaign
-                                                                            .hlogName ??
-                                                                        ''),
+                                                                child:
+                                                                    TossPaymentPage(
+                                                                  foundation:
+                                                                      campaign.hlogName ??
+                                                                          '',
+                                                                  money: 17000,
+                                                                ),
                                                               );
                                                             },
                                                           ),
@@ -313,8 +316,8 @@ class _SavingPageState extends State<SavingPage> {
         ));
   }
 
-  @override
-  State<StatefulWidget> createState() {
-    throw UnimplementedError();
-  }
+  // @override
+  // State<StatefulWidget> createState() {
+  //   throw UnimplementedError();
+  // }
 }
