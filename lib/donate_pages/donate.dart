@@ -3,15 +3,12 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:temp_project/donate_pages/api_moneybox.dart';
 import '../toss/tosspayment.dart';
-import 'api_moneybox.dart';
 import 'api_campaign.dart';
 import 'mydonation.dart';
 import 'one_campaign.dart';
 import 'savings.dart';
-//import 'four_campaign.dart';
-//import 'four_api_campaign.dart';
-
-//import 'four_campaign.dart';
+import 'package:temp_project/const/colors.dart';
+import 'package:flutter/cupertino.dart';
 
 class Donating extends StatelessWidget {
   @override
@@ -46,19 +43,24 @@ class _DonatingPageState extends State<DonatingPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xffFFFFFF),
-        title: Text(
-          '',
-          style: TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.bold,
-            color: Color(0xff444444),
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            elevation: 0,
+            backgroundColor: WHITE_COLOR,
+            actions:[
+              Padding(
+                padding: const EdgeInsets.all(11.0),
+                child: IconButton(
+                  icon: Icon(CupertinoIcons.mail, color: BLACK_COLOR),
+                  iconSize: 35.0,
+                  onPressed: () {
+                  },
+                ),
+              ),
+            ],
           ),
-        ),
-        centerTitle: true,
-      ),
       body: Container(
           child: Stack(
         children: [
